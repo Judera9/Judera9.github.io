@@ -1,0 +1,589 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jude">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本章讲述作者写本书时的一些考量，以及对行文风格等进行了描述。另外讲解了一些术语和概念，我个人进行了一些拓展，可能后面章节作者也会提到这些。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Effective C++ 第三版》0 导读">
+<meta property="og:url" content="https://judera9.github.io/2022/02/02/Effective-Cpp-Introduction/index.html">
+<meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="本章讲述作者写本书时的一些考量，以及对行文风格等进行了描述。另外讲解了一些术语和概念，我个人进行了一些拓展，可能后面章节作者也会提到这些。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://judera9.github.io/img/default3.png">
+<meta property="article:published_time" content="2022-02-02T02:55:41.000Z">
+<meta property="article:modified_time" content="2022-02-02T16:03:28.617Z">
+<meta property="article:author" content="Jude">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="阅读笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://judera9.github.io/img/default3.png">
+  
+  
+  <title>《Effective C++ 第三版》0 导读 - Jude&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jude&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home Page
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About Me
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="《Effective C++ 第三版》0 导读">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-02 10:55" pubdate>
+        2022年2月2日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《Effective C++ 第三版》0 导读</h1>
+            
+            <div class="markdown-body">
+              <h2 id="terminology">Terminology</h2>
+<h3 id="声明-declaration">声明-declaration</h3>
+<p>在《C++ Primer》中提到：</p>
+<blockquote>
+<p>变量声明：用于向程序表明变量的类型和名字。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><pre><code class="hljs Cpp"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> x; <span class="hljs-comment">// declare an object</span><br><span class="hljs-function">std::<span class="hljs-keyword">size_t</span> <span class="hljs-title">numDigits</span><span class="hljs-params">(<span class="hljs-keyword">int</span> number)</span></span>; <span class="hljs-comment">// declare a function</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Widget</span>;</span> <span class="hljs-comment">// declare a class</span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-comment">// declare a template</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GraphNode</span>;</span><br></code></pre></td></tr></table></figure>
+<h4 id="extern关键字">extern关键字</h4>
+<p>  通过使用extern关键字能够声明变量名而不定义它，使用extern编译器不会给变量分配存储空间。所以<code>extern
+int x;</code>是声明而不是定义，而<code>int
+x;</code>是声明也是定义。但是如果对声明进行了initialization，如<code>extern
+int x = 1;</code>，则一定是定义。</p>
+<p>  对函数来说如果加了<code>&#123;&#125;</code>就是定义，如果没有就是声明。<strong>在一个程序中，变量或函数可以声明多次（如下会提示<code>Clang-Tidy:
+Redundant 'foo'
+declaration</code>），但是定义只能有一次</strong>，如下代码能够编译成功：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>; <span class="hljs-comment">// declaration</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>; <span class="hljs-comment">// redundant declaration</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>&#123; <span class="hljs-comment">// definition</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="使用std">使用std</h4>
+<p>  为了方便，作者在后面章节的代码中省略了C++标准程序库的命名空间<code>std::</code>的书写，但是在实际编译时是不能省略的。另外，<code>use
+namespace
+std;</code>并不是一个好选择，因为会引入很多不必要的名称，这可能会导致灾难性的结果。在《C++
+Primer Plus》的“第九章-内存模型和名称空间”中，提到：</p>
+<blockquote>
+<p>  一般说来，使用using命令比
+使用using编译命令更安全，这是由于它只导入了制定的名称。如果该名称与局部名称发生冲突，编译器将发出指示。using编译命令导入所有的名称，包括可能并不需要的名称。<strong>如果与局部名称发生冲突，则局部名称将覆盖名称空间版本，而编译器并不会发出警告。</strong>另外，名称空间的开放性意味着名称空间的名称可能分散在多个地方，这使得难以准确知道添加了哪些名称。</p>
+</blockquote>
+<h4 id="为什么使用size_t">为什么使用size_t</h4>
+<p>  上面提到的标准库中的size_t，是很多C++
+Programmer知道但是很多时候不敢用的一个typedef的unsigned
+integer类型。使用size_t能够使得代码更加便于在不同系统间移植（如IP16L32和I16PL32），同时增加移植性和可读性，可以参考给出的链接<a
+target="_blank" rel="noopener" href="http://web.archive.org/web/20101209143037/http://www.eetimes.com/discussion/programming-pointers/4026076/Why-size-t-matters?">Why
+size_t matters</a>。</p>
+<h4 id="函数签名-signature">函数签名-signature</h4>
+<p>  官方定义的C++
+signature只包括函数的参数，不包括返回类型。编译器在检查函数signature是否重复时，如果两个函数声明只有返回类型不同，编译器同样会报错，因为它不知道调用的是哪个函数。但是本书为了帮助理解将返回类型视为signature的一部分。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>  上面的declaration我使用C++14标准会报<em>“Functions that differ only
+in their return type cannot be
+overloaded”</em>。如下的代码是可以编译通过的（对于C89来说这两种都不行，C只检查函数名，而不会将参数类型和返回值加到signature中）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>;<br></code></pre></td></tr></table></figure>
+<h3 id="定义-definition">定义-definition</h3>
+<p>  书中描述是<em>“definition的任务是提供编译器一些声明式所遗漏的细节“</em>，个人感觉说的不够清楚。在《C++
+Primer》中提到：</p>
+<blockquote>
+<p>变量定义：用于为变量分配存储空间，还可为变量指定初始值。程序中，变量有且仅有一个定义（定义也是声明）。</p>
+</blockquote>
+<h4 id="关于声明与定义的程序设计风格">关于声明与定义的程序设计风格</h4>
+<p>  参考博客<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/sjxbf/article/details/6310150">C++定义与声明
+区别</a>，我觉得有几点很值得注意：</p>
+<ol type="1">
+<li>不要把变量定义放入.h文件，这样容易导致重复定义错误。</li>
+<li>但是值在编译时就已知的const变量的定义、类的定义、inline
+函数的定义可以放到头文件中。</li>
+<li>尽量使用static关键字把变量定义限制于该源文件作用域，除非变量被设计成全局的。</li>
+<li>可以在头文件中声明一个变量，在用的时候包含这个头文件就声明了这个变量。</li>
+</ol>
+<h3 id="初始化-initialization">初始化-initialization</h3>
+<p>  初始化是“给予对象初值”的过程，通常由构造函数constructor完成。需要注意如下三个特别的构造函数：default构造函数、copy构造函数、以及copy
+assignment操作符。</p>
+<h4 id="default构造函数">default构造函数</h4>
+<p>  default构造函数的要求是<em>“一个可被调用而不带任何实参者”</em>，也可以是每个参数都有缺省值。<strong>通常来说，建议构造函数被声明为explicit，这样能够阻止implicit
+type conversions。</strong></p>
+<h4 id="copy构造函数和copy-assignment操作符">copy构造函数和copy
+assignment操作符</h4>
+<p>  copy构造函数被用来<em>“以同型对象初始化自我对象”</em>，而copy
+assignment操作符被用来<em>“从另一个同型对象中拷贝其值到自我对象”</em>。copy构造和copy赋值的区别在于是否有新的对象被创建。<strong>这两个都是典型的pass-by-value的方式，而一般更好的方式是pass-by-reference-to-const。</strong>书中的例子如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Widget</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Widget</span>(); <span class="hljs-comment">// default构造函数</span><br>    <span class="hljs-built_in">Widget</span>(<span class="hljs-keyword">const</span> Widget&amp; rhs); <span class="hljs-comment">// copy构造函数</span><br>    Widget&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Widget&amp; rhs); <span class="hljs-comment">// copy assignment操作符</span><br>    ...<br>&#125;;<br>Widget w1; <span class="hljs-comment">// 调用default构造函数</span><br><span class="hljs-function">Widget <span class="hljs-title">w2</span><span class="hljs-params">(w1)</span></span>; <span class="hljs-comment">// 调用copy构造函数</span><br>w1 = w2; <span class="hljs-comment">// 调用copy assignment操作符</span><br></code></pre></td></tr></table></figure>
+<h3 id="standard-template-library-stl">Standard Template
+Library-STL</h3>
+<p>  是C++标准程序库的一部分，内含容器（vector、list、set、map等），迭代器（iterator、set<string>::iterator等），算法（for_each、find、sort等）及其相关机能。作者说STL是非常有用的，不过我基本没用过（因为我C++课的老师主要让我们搞速度优化，用STL肯定卷不过别人了）。</p>
+<h3 id="不明确行为-undefined-behavior">不明确行为-undefined
+behavior</h3>
+<p>  带有undefined
+behavior的程序通常是令人崩溃的，这样的程序即使能够编译成功，在执行过程中可能有时正常执行，有时造成崩坏，有时产生不正确的结果。因此，使用C++编程时要能够自己处理异常并小心避免undefined
+behavior。下面程序的返回值就是一个随机的结果，因为数组name的大小为6，发生了越界。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">char</span> name[] = <span class="hljs-string">&quot;Darla&quot;</span>;<br><span class="hljs-keyword">char</span> c = name[<span class="hljs-number">10</span>];<br>std::cout &lt;&lt; c &lt;&lt; std::endl;<br></code></pre></td></tr></table></figure>
+<h2 id="tr1和boost">TR1和Boost</h2>
+<p>TR1是描述C++许多新机能的一份规范，而Boost是一个相关的开源平台。关于这方面，下面提供了一些可能有帮助的C++学习相关资源链接。</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.runoob.com/cplusplus/cpp-useful-resources.html">C++
+有用的资源</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/header">C++ Standard
+Library headers</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikibooks.org/wiki/C++_Programming">C++
+Programming（书）</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.sunistudio.com/cppfaq/">C++ FAQ LITE —
+Frequently Asked Questions</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thefreecountry.com/sourcecode/cpp.shtml">Free C
+/ C++ Libraries, Source Code and Frameworks</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.boost.org/">boost</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Effective-C/">Effective C++</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">阅读笔记</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/02/Effective-Cpp-Content/">
+                        <span class="hidden-mobile">《Effective C++ 第三版》阅读笔记目录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"rWP5Th0qagfznphon6NebcDz-MdYXbMMI","appKey":"N6SsCayJVsJro8mdKlTR49ub","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
