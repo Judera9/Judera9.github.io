@@ -4,6 +4,79 @@
   
   
   <entry>
+    <title>编曲笔记</title>
+    <link href="/2022/02/04/Music-Arrangment-Content/"/>
+    <url>/2022/02/04/Music-Arrangment-Content/</url>
+    
+    <content type="html"><![CDATA[<h2 id="参考教程链接">参考教程链接</h2><ul><li><a href="https://space.bilibili.com/13639412">乐球网b站主页</a></li><li><ahref="https://www.bilibili.com/video/BV14x411s7KZ?p=15&amp;spm_id_from=pageDriver">B站乐球网最全从零开始的完整的编曲教程『301P更新完毕』【你还不会编曲吗？】</a></li><li><ahref="https://www.bilibili.com/video/BV1bx411s7A5?spm_id_from=333.999.0.0">FLStudio使用教程【乐球网】</a></li><li><ahref="https://www.bilibili.com/video/BV1CE411g7Wz/?spm_id_from=333.788.recommend_more_video.7">如何在B站自学音乐制作，从零开始系统全面引导向教程教你作曲编曲混音母带直到成为一名制作人</a></li><li><ahref="https://space.bilibili.com/285766656?spm_id_from=333.788.b_765f7570696e666f.1">来玩吉他b站主页</a></li><li><a href="http://www.fhdq.net/ts/96.html">音符符号</a></li></ul><h2 id="笔记目录">笔记目录</h2><ol type="1"><li><a href="">乐理基础</a></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>杂学笔记</category>
+      
+      <category>编曲</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>笔记</tag>
+      
+      <tag>编曲</tag>
+      
+      <tag>b站</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ETH Robot Dynamics Note</title>
+    <link href="/2022/02/04/ETH-Robot-Dynamics-Note/"/>
+    <url>/2022/02/04/ETH-Robot-Dynamics-Note/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>《Effective C++ 第三版》1 让自己习惯C++</title>
+    <link href="/2022/02/03/Effective-Cpp-Accustoming-Yourself-to-C/"/>
+    <url>/2022/02/03/Effective-Cpp-Accustoming-Yourself-to-C/</url>
+    
+    <content type="html"><![CDATA[<h2 id="条款01view-c-as-a-federation-of-languages">条款01：View C++ as afederation of languages</h2><p>  当下的C++标准仍然在不断的扩充，我查了一下最新的C++20标准，也有<ahref="https://www.oschina.net/news/123834/cpp20-published">很多重大的更新</a>，比如模块等，这是继C++11以来加入重要新特性的一次更新。在链接下方的评论区有句话说的挺正确：</p><blockquote><p>C++功能非常多，支持范围非常广，然而各种功能各有各的使用场景。人家支持的全，并不是强行要求你全用，而是按需使用。自己不行，也不愿意学习和了解，还跑出来到处喷。对于c++，一定要清楚你需要什么，能够满足使用即可，而不是一个项目把所有功能都用上，真没必要。你可以先用最基本的功能实现，然后用新特性去改进，从而学习新特性。</p></blockquote><p>  根据本书，C++是一个多重范型编程语言（multiparadigm programminglanguage），同时支持过程形式（procedural）、面向对象形式（object-oriented）、函数形式（functional）、泛型形式（generic）、元编程形式（metaprogramming）。所以C++最大的缺点是它的复杂性，这可能让很多项目变得难以维护。本书对此给出的建议是将C++看作多个次语言来学习和使用（正如上面的评论所说），对于不同的次语言需要考虑不同的高效编程策略，其中主要的四个次语言和其特点如下：</p><ol type="1"><li>C：最基础的部分，特点在于指针（pointers）、数组（arrays）、预处理器（preprocessor）等基础机能，对于程序员要求较高的主要是内存管理、指针运用等，此时pass-by-value通常比pass-by-reference更加高效；</li><li>Object-Oriented C++：即C withClasses的部分，包括了classes（构造与析构）、封装（encapsulation）、继承（inheritance）、多态（polymorphism）、virtual函数（动态绑定）等；</li><li>Template C++：这是C++ genericprogramming的部分，根据本书，template特性带来了TMP（templatemetaprogramming）的编程范式。不过在C++20特性中，貌似引入了能够替代TMP的新特性；</li><li>STL：是C++的一个template程序库，有很多现成迭代器和算法可以方便开发；</li></ol><h2 id="条款02prefer-consts-enums-and-inlines-to-define">条款02：Preferconsts, enums, and inlines to #define</h2><h3 id="const">const</h3><p>  使用预处理器不会将被替换的记号名称记入记号表，这可能导致调试时不方便追踪记号名称。除此之外，使用常量可能比宏定义导致更小量的码，从而速度更快。例如：</p><figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ASPECT_RATIO 1.653 <span class="hljs-comment">// preprocessor</span></span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> AspectRatio = <span class="hljs-number">1.653</span>; <span class="hljs-comment">// compiler</span><br></code></pre></td></tr></table></figure><p>对于常量定义有两种特殊的情况需要注意：</p><ol type="1"><li>定义constant pointers</li></ol><p>  通常对于此类情况，我们希望指针和指针所指向的东西都是const的，因此需要写两次const，例如：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 1st const is constant content(&quot;Scott Meyers&quot;)</span><br><span class="hljs-comment">// 2nd const is constant pointer(authorName)</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> authorName = <span class="hljs-string">&quot;Scott Meyers&quot;</span>;<br></code></pre></td></tr></table></figure><ol start="2" type="1"><li>定义class常量</li></ol><p>  需要限制scope在class内，因此将变量声明为class的即staticmember。需要注意的是，在头文件中我们如下进行的并不是定义，而是声明，因此需要在实现文件中进行定义。该staticclass变量只能给予一次初值，如果在头文件中不需要使用NumTurns，也可以在实现文件定义式中给予初值。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// .h</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GamePlayer</span> &#123;</span><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> NumTurns = <span class="hljs-number">5</span>; <span class="hljs-comment">// declaration</span><br>    <span class="hljs-keyword">int</span> scores[NumTurns]; <span class="hljs-comment">// use the declared var</span><br>    ...<br>&#125;<br><br><span class="hljs-comment">// cpp</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> GamePlayer::NumTurns; <span class="hljs-comment">// definition</span><br></code></pre></td></tr></table></figure><h3 id="enum-hack">enum hack</h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+      <category>Effective C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>笔记</tag>
+      
+      <tag>C++</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Note of A Low Cost Modular Actuator for Dynamic Robots</title>
     <link href="/2022/02/03/Note-of-A-Low-Cost-Modular-Actuator-for-Dynamic-Robots/"/>
     <url>/2022/02/03/Note-of-A-Low-Cost-Modular-Actuator-for-Dynamic-Robots/</url>
@@ -35,9 +108,9 @@
     
     <tags>
       
-      <tag>C++</tag>
+      <tag>笔记</tag>
       
-      <tag>阅读笔记</tag>
+      <tag>C++</tag>
       
     </tags>
     
@@ -50,7 +123,7 @@
     <link href="/2022/02/02/Effective-Cpp-Content/"/>
     <url>/2022/02/02/Effective-Cpp-Content/</url>
     
-    <content type="html"><![CDATA[<p>  《Effective C++第三版》这本书给出了55条使用C++编程时需要注意的要点，帮助程序员写出更加优雅合理的程序。如导读里所说，<em>“学习程序语言根本大法是一回事；学习如何以某种语言设计并实现高效程序则是另一回事”</em>，在这方面C++是代表。因此，本书的目的不是教你学会C++，而是学习如何写出Effective的C++程序。</p><p>  我记录这篇笔记的目的是为了提取我自己认为重要，或是需要的条款，方便以后写代码时随时能够查看使用。因此，有些地方可能会进行拓展学习，有些地方只是一笔带过。个人能力有限，如果有错误的内容烦请在评论区指正！</p><p>  另外帮我的C++课老师于仕琪教授打个广告，他的C++程序设计课程体验很棒。大家可以去<ahref="https://space.bilibili.com/519963684?from=search&amp;seid=2332289542653409243&amp;spm_id_from=333.337.0.0">b站</a>围观一下，并且这里也提供了他的<ahref="https://github.com/ShiqiYu/CPP">课程仓库</a>，大家可以下载ppt和实例代码看看，课程讲了很多矩阵运算优化方法。</p><h2 id="content">Content</h2><ol start="0" type="1"><li><a href="">Introduction</a></li><li><a href="">Accustoming Yourself to C++</a></li><li><a href="">Constructors, Destructors, and AssignmentOperators</a></li><li><a href="">Resource Management</a></li><li><a href="">Designs and Declarations</a></li><li><a href="">Implementations</a></li><li><a href="">Inheritance and Object-Oriented Design</a></li><li><a href="">Templates and Generic Programming</a></li><li><a href="">Customizing new and delete</a></li><li><a href="">Miscellany</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<p>  《Effective C++第三版》这本书给出了55条使用C++编程时需要注意的要点，帮助程序员写出更加优雅合理的程序。如导读里所说，<em>“学习程序语言根本大法是一回事；学习如何以某种语言设计并实现高效程序则是另一回事”</em>，在这方面C++是代表。因此，本书的目的不是教你学会C++，而是学习如何写出Effective的C++程序。</p><p>  我记录这篇笔记的目的是为了提取我自己认为重要，或是需要的条款，方便以后写代码时随时能够查看使用。因此，有些地方可能会进行拓展学习，有些地方只是一笔带过。个人能力有限，如果有错误的内容烦请在评论区指正！</p><p>  另外帮我的C++课老师于仕琪教授打个广告，他的C++程序设计课程体验很棒。大家可以去<ahref="https://space.bilibili.com/519963684?from=search&amp;seid=2332289542653409243&amp;spm_id_from=333.337.0.0">b站</a>围观一下，并且这里也提供了他的<ahref="https://github.com/ShiqiYu/CPP">课程仓库</a>，大家可以下载ppt和实例代码看看，课程讲了很多矩阵运算优化方法。</p><h2 id="catalog">Catalog</h2><ol start="0" type="1"><li><a href="">Introduction</a></li><li><a href="">Accustoming Yourself to C++</a></li><li><a href="">Constructors, Destructors, and AssignmentOperators</a></li><li><a href="">Resource Management</a></li><li><a href="">Designs and Declarations</a></li><li><a href="">Implementations</a></li><li><a href="">Inheritance and Object-Oriented Design</a></li><li><a href="">Templates and Generic Programming</a></li><li><a href="">Customizing new and delete</a></li><li><a href="">Miscellany</a></li></ol>]]></content>
     
     
     <categories>
@@ -64,9 +137,9 @@
     
     <tags>
       
-      <tag>C++</tag>
+      <tag>笔记</tag>
       
-      <tag>阅读笔记</tag>
+      <tag>C++</tag>
       
     </tags>
     
@@ -79,7 +152,7 @@
     <link href="/2022/01/30/Surfskate-Selection/"/>
     <url>/2022/01/30/Surfskate-Selection/</url>
     
-    <content type="html"><![CDATA[<h2 id="surfskate的由来">Surfskate的由来</h2><p>  中文名陆地冲浪板（简称“陆冲”），板如其名，是用于模拟海上冲浪的。众所周知，冲浪要在暖季合适的海岸，滑雪要在冬季合适的雪地，条件苛刻，更别提大家疲于996福报很少有时间出行去冲浪滑雪。因此，入手一个陆地冲浪板能够帮助提高技能水平，是冲浪滑雪很好的练习道具。</p><div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/Surfskate-Selection-surf.jpeg" height="250" /></div><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/Surfskate-Selection-ski.png" height="250" /></div></div></div><h2 id="结构与功能">结构与功能</h2><h2 id="市面大牌选型">市面大牌选型</h2><h3 id="carver">Carver</h3><p>  Carver是美国一家96年才成立的年轻公司，特点是PU桥和弹簧桥，目前应该是卖的最好的品牌之一。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.">[1]</span></a></sup></p><h3 id="sancheski">SANCHESKI</h3><p>  SANCHESKI是一家西班牙的运动用品制造商，从60年代开始就设计制作自己的滑板版面。在10年之后才<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.">[1]</span></a></sup></p><h2 id="保养与维护">保养与维护</h2><p><br></p>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=62322438&bvid=BV1ht411M78i&cid=108319980&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><p><br></p><h2 id="玩法show">玩法show</h2><ol type="1"><li><ahref="https://zhuanlan.zhihu.com/p/82459365">陆地冲浪surfskate入手后的问题和使用说明书！</a></li><li><ahref="https://www.bilibili.com/video/BV1wy4y1E7KL?from=search&amp;seid=16512587863776667224&amp;spm_id_from=333.337.0.0">日本小哥横刹(PowerSlide)教学【搬运|字幕】</a></li></ol><h2 id="参考">参考</h2><em>我玩的经验下次博客再介绍吧（等我玩熟练了先） ヾ(=･ω･=)o</em><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1"class="footnote-text"><span>“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.<a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
+    <content type="html"><![CDATA[<h2 id="surfskate的由来">Surfskate的由来</h2><p>  中文名陆地冲浪板（简称“陆冲”），板如其名，是用于模拟海上冲浪的。众所周知，冲浪要在暖季合适的海岸，滑雪要在冬季合适的雪地，条件苛刻，更别提大家疲于996福报很少有时间出行去冲浪滑雪。因此，入手一个陆地冲浪板能够帮助提高技能水平，是冲浪滑雪很好的练习道具。</p><div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/surfskate/Surfskate-Selection-surf.jpeg" height="250" /></div><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/surfskate/Surfskate-Selection-ski.png" height="250" /></div></div></div><h2 id="结构与功能">结构与功能</h2><h2 id="市面大牌选型">市面大牌选型</h2><h3 id="carver">Carver</h3><p>  Carver是美国一家96年才成立的年轻公司，特点是PU桥和弹簧桥，目前应该是卖的最好的品牌之一。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.">[1]</span></a></sup></p><h3 id="sancheski">SANCHESKI</h3><p>  SANCHESKI是一家西班牙的运动用品制造商，从60年代开始就设计制作自己的滑板版面。在10年之后才<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.">[1]</span></a></sup></p><h2 id="保养与维护">保养与维护</h2><p><br></p>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=62322438&bvid=BV1ht411M78i&cid=108319980&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><p><br></p><h2 id="玩法show">玩法show</h2><ol type="1"><li><ahref="https://zhuanlan.zhihu.com/p/82459365">陆地冲浪surfskate入手后的问题和使用说明书！</a></li><li><ahref="https://www.bilibili.com/video/BV1wy4y1E7KL?from=search&amp;seid=16512587863776667224&amp;spm_id_from=333.337.0.0">日本小哥横刹(PowerSlide)教学【搬运|字幕】</a></li></ol><h2 id="参考">参考</h2><em>我玩的经验下次博客再介绍吧（等我玩熟练了先） ヾ(=･ω･=)o</em><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1"class="footnote-text"><span>“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.<a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
     
     
     
@@ -88,13 +161,33 @@
   
   
   <entry>
-    <title>Music Theory</title>
+    <title>乐理基础</title>
     <link href="/2022/01/30/Music-Theory/"/>
     <url>/2022/01/30/Music-Theory/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<p>图片和教程来源，<ahref="https://www.bilibili.com/video/BV14x411s7KZ?p=1">bilibili乐球网编曲教程</a>。个人仅作笔记，侵删。</p><span id="more"></span><h2 id="音程">音程</h2><p>  我们能够用<strong>属性+大小+单位</strong>的方式来描述音程。音程是两个音之间的距离，单位都是度；大小有从一到七；属性有<strong>纯、大、小、增、减、倍增、倍减</strong>。</p><h3 id="音程大小">音程大小</h3><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204192938.png" width="550"><center>图 1</center></center><ul><li>对于白键：直接数两者之间有几个白键就是几度，注意是包括开始和结束的键；</li><li>对于黑键：首先还原黑键，然后和白键一样数就行；</li></ul><blockquote><p>  也可以这样，sou就是5，升re就是♯2（或者♭3），因此对应(5-2)+1=4，所以是四度。不过好像跨了下一个八度就不好算了，还是好好数琴键吧&gt;_&lt;|||</p></blockquote><h3 id="音程属性">音程属性</h3><p>  如图1所示，尽管大小相同，还需要区分属性。<strong>“纯”只存在于一、四、五、八度中，“大/小“只存在于二、三、六、七度中，而“增、减、倍增、倍减”存在于所有度数大小</strong>。即，不存在纯三度或大四度。</p><h3 id="标准音程与音程计算">标准音程与音程计算</h3><p>  标准音程是以C为起点到下一个八度的C为止，共七个白键音程的名称。如图2所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204203925.png" width="550"><center>图 2</center></center><p>  对于不是两个琴键都落在白键上的情况，遵循以下的步骤进行计算：</p><ol type="1"><li>找大小：还原升降号，然后数白键的数量；</li><li>找属性：数白键和黑键的总数，通过图3的公式和标准音程比较，进行计算；</li></ol><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204204602.png" width="550"><center>图 3</center></center><p>  例如：对于♯F和D，如图4所示。首先，还原♯F，F和D之间有6个琴键，所以是六度。标准的六度是10个键，对应的是大六度。然后，数白键与黑键一共是9个键，因此根据公式结果是小六度。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204205257.png" width="550"><center>图 4</center></center><blockquote><p>  我自己总结也差不多，假设E和F之间以及B和C之间少了一个黑键我们叫做一个坑（“少了个黑键”），那么最终其实就是比较坑的数量嘛。假设还是♯F和D，很容易发现♯F和G之间由于升降号导致了一个坑，在B和C之间本来有一个坑，那么一共是两个坑。标准的六度是一个坑（标准的四度到七度都是一个坑），所以♯F到D比标准的多了一个坑（“少了一个黑键”），因此是小六度。</p></blockquote><h2 id="和弦">和弦</h2><p>  和弦就是<strong>以任何一个音作为根音，往上按照三度的音程关系叠加构成的组合</strong>。和弦最少是三个音，两个音的是音程。所谓三和弦，指的是根音到冠音的度数是三，而后面直到十三和弦以此类推。音最多的十三和弦有7个音，刚好从C到B。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204223656.png" width="550"><center>图 5</center></center><h3 id="三和弦">三和弦</h3><p>  属性包括“<strong>大三和弦、小三和弦、增三和弦、减三和弦</strong>”，其中增三和弦在流行乐中很少用到，所以这里不讲。区分大三和弦，小三和弦和减三和弦的方式是看三和弦的两个音程的属性，如图6：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204231246.png" width="550"><center>图 6</center></center><p>  例如：FAC是大三度+小三度=F大三和弦，F♭AC是小三度+大三度=F小三和弦，F♭A♭C是小三度+小三度=F减三和弦（这就是F为根音对应的几个三和弦）</p><h3 id="七和弦">七和弦</h3><p>  属性主要包括“<strong>大大七和弦、小小七和弦、大小七和弦、减小七和弦、减减七和弦</strong>”，其中我们并不会这么叫，实际的叫法是“<strong>大七和弦、小七和弦、属七和弦、半减七和弦、减七和弦</strong>”。区分它们的方法建立在三和弦的分类基础上，如图7所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204233441.png" width="550"><center>图 7</center></center><p>  例如：DFAC是小三和弦+小七度=D小七和弦，DF♭AC是减三和弦+小七度=D半减七和弦，DF♭A♭C是减三和弦+减七度=D减七和弦（这就是D为根音对应的几个七和弦）</p><h3 id="和弦转位">和弦转位</h3><p>  和弦转位其实就是将和弦中的某个或某些音提高了八度，然后低音变成了其他音。如图8中C（表示C大三和弦）的转位，由于除了根音外有两个音，所以三和弦都是有两个转位的。图8中间的<strong>C/E就是C和弦第一转位，“/”前面的“C”表示这是一个C和弦，后面的“E”表示低音演奏E</strong>；而C/G同理。注意到，对于C/E来说，只要保证低音是E，上面不论是135还是513都没有关系，都是C和弦第一转位。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204234704.png" width="550"><center>图 8</center></center><p>  对于七和弦，也是同样的道理。例如：CM7（也就是C小七和弦）是CEGB是原位，然后第一转位是CM7/E，也就是E...（如EGBC），第二转位是G...（如GBCE），以此类推共有三个和弦转位。再比如下图9，原位是D7（D属七和弦），对应的三个转位是D7/♯F、D7/A、D7/C。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205000556.png" width="550"><center>图 9</center></center><h2 id="音调">音调</h2><p>  对于一首歌，如果调太高了唱不上去，我们通常会降调，音阶整体上移或下移就是变调（变调是不会改变旋律本身的）。首先是自然大调和自然小调，在其基础上对六音和七音进行升降就得到和声大调、旋律大调、和声小调、旋律小调。</p><h3 id="自然大调">自然大调</h3><p>  总结来说，<strong>听起来像CDEFGABC的就是自然大调</strong>，上述是C大调。再比如说，♭D大调是♭D♭EF♭G♭A♭BC♭D，E大调是E♯F♯GAB♯C♯DE，这些自然大调的音阶结构，都是如下图10所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205103723.png" width="550"><center>图 10</center></center><h3 id="自然小调">自然小调</h3><p>  总结来说，<strong>听起来像ABCDEFGA的就是自然大调</strong>，上述是A小调。再比如说，C小调是CD♭EFG♭A♭BC。自然小调的音阶结构如下图11所示。由此，我们又能够看出，C大调和A小调的音是一样的，只是顺序不同而已，因此它们称为<strong>关系大小调</strong>。除此之外，C大调的C和A小调的A之间差了一个小3°，因此所有的关系大小调间也是差了一个小3°。例如，C小调的关系大调是♭E大调。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205110501.png" width="550"><center>图 11</center></center><h3 id="如何辨别一首歌的调">如何辨别一首歌的调</h3><blockquote><p>  这里貌似教程少了这方面的内容，所以另外找了个讲的很好的视频补上！<strong>其实就是听最后的结尾旋律，一般流行乐的结尾音就是这个调的调名啦</strong>，不过我乐感好拉跨（羡慕绝对音感的人）。</p></blockquote>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=43075656&bvid=BV1cb411S7ra&cid=141283989&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><h3 id="调性">调性</h3><p>  即在自然大调和自然小调的基础上对六音和七音进行升降，如下图12所示。例如：要找E和声大调，首先找到E自然大调E♯F♯GAB♯C♯DE，然后降低六音得到E♯F♯GABC♯DE，此时再降低七音得到E旋律大调E♯F♯GABCDE。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205140927.png" width="550"><center>图 12</center></center><h2 id="音符">音符</h2><p>  音符就比较简单了，即所谓表示演奏时间的长短。这一部分因为自己好歹学了多年演奏，比较熟练所以就懒得记太多了。图13是从全音符到六十四分音符单个的写法（六十四一般用不到）。图14是节拍的写法，例如：3/4念作四三拍，表示以四分音符为一拍，一个小节是三拍。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205141824.png" width="550"><center>图 13</center></center><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205142042.png" width="550"><center>图 14</center></center><h3 id="附点音符">附点音符</h3><p>  附点音符=原音符+原音符的一半，如图15。附点在乐谱上的写法也要注意，如果音符在第n线上，那个附点标记在这条线的上面的间；如果音符在间上，那么直接标记在这个间就可以了。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205142607.png" width="550"><center>图 15</center></center><h3 id="休止符">休止符</h3><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205143000.png" width="550"><center>图 16</center></center><h3 id="连音">连音</h3><p>  概念比较简单，注意连音的写法。如果音符是四分音符，标了三连音的符号之后（三连音对应到2），相当于4个四分音符也就是两拍，即<strong>在两拍内演奏完三连音</strong>。再比如如下图17，音符是十六分音符（五、六、七连音对应到4），相当于4个十六分音符也就是一拍，即<strong>在一拍内演奏完五、六、七连音</strong>。以此类推，9～15连音对应到8进行相应的计算。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205144219.png" width="550"><center>图 17</center></center>]]></content>
     
     
+    <categories>
+      
+      <category>杂学笔记</category>
+      
+      <category>编曲</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>笔记</tag>
+      
+      <tag>编曲</tag>
+      
+      <tag>b站</tag>
+      
+      <tag>乐理</tag>
+      
+    </tags>
     
   </entry>
   
@@ -123,8 +216,6 @@
       
       <tag>文学</tag>
       
-      <tag>娱乐</tag>
-      
     </tags>
     
   </entry>
@@ -136,7 +227,7 @@
     <link href="/2022/01/30/Takarazuka-Revue/"/>
     <url>/2022/01/30/Takarazuka-Revue/</url>
     
-    <content type="html"><![CDATA[<h2 id="一选题原因">一、选题原因</h2><p>  老师在课上介绍宝冢歌剧团时，提问我们是如何了解到“宝冢”这个名字的，当时我回答是从一部番剧了解的，这部番剧即本文分析涉及的2021新番“歌剧少女”。歌剧作为本门课程中重要的课题，我希望结合宝冢歌剧团和这部番剧来进行一些歌剧文化方面的探讨。</p><h2 id="二宝冢歌剧团">二、宝冢歌剧团</h2><p>  与歌舞伎全部为男性演员相反，日本宝冢歌剧以全员女性的形式为观众演绎各种各样的浪漫爱情故事。自大正年间创立以来宝冢已有百年历史，如今分为各具特色的“花、月、雪、星、宙”五个组，可简单总结其特色为歌舞之花、戏剧之月、和物之雪、装扮之星、年轻之宙。宝冢的歌剧题材来源极其广泛，服装和舞台效果也非常还原所演绎的故事设定。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded" aria-label="易巧丽.华丽旖旎的女性之梦谈日本宝冢歌剧中的多元化[J].中国戏剧,2021(03):83-84.">[1]</span></a></sup></p><p>  宝冢歌剧一个重要的特色是男役演员，为了向以已婚女性主妇为主体的观众展现其“大男主”题材的爱情故事，舞台的核心即男役演员需要展现出完美的男性魅力。宝冢歌剧通过瑰丽的舞台，为女性观众们编织了完美与浪漫的爱情之梦。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/Takarazuka-Revue-1.png" width="300"><center>宝冢歌剧团首席男役</center></center><h2 id="三歌剧少女">三、歌剧少女</h2><p>  番剧“歌剧少女”是一部歌剧相关题材的漫改动画，于2021年7月开始放送。剧中的红华歌剧学院即现实中的宝冢音乐学院，且许多专有名词，如男役、娘役、预科生等，以及戏剧名和相关文化特色均是直接还原现实中的宝冢文化，个人认为在设定上对宝冢的还原度相对较高。</p><p>  放送完结的第一季对应原作的前日谈部分，介绍了几位不同背景的预科生各自的过往和相互建立羁绊的故事。有意思的是，剧中主要角色的背景还涉及了歌舞伎和偶像文化等。与少女漫画或偶像企划（如lovelive）不同，本剧细致描写了各个同学在学院学习歌剧的跌宕起伏的经历，并且在细节上较好的还原了宝冢音乐学院的特色（如学生间的阶级制度和各种道具等）。</p><p>  “歌剧少女”的片尾曲很有宝冢的歌剧特色，经过调查发现音乐部分是由在宝塚歌剧团工作过的齐藤恒芳先生完成作词、作曲、编曲的。在字幕表中能看到不少宝冢的OG也有演出。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“音乐学院舞台，描写青春友情，《歌剧少女!!》制片人诹访丰的访谈”.https://www.bilibili.com/read/cv12419830.">[2]</span></a></sup></p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/Takarazuka-Revue-2.png" width="300"><center>歌剧少女宣传封面</center></center><h2 id="四宝冢歌剧文化的创新与魅力">四、宝冢歌剧文化的创新与魅力</h2><p>  <em>“一般文化的寿命是50年，50年过后，即便不消失也不再是大众之物。”</em></p><p>  随着互大众传媒的发展，娱乐的形式和观赏娱乐的方式都在不断扩张，许多曾经流行的艺术也在逐渐淡出历史舞台。这并不是一件坏事，毕竟艺术源于生活，而当一种艺术已经与当代人的生活脱钩时，这种艺术也不再能引起人们的共鸣。如为了迎合当下快节奏的生活方式而诞生出的“短视频”文化，而像豫剧、河北梆子等这种地方戏剧没有跟上时代的改变并迎合现代人的喜好，便逐渐在戏剧的历史舞台上消逝。</p><p>  我认为宝冢歌剧是成功迎合新时代的文化之一，我认为主要原因有两点。</p><p>  首先是题材上的创新，在电视刚开始流行的时候，宝冢歌剧遭遇了严重的打击，而她们顶住舆论的压力，用一部《凡尔赛玫瑰》成功背水一战重新焕发生机。而后来她们也尝试去改编各种各样的题材，包括古代历史、近代风物、当代故事、甚至关于未来想象，容纳了中国、阿拉伯、印度等各个国家的文化，改编自歌剧、话剧、影视剧、漫画、小说、历史传说、神话故事等；</p><p>  其次是系统的演员培养方式和优秀的团内文化，很多人真正粉上宝冢歌剧不是由于戏剧本身，而是由于舞台上绚丽多姿的演员们，尤其是男役演员。所谓“男役十年”，即培养一个优秀的男役演员需要十年的功夫来模仿、沉淀和学习，从而演绎出“女性眼中最完美的男性”。其次，在宝冢音乐学院里，学生不仅要学习各种歌剧表演方面的技能和知识，更加重要的是对气质的培养，即“清正美”的形象和态度。</p><h2 id="五歌剧少女与宝冢歌剧">五、歌剧少女与宝冢歌剧</h2><p>  在讨论宝冢歌剧的魅力时，上面提到了宝冢歌剧团演员的培养和团内文化，而这方面的魅力如何才能展现在大众的面前呢？如何能将宝冢歌剧团内日复一日的枯燥练习，与背后每个团员的故事与经历呈现在大众面前呢？歌剧少女这部番剧，就很好的做到了这一点。</p><p>  制片人诹访丰在访谈中提到，他原本对歌剧并不熟悉，而是在看了原作漫画后对其产生兴趣，<em>“实际去观看了歌剧后，发现非常有趣。我觉得就像是这样的我一样，如果能通过作品，给其他人制造一个契机，会是非常好的一件事，这也是企划立项原因之一。”</em><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“音乐学院舞台，描写青春友情，《歌剧少女!!》制片人诹访丰的访谈”.https://www.bilibili.com/read/cv12419830.">[2]</span></a></sup></p><p>  实际上，这是一种很好的扩大戏剧影响力的方式，和在论坛中有同学讨论关于游戏原神的角色云瑾与京剧文化的结合相似。歌剧少女通过二次元番剧和漫画的形式，将宝冢歌剧文化浓缩为一个个角色背后生动的故事，故事中的主角即为台上的演员。通过这些或是感人、或是引人发笑的故事，将宝冢歌剧团的魅力更是加深一层，也使得更多原本对宝冢不了解的人们能够来尝试观看歌剧，并找到其中的乐趣。</p><p>  举个例子说明，番剧中有一段关于身材焦虑与催吐的剧情，最终在老师的开导下该角色走出了焦虑。我认为这类的焦虑其实在宝冢歌剧团和一些偶像团体中并不少见，但观众和饭们平时不会对此有深刻的体会。而在观看番剧的过程中，观众们能够认识到这些演员们平时不能在大众面前表现的一面，从而使现实中的演员的人设更加丰富具体。</p><h2 id="参考">参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>易巧丽.华丽旖旎的女性之梦谈日本宝冢歌剧中的多元化[J].中国戏剧,2021(03):83-84.<a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:2"class="footnote-text"><span>“音乐学院舞台，描写青春友情，《歌剧少女!!》制片人诹访丰的访谈”.https://www.bilibili.com/read/cv12419830.<a href="#fnref:2" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
+    <content type="html"><![CDATA[<h2 id="一选题原因">一、选题原因</h2><p>  老师在课上介绍宝冢歌剧团时，提问我们是如何了解到“宝冢”这个名字的，当时我回答是从一部番剧了解的，这部番剧即本文分析涉及的2021新番“歌剧少女”。歌剧作为本门课程中重要的课题，我希望结合宝冢歌剧团和这部番剧来进行一些歌剧文化方面的探讨。</p><h2 id="二宝冢歌剧团">二、宝冢歌剧团</h2><p>  与歌舞伎全部为男性演员相反，日本宝冢歌剧以全员女性的形式为观众演绎各种各样的浪漫爱情故事。自大正年间创立以来宝冢已有百年历史，如今分为各具特色的“花、月、雪、星、宙”五个组，可简单总结其特色为歌舞之花、戏剧之月、和物之雪、装扮之星、年轻之宙。宝冢的歌剧题材来源极其广泛，服装和舞台效果也非常还原所演绎的故事设定。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded" aria-label="易巧丽.华丽旖旎的女性之梦谈日本宝冢歌剧中的多元化[J].中国戏剧,2021(03):83-84.">[1]</span></a></sup></p><p>  宝冢歌剧一个重要的特色是男役演员，为了向以已婚女性主妇为主体的观众展现其“大男主”题材的爱情故事，舞台的核心即男役演员需要展现出完美的男性魅力。宝冢歌剧通过瑰丽的舞台，为女性观众们编织了完美与浪漫的爱情之梦。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/takarazuka/Takarazuka-Revue-1.png" width="300"><center>宝冢歌剧团首席男役</center></center><h2 id="三歌剧少女">三、歌剧少女</h2><p>  番剧“歌剧少女”是一部歌剧相关题材的漫改动画，于2021年7月开始放送。剧中的红华歌剧学院即现实中的宝冢音乐学院，且许多专有名词，如男役、娘役、预科生等，以及戏剧名和相关文化特色均是直接还原现实中的宝冢文化，个人认为在设定上对宝冢的还原度相对较高。</p><p>  放送完结的第一季对应原作的前日谈部分，介绍了几位不同背景的预科生各自的过往和相互建立羁绊的故事。有意思的是，剧中主要角色的背景还涉及了歌舞伎和偶像文化等。与少女漫画或偶像企划（如lovelive）不同，本剧细致描写了各个同学在学院学习歌剧的跌宕起伏的经历，并且在细节上较好的还原了宝冢音乐学院的特色（如学生间的阶级制度和各种道具等）。</p><p>  “歌剧少女”的片尾曲很有宝冢的歌剧特色，经过调查发现音乐部分是由在宝塚歌剧团工作过的齐藤恒芳先生完成作词、作曲、编曲的。在字幕表中能看到不少宝冢的OG也有演出。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“音乐学院舞台，描写青春友情，《歌剧少女!!》制片人诹访丰的访谈”.https://www.bilibili.com/read/cv12419830.">[2]</span></a></sup></p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/takarazuka/Takarazuka-Revue-2.png" width="300"><center>歌剧少女宣传封面</center></center><h2 id="四宝冢歌剧文化的创新与魅力">四、宝冢歌剧文化的创新与魅力</h2><p>  <em>“一般文化的寿命是50年，50年过后，即便不消失也不再是大众之物。”</em></p><p>  随着互大众传媒的发展，娱乐的形式和观赏娱乐的方式都在不断扩张，许多曾经流行的艺术也在逐渐淡出历史舞台。这并不是一件坏事，毕竟艺术源于生活，而当一种艺术已经与当代人的生活脱钩时，这种艺术也不再能引起人们的共鸣。如为了迎合当下快节奏的生活方式而诞生出的“短视频”文化，而像豫剧、河北梆子等这种地方戏剧没有跟上时代的改变并迎合现代人的喜好，便逐渐在戏剧的历史舞台上消逝。</p><p>  我认为宝冢歌剧是成功迎合新时代的文化之一，我认为主要原因有两点。</p><p>  首先是题材上的创新，在电视刚开始流行的时候，宝冢歌剧遭遇了严重的打击，而她们顶住舆论的压力，用一部《凡尔赛玫瑰》成功背水一战重新焕发生机。而后来她们也尝试去改编各种各样的题材，包括古代历史、近代风物、当代故事、甚至关于未来想象，容纳了中国、阿拉伯、印度等各个国家的文化，改编自歌剧、话剧、影视剧、漫画、小说、历史传说、神话故事等；</p><p>  其次是系统的演员培养方式和优秀的团内文化，很多人真正粉上宝冢歌剧不是由于戏剧本身，而是由于舞台上绚丽多姿的演员们，尤其是男役演员。所谓“男役十年”，即培养一个优秀的男役演员需要十年的功夫来模仿、沉淀和学习，从而演绎出“女性眼中最完美的男性”。其次，在宝冢音乐学院里，学生不仅要学习各种歌剧表演方面的技能和知识，更加重要的是对气质的培养，即“清正美”的形象和态度。</p><h2 id="五歌剧少女与宝冢歌剧">五、歌剧少女与宝冢歌剧</h2><p>  在讨论宝冢歌剧的魅力时，上面提到了宝冢歌剧团演员的培养和团内文化，而这方面的魅力如何才能展现在大众的面前呢？如何能将宝冢歌剧团内日复一日的枯燥练习，与背后每个团员的故事与经历呈现在大众面前呢？歌剧少女这部番剧，就很好的做到了这一点。</p><p>  制片人诹访丰在访谈中提到，他原本对歌剧并不熟悉，而是在看了原作漫画后对其产生兴趣，<em>“实际去观看了歌剧后，发现非常有趣。我觉得就像是这样的我一样，如果能通过作品，给其他人制造一个契机，会是非常好的一件事，这也是企划立项原因之一。”</em><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“音乐学院舞台，描写青春友情，《歌剧少女!!》制片人诹访丰的访谈”.https://www.bilibili.com/read/cv12419830.">[2]</span></a></sup></p><p>  实际上，这是一种很好的扩大戏剧影响力的方式，和在论坛中有同学讨论关于游戏原神的角色云瑾与京剧文化的结合相似。歌剧少女通过二次元番剧和漫画的形式，将宝冢歌剧文化浓缩为一个个角色背后生动的故事，故事中的主角即为台上的演员。通过这些或是感人、或是引人发笑的故事，将宝冢歌剧团的魅力更是加深一层，也使得更多原本对宝冢不了解的人们能够来尝试观看歌剧，并找到其中的乐趣。</p><p>  举个例子说明，番剧中有一段关于身材焦虑与催吐的剧情，最终在老师的开导下该角色走出了焦虑。我认为这类的焦虑其实在宝冢歌剧团和一些偶像团体中并不少见，但观众和饭们平时不会对此有深刻的体会。而在观看番剧的过程中，观众们能够认识到这些演员们平时不能在大众面前表现的一面，从而使现实中的演员的人设更加丰富具体。</p><h2 id="参考">参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>易巧丽.华丽旖旎的女性之梦谈日本宝冢歌剧中的多元化[J].中国戏剧,2021(03):83-84.<a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:2"class="footnote-text"><span>“音乐学院舞台，描写青春友情，《歌剧少女!!》制片人诹访丰的访谈”.https://www.bilibili.com/read/cv12419830.<a href="#fnref:2" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
     
     
     <categories>
@@ -174,22 +265,22 @@
     
     <categories>
       
-      <category>Test</category>
+      <category>学习笔记</category>
       
-      <category>FirstTest</category>
+      <category>论文阅读</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>control</tag>
+      <tag>控制</tag>
       
       <tag>MPC</tag>
       
-      <tag>Cheetah</tag>
+      <tag>Mit Cheetah</tag>
       
-      <tag>Mit</tag>
+      <tag>笔记</tag>
       
     </tags>
     

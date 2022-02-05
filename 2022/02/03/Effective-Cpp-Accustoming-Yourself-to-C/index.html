@@ -16,18 +16,24 @@
   <meta name="author" content="Jude">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="Note of A Low Cost Modular Actuator for Dynamic Robots">
-<meta property="og:url" content="https://judera9.github.io/2022/02/03/Note-of-A-Low-Cost-Modular-Actuator-for-Dynamic-Robots/index.html">
+    <meta name="description" content="条款01：View C++ as a federation of languages   当下的C++标准仍然在不断的扩充，我查了一下最新的C++20标准，也有很多重大的更新，比如模块等，这是继C++11以来加入重要新特性的一次更新。在链接下方的评论区有句话说的挺正确：  C++功能非常多，支持范围非常广，然而各种功能各有各的使用场景。人家支持的全，并不是强行要求你全用，而是按需使用。自己不行，也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Effective C++ 第三版》1 让自己习惯C++">
+<meta property="og:url" content="https://judera9.github.io/2022/02/03/Effective-Cpp-Accustoming-Yourself-to-C/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="条款01：View C++ as a federation of languages   当下的C++标准仍然在不断的扩充，我查了一下最新的C++20标准，也有很多重大的更新，比如模块等，这是继C++11以来加入重要新特性的一次更新。在链接下方的评论区有句话说的挺正确：  C++功能非常多，支持范围非常广，然而各种功能各有各的使用场景。人家支持的全，并不是强行要求你全用，而是按需使用。自己不行，也">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-02T16:06:56.000Z">
-<meta property="article:modified_time" content="2022-02-02T16:06:56.015Z">
+<meta property="og:image" content="https://judera9.github.io/img/default3.png">
+<meta property="article:published_time" content="2022-02-03T04:09:33.000Z">
+<meta property="article:modified_time" content="2022-02-04T16:18:10.190Z">
 <meta property="article:author" content="Jude">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://judera9.github.io/img/default3.png">
   
   
-  <title>Note of A Low Cost Modular Actuator for Dynamic Robots - Jude&#39;s Blog</title>
+  <title>《Effective C++ 第三版》1 让自己习惯C++ - Jude&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -168,12 +174,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/index_banner7.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Note of A Low Cost Modular Actuator for Dynamic Robots">
+            <span class="h2" id="subtitle" title="《Effective C++ 第三版》1 让自己习惯C++">
               
             </span>
 
@@ -183,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-03 00:06" pubdate>
-        2022年2月3日 凌晨
+      <time datetime="2022-02-03 12:09" pubdate>
+        2022年2月3日 中午
       </time>
     </span>
   
@@ -194,7 +200,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      1.7k 字
     </span>
   
 
@@ -203,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      15 分钟
     </span>
   
 
@@ -232,16 +238,70 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Note of A Low Cost Modular Actuator for Dynamic Robots</h1>
+            <h1 style="display: none">《Effective C++ 第三版》1 让自己习惯C++</h1>
             
             <div class="markdown-body">
-              
+              <h2 id="条款01view-c-as-a-federation-of-languages">条款01：View C++ as a
+federation of languages</h2>
+<p>  当下的C++标准仍然在不断的扩充，我查了一下最新的C++20标准，也有<a
+target="_blank" rel="noopener" href="https://www.oschina.net/news/123834/cpp20-published">很多重大的更新</a>，比如模块等，这是继C++11以来加入重要新特性的一次更新。在链接下方的评论区有句话说的挺正确：</p>
+<blockquote>
+<p>C++功能非常多，支持范围非常广，然而各种功能各有各的使用场景。人家支持的全，并不是强行要求你全用，而是按需使用。自己不行，也不愿意学习和了解，还跑出来到处喷。对于c++，一定要清楚你需要什么，能够满足使用即可，而不是一个项目把所有功能都用上，真没必要。你可以先用最基本的功能实现，然后用新特性去改进，从而学习新特性。</p>
+</blockquote>
+<p>  根据本书，C++是一个多重范型编程语言（multiparadigm programming
+language），同时支持过程形式（procedural）、面向对象形式（object-oriented）、函数形式（functional）、泛型形式（generic）、元编程形式（metaprogramming）。所以C++最大的缺点是它的复杂性，这可能让很多项目变得难以维护。本书对此给出的建议是将C++看作多个次语言来学习和使用（正如上面的评论所说），对于不同的次语言需要考虑不同的高效编程策略，其中主要的四个次语言和其特点如下：</p>
+<ol type="1">
+<li>C：最基础的部分，特点在于指针（pointers）、数组（arrays）、预处理器（preprocessor）等基础机能，对于程序员要求较高的主要是内存管理、指针运用等，此时pass-by-value通常比pass-by-reference更加高效；</li>
+<li>Object-Oriented C++：即C with
+Classes的部分，包括了classes（构造与析构）、封装（encapsulation）、继承（inheritance）、多态（polymorphism）、virtual函数（动态绑定）等；</li>
+<li>Template C++：这是C++ generic
+programming的部分，根据本书，template特性带来了TMP（template
+metaprogramming）的编程范式。不过在C++20特性中，貌似引入了能够替代TMP的新特性；</li>
+<li>STL：是C++的一个template程序库，有很多现成迭代器和算法可以方便开发；</li>
+</ol>
+<h2 id="条款02prefer-consts-enums-and-inlines-to-define">条款02：Prefer
+consts, enums, and inlines to #define</h2>
+<h3 id="const">const</h3>
+<p>  使用预处理器不会将被替换的记号名称记入记号表，这可能导致调试时不方便追踪记号名称。除此之外，使用常量可能比宏定义导致更小量的码，从而速度更快。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ASPECT_RATIO 1.653 <span class="hljs-comment">// preprocessor</span></span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> AspectRatio = <span class="hljs-number">1.653</span>; <span class="hljs-comment">// compiler</span><br></code></pre></td></tr></table></figure>
+<p>对于常量定义有两种特殊的情况需要注意：</p>
+<ol type="1">
+<li>定义constant pointers</li>
+</ol>
+<p>  通常对于此类情况，我们希望指针和指针所指向的东西都是const的，因此需要写两次const，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 1st const is constant content(&quot;Scott Meyers&quot;)</span><br><span class="hljs-comment">// 2nd const is constant pointer(authorName)</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> authorName = <span class="hljs-string">&quot;Scott Meyers&quot;</span>;<br></code></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>定义class常量</li>
+</ol>
+<p>  需要限制scope在class内，因此将变量声明为class的即static
+member。需要注意的是，在头文件中我们如下进行的并不是定义，而是声明，因此需要在实现文件中进行定义。该static
+class变量只能给予一次初值，如果在头文件中不需要使用NumTurns，也可以在实现文件定义式中给予初值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// .h</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GamePlayer</span> &#123;</span><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> NumTurns = <span class="hljs-number">5</span>; <span class="hljs-comment">// declaration</span><br>    <span class="hljs-keyword">int</span> scores[NumTurns]; <span class="hljs-comment">// use the declared var</span><br>    ...<br>&#125;<br><br><span class="hljs-comment">// cpp</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> GamePlayer::NumTurns; <span class="hljs-comment">// definition</span><br></code></pre></td></tr></table></figure>
+<h3 id="enum-hack">enum hack</h3>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Effective-C/">Effective C++</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                  </div>
                 
               </div>
               
@@ -250,9 +310,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/02/03/Effective-Cpp-Accustoming-Yourself-to-C/">
+                      <a href="/2022/02/04/ETH-Robot-Dynamics-Note/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">《Effective C++ 第三版》1 让自己习惯C++</span>
+                        <span class="hidden-mobile">ETH Robot Dynamics Note</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -260,8 +320,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/02/Effective-Cpp-Introduction/">
-                        <span class="hidden-mobile">《Effective C++ 第三版》0 导读</span>
+                      <a href="/2022/02/03/Note-of-A-Low-Cost-Modular-Actuator-for-Dynamic-Robots/">
+                        <span class="hidden-mobile">Note of A Low Cost Modular Actuator for Dynamic Robots</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -278,6 +338,26 @@
                   
                 
                 
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"rWP5Th0qagfznphon6NebcDz-MdYXbMMI","appKey":"N6SsCayJVsJro8mdKlTR49ub","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
 
               </article>
             
