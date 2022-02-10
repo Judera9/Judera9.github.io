@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>机器人运动学中表示旋转的方法（四元数、欧拉角、旋转向量）</title>
+    <link href="/2022/02/06/Rotation-Representation-Methods-Introduction/"/>
+    <url>/2022/02/06/Rotation-Representation-Methods-Introduction/</url>
+    
+    <content type="html"><![CDATA[<p>在网上看了一些博客，感觉多数没有把旋转讲明白，包括各种表示法以及转换，因此记录本文整合一下网上相关的介绍，也作为以后复习的参考。</p><span id="more"></span><h2 id="什么是so3矩阵">什么是SO3矩阵</h2><h3 id="so3矩阵定义">SO3矩阵定义</h3><p>  最近在复习Robotics运动学和动力学，看的是ETH那份Dynamics讲义，看到运动学旋转矩阵这里的时候想深究一下SO3，讲义上并没有仔细介绍这个概念。简单来说，就是所谓的旋转矩阵群，在机器人学中能够表征刚体围绕原点旋转，并保持被旋转向量的长度和相对矢量方向，同时是线性的；在性质上，是所谓的SpecialOrthogonal Group，也即正交群（<spanclass="math inline">\(AA^T=I\)</span>）中行列式为1的部分。</p><h3 id="旋转矩阵">旋转矩阵</h3><span class="katex-error" title="ParseError: KaTeX parse error: Can&#x27;t use function &#x27;$&#x27; in math mode at position 1: $̲$_{A}r_{AP}=\…" style="color:#cc0000">$$_{A}r_{AP}=\begin{pmatrix}_{A}r_{AP_{x}}\\_{A}r_{AP_{y}}\\_{A}r_{AP_{z}}\\\end{pmatrix}\\_{}r_{AP}=\begin{pmatrix}_{B}r_{AP_{x}}\\_{B}r_{AP_{y}}\\_{B}r_{AP_{z}}\\\end{pmatrix}\\\rArr_{A}r_{AP}=\begin{bmatrix}_{A}e_{x}^{B} &amp; _{A}e_{y}^{B} &amp; _{A}e_{z}^{B}\end{bmatrix} \cdot { }_{B}r_{AP}=C_{AB} \cdot { }_{B}r_{AP}$$</span><h3 id="复合旋转矩阵">复合旋转矩阵</h3><h2 id="欧拉角euler-angle">欧拉角（Euler Angle）</h2><h3 id="欧拉角定义">欧拉角定义</h3><h3 id="几种典型欧拉角及计算">几种典型欧拉角及计算</h3><h2 id="李代数基础">李代数基础</h2><h3 id="李群">李群</h3><h3 id="李代数">李代数</h3><h2 id="轴线角angle-axis">轴线角（Angle Axis）</h2><h3 id="旋转向量">旋转向量</h3><h3 id="与旋转矩阵的转化">与旋转矩阵的转化</h3>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>编曲笔记</title>
     <link href="/2022/02/04/Music-Arrangment-Content/"/>
     <url>/2022/02/04/Music-Arrangment-Content/</url>
@@ -39,7 +52,7 @@
     <link href="/2022/02/04/ETH-Robot-Dynamics-Note/"/>
     <url>/2022/02/04/ETH-Robot-Dynamics-Note/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="robot-dynamics-lecture-notes">Robot Dynamics Lecture Notes</h1><p>  来自ETH大神实验室Robotic Systems Lab, ETHZurich的课程笔记，感觉写的非常棒，仅仅100页不到总结了机器人学最核心的内容。这里作为阅读记录，使用English。笔记链接：<ahref="https://ethz.ch/content/dam/ethz/special-interest/mavt/robotics-n-intelligent-systems/rsl-dam/documents/RobotDynamics2017/RD_HS2017script.pdf">RobotDynamics Lecture Notes</a></p><h2 id="introduction">1 Introduction</h2><h3 id="nomenclature">1.1 Nomenclature</h3><h3 id="operators">1.2 Operators</h3><h2 id="kinematics">2 Kinematics</h2><h3 id="introduction-1">2.1 Introduction</h3><h2 id="dynamics">3 Dynamics</h2><h2 id="appendix">Appendix</h2>]]></content>
     
     
     
