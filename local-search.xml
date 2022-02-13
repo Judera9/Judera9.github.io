@@ -4,6 +4,52 @@
   
   
   <entry>
+    <title>和弦基础</title>
+    <link href="/2022/02/12/Music-Chord/"/>
+    <url>/2022/02/12/Music-Chord/</url>
+    
+    <content type="html"><![CDATA[<h2 id="和弦标记">和弦标记</h2><p>  每种和弦都会有多种表示方法，最常用的总结如下：</p><table><thead><tr class="header"><th style="text-align: center;">三和弦</th><th style="text-align: center;">符号</th><th style="text-align: center;">七和弦</th><th style="text-align: center;">符号</th></tr></thead><tbody><tr class="odd"><td style="text-align: center;">大三和弦</td><td style="text-align: center;">C</td><td style="text-align: center;">大七和弦</td><td style="text-align: center;">CM7</td></tr><tr class="even"><td style="text-align: center;">小三和弦</td><td style="text-align: center;">Cm</td><td style="text-align: center;">小七和弦</td><td style="text-align: center;">Cm7</td></tr><tr class="odd"><td style="text-align: center;">挂四和弦</td><td style="text-align: center;">Csus</td><td style="text-align: center;">属七和弦</td><td style="text-align: center;">C7</td></tr><tr class="even"><td style="text-align: center;"></td><td style="text-align: center;"></td><td style="text-align: center;">半减七和弦</td><td style="text-align: center;">C∅7</td></tr><tr class="odd"><td style="text-align: center;"></td><td style="text-align: center;"></td><td style="text-align: center;">减七和弦</td><td style="text-align: center;">Co7</td></tr></tbody></table><h3 id="大和弦-major">大和弦 Major</h3><ul><li><strong>三和弦</strong>：例如，CEG（大三+小三=大三和弦），可以记为<strong>Cmaj、CM、CΔ、C</strong>；</li><li><strong>七和弦</strong>：例如，CEGB（大三和弦+大三=大七和弦），可以记为<strong>Cmaj7、CM7、CΔ7</strong>（不是C7）；</li></ul><h3 id="小和弦-minor">小和弦 Minor</h3><ul><li><strong>三和弦</strong>：例如，ACE（小三+大三=小三和弦），可以记为<strong>Amin、Am、A-</strong>；</li><li><strong>七和弦</strong>：例如，ACEG（小三和弦+小三=小七和弦），可以记为<strong>Amin7、Am7、A-7</strong>；</li></ul><h3 id="减和弦-diminish">减和弦 Diminish</h3><ul><li><strong>三和弦</strong>：例如，BDF（小三+小三=减三和弦），可以记为<strong>Bdim、Bo</strong>；</li><li><strong>七和弦</strong>：例如，BDF♭A（减三和弦+小三=减七和弦），可以记为<strong>Bdim7、Bo7</strong>；</li></ul><h3 id="增三和弦-augmented">增三和弦 Augmented</h3><ul><li><strong>三和弦</strong>：这个和弦用的少，例如，CE♯G（大三+大三=增三和弦），可以记为<strong>Caug</strong>；</li></ul><h3 id="属七和弦-dominant-7th">属七和弦 Dominant 7th</h3><ul><li><strong>七和弦</strong>：例如，CEG♭B（大三和弦+小三=属七和弦），可以记为<strong>C7</strong>；</li><li>    例如，GBDF（大三和弦+小三=属七和弦），可以记为<strong>G7</strong>；</li></ul><h3 id="半减七和弦-half-diminished-7th">半减七和弦 Half Diminished7th</h3><ul><li><strong>七和弦</strong>：例如，BDFA（减三和弦+大三=半减七和弦），可以记为<strong>Bm7b5、Bm7-5、B∅7</strong>（如果我没理解错的话，Bm7b5的含义是在B小七和弦的基础上将♭G，即七和弦的5音降低，其他半减七可写为Xm-5）；</li></ul><h3 id="sus和弦挂">SUS和弦（挂）</h3><ul><li><strong>三和弦</strong>：以大三和弦C（即CEG）为例，它的<strong>挂二和弦Csus2就是CDG，即将3音变成2音</strong>，它的<strong>挂四和弦Csus4就是CFG，即将3音变成4音</strong>，如果<strong>Xsus后面没有任何数字，默认为挂四和弦</strong>；</li></ul><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220213000058.png" width="650"><center>图 1</center></center><h2 id="和弦功能">和弦功能</h2><ul><li><strong>主和弦</strong>：音乐开始或者结束，给人稳定的感觉（家）。不能整首曲子都是主和弦，这样会给人一种单调乏味的感觉；</li><li><strong>属和弦</strong>：一种听起来不稳定的和弦（在外面，想要回家），<strong>在和声学里，从不稳定到稳定的过程叫“解决”</strong>；</li><li><strong>下属和弦</strong>：相对属和弦比较轻松，但是除了主和弦的其他和弦都有不稳定的感觉（也在外面，但没有急着回家）。整体来说，乐曲的发展是<strong>主和弦&gt; 下属和弦 &gt; 属和弦 &gt;主和弦</strong>这样的顺序，也可以如图2其他顺序（但是不能从属和弦到下属和弦）：</li></ul><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220213104608.png" width="500"><center>图 2</center></center><h2 id="大调leading-bass">大调Leading Bass</h2><p>  首先要知道，很多的流行歌曲并不是用心编配和弦写出来的，而是有固定的套路的，例如这个LeadingBass就是一种固定的套路。不同的曲子可能以一个或两个和弦为一小节去编排，但最后转个调都能够用这一套和弦去伴奏。</p><p>  <strong>LeadingBase（顺阶和弦）是一组和声进行，之所以叫这个名字是因为它的低音是顺着音阶下行的（CBAGFEDG）</strong>。C大调的和弦记号如下：C- G/B - Am - C/G - F - C/E - Dm - G7。大约30%的流行歌曲用的是LeadingBase的和声进行，可以看看下面这个视频：</p>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=14452311&bvid=BV14x411s7KZ&cid=335407887&page=28" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><p><strong>II-V-I进行</strong>：在流行乐中，例如大调LeadingBase的结尾，就是II-V-I进行（即对于C大调来说是DGC）。这种进行是非常重要的，并且用的非常多。继续观察，<strong>II-V-I其实就是“小七-属七-主”这样的和弦进行方式，这也是旋律小调为什么降低VI音和VII音的原因</strong>。</p><h2 id="大调四度圈">大调四度圈</h2><p>  大约30%的华语流行歌曲就是用四度圈写出来的，四度圈在C大调上的记号如下：F- G/F - Em - Am - Dm - G7 - C -C7。大七和弦具有让乐曲开始和结束的功能，因此对于大调来说，音乐开始的第一个和弦要么是第I级，要么是第IV级，如图3：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220213124411.png" width="550"><center>图 3</center></center>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=14452311&bvid=BV14x411s7KZ&cid=335408040&page=29" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><h2 id="小调leading-base和小调四度圈">小调Leading Base和小调四度圈</h2><p>  小调的这两种和声在流行乐中用的较少，在华语流行歌曲中也就大概5%左右。回忆之前学的大调，结尾是II-V-I进行（“小七-属七-主”）。<strong>注意到在小调LeadingBase中，以A小调ABCDEFGA为例，其II-V-I和弦进行对应的是“半减七（BDFG）-小七（EGBD）-小七（ACEG）”，所以需要将六音和七音（F和G）进行升音，得到“小七（BD♯FG）-属七（E♯GBD）-小大七（ACE♯G</strong>）**</p><blockquote><p>不知道是我算错了还是不理解，这个小大七和弦（小三和弦+大三）听起来也不像个稳定的和弦，为啥能够作为主和弦。目前这个地方不太明白，虽然小调LeadingBase用的不多，但希望以后能搞懂。</p></blockquote><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220213181143.png" width="600"><center>图 4</center></center><p>-未完待续-</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>杂学笔记</category>
+      
+      <category>编曲</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>编曲</tag>
+      
+      <tag>b站</tag>
+      
+      <tag>乐理</tag>
+      
+      <tag>和弦</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>C++ Iterator 迭代器学习</title>
+    <link href="/2022/02/12/Cpp-Iterator/"/>
+    <url>/2022/02/12/Cpp-Iterator/</url>
+    
+    <content type="html"><![CDATA[<h2 id="stl六大组件">STL六大组件</h2><p>因为于老师没讲STL，所以补一下课。STL的六大部件是下面这些：容器（Container）、算法（Algorithm）、迭代器（Iterator）、仿函数（Functionobject）、适配器（Adaptor）、空间配置器（allocator）。其他的以后碰到了再说，现在先学一下Iterator并简单做下实验。</p><h2 id="section"></h2>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>介绍树莓派Pico | MicroPython插件</title>
     <link href="/2022/02/12/Introduction-to-Pico-MicroPython-Plugin-Of-Pycharm/"/>
     <url>/2022/02/12/Introduction-to-Pico-MicroPython-Plugin-Of-Pycharm/</url>
@@ -24,13 +70,13 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>Raspberry</tag>
       
       <tag>pico</tag>
       
       <tag>MicroPython</tag>
+      
+      <tag>嵌入式</tag>
       
     </tags>
     
@@ -52,7 +98,7 @@
   
   
   <entry>
-    <title>编曲笔记</title>
+    <title>编曲笔记目录</title>
     <link href="/2022/02/04/Music-Arrangment-Content/"/>
     <url>/2022/02/04/Music-Arrangment-Content/</url>
     
@@ -69,8 +115,6 @@
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>编曲</tag>
       
@@ -114,9 +158,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>C++</tag>
+      
+      <tag>读书笔记</tag>
       
     </tags>
     
@@ -156,9 +200,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>C++</tag>
+      
+      <tag>读书笔记</tag>
       
     </tags>
     
@@ -185,9 +229,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>C++</tag>
+      
+      <tag>读书笔记</tag>
       
     </tags>
     
@@ -200,9 +244,25 @@
     <link href="/2022/01/30/Surfskate-Selection/"/>
     <url>/2022/01/30/Surfskate-Selection/</url>
     
-    <content type="html"><![CDATA[<h2 id="surfskate的由来">Surfskate的由来</h2><p>  中文名陆地冲浪板（简称“陆冲”），板如其名，是用于模拟海上冲浪的。众所周知，冲浪要在暖季合适的海岸，滑雪要在冬季合适的雪地，条件苛刻，更别提大家疲于996福报很少有时间出行去冲浪滑雪。因此，入手一个陆地冲浪板能够帮助提高技能水平，是冲浪滑雪很好的练习道具。</p><div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/surfskate/Surfskate-Selection-surf.jpeg" height="250" /></div><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/surfskate/Surfskate-Selection-ski.png" height="250" /></div></div></div><h2 id="结构与功能">结构与功能</h2><h2 id="市面大牌选型">市面大牌选型</h2><h3 id="carver">Carver</h3><p>  Carver是美国一家96年才成立的年轻公司，特点是PU桥和弹簧桥，目前应该是卖的最好的品牌之一。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.">[1]</span></a></sup></p><h3 id="sancheski">SANCHESKI</h3><p>  SANCHESKI是一家西班牙的运动用品制造商，从60年代开始就设计制作自己的滑板版面。在10年之后才<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.">[1]</span></a></sup></p><h2 id="保养与维护">保养与维护</h2><p><br></p>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=62322438&bvid=BV1ht411M78i&cid=108319980&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><p><br></p><h2 id="玩法show">玩法show</h2><ol type="1"><li><ahref="https://zhuanlan.zhihu.com/p/82459365">陆地冲浪surfskate入手后的问题和使用说明书！</a></li><li><ahref="https://www.bilibili.com/video/BV1wy4y1E7KL?from=search&amp;seid=16512587863776667224&amp;spm_id_from=333.337.0.0">日本小哥横刹(PowerSlide)教学【搬运|字幕】</a></li></ol><h2 id="参考">参考</h2><em>我玩的经验下次博客再介绍吧（等我玩熟练了先） ヾ(=･ω･=)o</em><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1"class="footnote-text"><span>“碗池的由来！从海洋到陆地冲浪滑板的故事“.https://www.bilibili.com/video/BV1tB4y1u7CJ/?spm_id_from=333.788.recommend_more_video.-1.<a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
+    <content type="html"><![CDATA[<hr /><h2 id="surfskate的由来">Surfskate的由来</h2><p>  中文名陆地冲浪板（简称“陆冲”），板如其名，是用于模拟海上冲浪的。众所周知，冲浪要在暖季合适的海岸，滑雪要在冬季合适的雪地，条件苛刻，更别提大家疲于996福报很少有时间出行去冲浪滑雪。因此，入手一个陆地冲浪板能够帮助提高技能水平，是冲浪滑雪很好的练习道具。</p><div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/surfskate/Surfskate-Selection-surf.jpeg" height="250" /></div><div class="group-image-wrap"><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/surfskate/Surfskate-Selection-ski.png" height="250" /></div></div></div><h2 id="市面大牌选型">市面大牌选型</h2><p>  可以参考<ahref="https://zhuanlan.zhihu.com/p/73588869">这个链接</a>，对于每种品牌的特点和桥的特点都说的很明白。这个大佬做了一张图，我只用过Yow的桥没啥发言权，所以参考这位老兄的经验肯定是靠谱的。</p><center><img src="https://pic2.zhimg.com/v2-648b45c90639c886ea0eef7d3989eba5_r.jpg" width="1000"><center>陆冲选型参考</center></center><h2 id="保养与维护">保养与维护</h2>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=62322438&bvid=BV1ht411M78i&cid=108319980&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><p>另外还可以参考：</p><ul><li><a href="https://www.bilibili.com/video/av89625664">YOW陆地冲浪板官方维修指南 Surf YOW Systems Tutorial</a></li><li><ahref="https://zhuanlan.zhihu.com/p/105870163">Carver冲浪滑板和其他Surfskate陆地冲浪板入门到快乐（五）维修篇</a></li><li><ahref="https://space.bilibili.com/508830">猫咪贵族（b站一位玩陆冲的大佬）</a></li></ul><h2 id="玩法show">玩法show</h2><ol type="1"><li><ahref="https://zhuanlan.zhihu.com/p/82459365">陆地冲浪surfskate入手后的问题和使用说明书！</a></li><li><ahref="https://www.bilibili.com/video/BV1wy4y1E7KL?from=search&amp;seid=16512587863776667224&amp;spm_id_from=333.337.0.0">日本小哥横刹(PowerSlide)教学【搬运|字幕】</a></li></ol><p><em>我玩的经验下次博客再介绍吧（等我玩熟练了先） ヾ(=･ω･=)o</em></p>]]></content>
     
     
+    <categories>
+      
+      <category>杂学笔记</category>
+      
+      <category>知识科普</category>
+      
+      <category>陆地冲浪/冲浪/滑雪</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>surfskate</tag>
+      
+    </tags>
     
   </entry>
   
@@ -213,7 +273,7 @@
     <link href="/2022/01/30/Music-Theory/"/>
     <url>/2022/01/30/Music-Theory/</url>
     
-    <content type="html"><![CDATA[<p>图片和教程来源，<ahref="https://www.bilibili.com/video/BV14x411s7KZ?p=1">bilibili乐球网编曲教程</a>。个人仅作笔记，侵删。</p><span id="more"></span><h2 id="音程">音程</h2><p>  我们能够用<strong>属性+大小+单位</strong>的方式来描述音程。音程是两个音之间的距离，单位都是度；大小有从一到七；属性有<strong>纯、大、小、增、减、倍增、倍减</strong>。</p><h3 id="音程大小">音程大小</h3><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204192938.png" width="550"><center>图 1</center></center><ul><li>对于白键：直接数两者之间有几个白键就是几度，注意是包括开始和结束的键；</li><li>对于黑键：首先还原黑键，然后和白键一样数就行；</li></ul><blockquote><p>  也可以这样，sou就是5，升re就是♯2（或者♭3），因此对应(5-2)+1=4，所以是四度。不过好像跨了下一个八度就不好算了，还是好好数琴键吧&gt;_&lt;|||</p></blockquote><h3 id="音程属性">音程属性</h3><p>  如图1所示，尽管大小相同，还需要区分属性。<strong>“纯”只存在于一、四、五、八度中，“大/小“只存在于二、三、六、七度中，而“增、减、倍增、倍减”存在于所有度数大小</strong>。即，不存在纯三度或大四度。</p><h3 id="标准音程与音程计算">标准音程与音程计算</h3><p>  标准音程是以C为起点到下一个八度的C为止，共七个白键音程的名称。如图2所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204203925.png" width="550"><center>图 2</center></center><p>  对于不是两个琴键都落在白键上的情况，遵循以下的步骤进行计算：</p><ol type="1"><li>找大小：还原升降号，然后数白键的数量；</li><li>找属性：数白键和黑键的总数，通过图3的公式和标准音程比较，进行计算；</li></ol><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204204602.png" width="550"><center>图 3</center></center><p>  例如：对于♯F和D，如图4所示。首先，还原♯F，F和D之间有6个琴键，所以是六度。标准的六度是10个键，对应的是大六度。然后，数白键与黑键一共是9个键，因此根据公式结果是小六度。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204205257.png" width="550"><center>图 4</center></center><blockquote><p>  我自己总结也差不多，假设E和F之间以及B和C之间少了一个黑键我们叫做一个坑（“少了个黑键”），那么最终其实就是比较坑的数量嘛。假设还是♯F和D，很容易发现♯F和G之间由于升降号导致了一个坑，在B和C之间本来有一个坑，那么一共是两个坑。标准的六度是一个坑（标准的四度到七度都是一个坑），所以♯F到D比标准的多了一个坑（“少了一个黑键”），因此是小六度。</p></blockquote><h2 id="和弦">和弦</h2><p>  和弦就是<strong>以任何一个音作为根音，往上按照三度的音程关系叠加构成的组合</strong>。和弦最少是三个音，两个音的是音程。所谓三和弦，指的是根音到冠音的度数是三，而后面直到十三和弦以此类推。音最多的十三和弦有7个音，刚好从C到B。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204223656.png" width="550"><center>图 5</center></center><h3 id="三和弦">三和弦</h3><p>  属性包括“<strong>大三和弦、小三和弦、增三和弦、减三和弦</strong>”，其中增三和弦在流行乐中很少用到，所以这里不讲。区分大三和弦，小三和弦和减三和弦的方式是看三和弦的两个音程的属性，如图6：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204231246.png" width="550"><center>图 6</center></center><p>  例如：FAC是大三度+小三度=F大三和弦，F♭AC是小三度+大三度=F小三和弦，F♭A♭C是小三度+小三度=F减三和弦（这就是F为根音对应的几个三和弦）</p><h3 id="七和弦">七和弦</h3><p>  属性主要包括“<strong>大大七和弦、小小七和弦、大小七和弦、减小七和弦、减减七和弦</strong>”，其中我们并不会这么叫，实际的叫法是“<strong>大七和弦、小七和弦、属七和弦、半减七和弦、减七和弦</strong>”。区分它们的方法建立在三和弦的分类基础上，如图7所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204233441.png" width="550"><center>图 7</center></center><p>  例如：DFAC是小三和弦+小七度=D小七和弦，DF♭AC是减三和弦+小七度=D半减七和弦，DF♭A♭C是减三和弦+减七度=D减七和弦（这就是D为根音对应的几个七和弦）</p><h3 id="和弦转位">和弦转位</h3><p>  和弦转位其实就是将和弦中的某个或某些音提高了八度，然后低音变成了其他音。如图8中C（表示C大三和弦）的转位，由于除了根音外有两个音，所以三和弦都是有两个转位的。图8中间的<strong>C/E就是C和弦第一转位，“/”前面的“C”表示这是一个C和弦，后面的“E”表示低音演奏E</strong>；而C/G同理。注意到，对于C/E来说，只要保证低音是E，上面不论是135还是513都没有关系，都是C和弦第一转位。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204234704.png" width="550"><center>图 8</center></center><p>  对于七和弦，也是同样的道理。例如：CM7（也就是C小七和弦）是CEGB是原位，然后第一转位是CM7/E，也就是E...（如EGBC），第二转位是G...（如GBCE），以此类推共有三个和弦转位。再比如下图9，原位是D7（D属七和弦），对应的三个转位是D7/♯F、D7/A、D7/C。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205000556.png" width="550"><center>图 9</center></center><h2 id="音调">音调</h2><p>  对于一首歌，如果调太高了唱不上去，我们通常会降调，音阶整体上移或下移就是变调（变调是不会改变旋律本身的）。首先是自然大调和自然小调，在其基础上对六音和七音进行升降就得到和声大调、旋律大调、和声小调、旋律小调。</p><h3 id="自然大调">自然大调</h3><p>  总结来说，<strong>听起来像CDEFGABC的就是自然大调</strong>，上述是C大调。再比如说，♭D大调是♭D♭EF♭G♭A♭BC♭D，E大调是E♯F♯GAB♯C♯DE，这些自然大调的音阶结构，都是如下图10所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205103723.png" width="550"><center>图 10</center></center><h3 id="自然小调">自然小调</h3><p>  总结来说，<strong>听起来像ABCDEFGA的就是自然大调</strong>，上述是A小调。再比如说，C小调是CD♭EFG♭A♭BC。自然小调的音阶结构如下图11所示。由此，我们又能够看出，C大调和A小调的音是一样的，只是顺序不同而已，因此它们称为<strong>关系大小调</strong>。除此之外，C大调的C和A小调的A之间差了一个小3°，因此所有的关系大小调间也是差了一个小3°。例如，C小调的关系大调是♭E大调。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205110501.png" width="550"><center>图 11</center></center><h3 id="如何辨别一首歌的调">如何辨别一首歌的调</h3><blockquote><p>  这里貌似教程少了这方面的内容，所以另外找了个讲的很好的视频补上！<strong>其实就是听最后的结尾旋律，一般流行乐的结尾音就是这个调的调名啦</strong>，不过我乐感好拉跨（羡慕绝对音感的人）。</p></blockquote>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=43075656&bvid=BV1cb411S7ra&cid=141283989&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><h3 id="调性">调性</h3><p>  即在自然大调和自然小调的基础上对六音和七音进行升降，如下图12所示。例如：要找E和声大调，首先找到E自然大调E♯F♯GAB♯C♯DE，然后降低六音得到E♯F♯GABC♯DE，此时再降低七音得到E旋律大调E♯F♯GABCDE。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205140927.png" width="550"><center>图 12</center></center><h2 id="音符">音符</h2><p>  音符就比较简单了，即所谓表示演奏时间的长短。这一部分因为自己好歹学了多年演奏，比较熟练所以就懒得记太多了。图13是从全音符到六十四分音符单个的写法（六十四一般用不到）。图14是节拍的写法，例如：3/4念作四三拍，表示以四分音符为一拍，一个小节是三拍。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205141824.png" width="550"><center>图 13</center></center><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205142042.png" width="550"><center>图 14</center></center><h3 id="附点音符">附点音符</h3><p>  附点音符=原音符+原音符的一半，如图15。附点在乐谱上的写法也要注意，如果音符在第n线上，那个附点标记在这条线的上面的间；如果音符在间上，那么直接标记在这个间就可以了。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205142607.png" width="550"><center>图 15</center></center><h3 id="休止符">休止符</h3><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205143000.png" width="550"><center>图 16</center></center><h3 id="连音">连音</h3><p>  概念比较简单，注意连音的写法。如果音符是四分音符，标了三连音的符号之后（三连音对应到2），相当于4个四分音符也就是两拍，即<strong>在两拍内演奏完三连音</strong>。再比如如下图17，音符是十六分音符（五、六、七连音对应到4），相当于4个十六分音符也就是一拍，即<strong>在一拍内演奏完五、六、七连音</strong>。以此类推，9～15连音对应到8进行相应的计算。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205144219.png" width="550"><center>图 17</center></center>]]></content>
+    <content type="html"><![CDATA[<p>图片和教程来源，<ahref="https://www.bilibili.com/video/BV14x411s7KZ?p=1">bilibili乐球网编曲教程</a>。个人仅作笔记，侵删。</p><span id="more"></span><h2 id="音程">音程</h2><p>  我们能够用<strong>属性+大小+单位</strong>的方式来描述音程。音程是两个音之间的距离，单位都是度；大小有从一到七；属性有<strong>纯、大、小、增、减、倍增、倍减</strong>。</p><h3 id="音程大小">音程大小</h3><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204192938.png" width="550"><center>图 1</center></center><ul><li>对于白键：直接数两者之间有几个白键就是几度，注意是包括开始和结束的键；</li><li>对于黑键：首先还原黑键，然后和白键一样数就行；</li></ul><blockquote><p>  也可以这样，sou就是5，升re就是♯2（或者♭3），因此对应(5-2)+1=4，所以是四度。不过好像跨了下一个八度就不好算了，还是好好数琴键吧&gt;_&lt;|||</p></blockquote><h3 id="音程属性">音程属性</h3><p>  如图1所示，尽管大小相同，还需要区分属性。<strong>“纯”只存在于一、四、五、八度中，“大/小“只存在于二、三、六、七度中，而“增、减、倍增、倍减”存在于所有度数大小</strong>。即，不存在纯三度或大四度。</p><h3 id="标准音程与音程计算">标准音程与音程计算</h3><p>  标准音程是以C为起点到下一个八度的C为止，共七个白键音程的名称。如图2所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204203925.png" width="550"><center>图 2</center></center><p>  对于不是两个琴键都落在白键上的情况，遵循以下的步骤进行计算：</p><ol type="1"><li>找大小：还原升降号，然后数白键的数量；</li><li>找属性：数白键和黑键的总数，通过图3的公式和标准音程比较，进行计算；</li></ol><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204204602.png" width="550"><center>图 3</center></center><p>  例如：对于♯F和D，如图4所示。首先，还原♯F，F和D之间有6个琴键，所以是六度。标准的六度是10个键，对应的是大六度。然后，数白键与黑键一共是9个键，因此根据公式结果是小六度。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204205257.png" width="550"><center>图 4</center></center><blockquote><p>  我自己总结也差不多，假设E和F之间以及B和C之间少了一个黑键我们叫做一个坑（“少了个黑键”），那么最终其实就是比较坑的数量嘛。假设还是♯F和D，很容易发现♯F和G之间由于升降号导致了一个坑，在B和C之间本来有一个坑，那么一共是两个坑。标准的六度是一个坑（标准的四度到七度都是一个坑），所以♯F到D比标准的多了一个坑（“少了一个黑键”），因此是小六度。</p></blockquote><h2 id="和弦">和弦</h2><p>  和弦就是<strong>以任何一个音作为根音，往上按照三度的音程关系叠加构成的组合</strong>。和弦最少是三个音，两个音的是音程。所谓三和弦，指的是根音到冠音的度数是三，而后面直到十三和弦以此类推。音最多的十三和弦有7个音，刚好从C到B。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204223656.png" width="550"><center>图 5</center></center><h3 id="三和弦">三和弦</h3><p>  属性包括“<strong>大三和弦、小三和弦、增三和弦、减三和弦</strong>”，其中增三和弦在流行乐中很少用到，所以这里不讲。区分大三和弦，小三和弦和减三和弦的方式是看三和弦的两个音程的属性，如图6：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204231246.png" width="550"><center>图 6</center></center><p>  例如：FAC是大三度+小三度=F大三和弦，F♭AC是小三度+大三度=F小三和弦，F♭A♭C是小三度+小三度=F减三和弦（这就是F为根音对应的几个三和弦）</p><h3 id="七和弦">七和弦</h3><p>  属性主要包括“<strong>大大七和弦、小小七和弦、大小七和弦、减小七和弦、减减七和弦</strong>”，其中我们并不会这么叫，实际的叫法是“<strong>大七和弦、小七和弦、属七和弦、半减七和弦、减七和弦</strong>”。区分它们的方法建立在三和弦的分类基础上，如图7所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204233441.png" width="550"><center>图 7</center></center><p>  例如：DFAC是小三和弦+小七度=D小七和弦，DF♭AC是减三和弦+小七度=D半减七和弦，DF♭A♭C是减三和弦+减七度=D减七和弦（这就是D为根音对应的几个七和弦）</p><blockquote><p>这里其实可以换一种理解方式（可能更好计算一点）： *大三和弦+大三（大七）=大七和弦 * 大三和弦+小三（小七）=属七和弦 *小三和弦+小三（小七）=小七和弦 * 减三和弦+大三（小七）=半减七和弦 *减三和弦+小三（减七）=减七和弦</p></blockquote><h3 id="和弦转位">和弦转位</h3><p>  和弦转位其实就是将和弦中的某个或某些音提高了八度，然后低音变成了其他音。如图8中C（表示C大三和弦）的转位，由于除了根音外有两个音，所以三和弦都是有两个转位的。图8中间的<strong>C/E就是C和弦第一转位，“/”前面的“C”表示这是一个C和弦，后面的“E”表示低音演奏E</strong>；而C/G同理。注意到，对于C/E来说，只要保证低音是E，上面不论是135还是513都没有关系，都是C和弦第一转位。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220204234704.png" width="550"><center>图 8</center></center><p>  对于七和弦，也是同样的道理。例如：CM7（也就是C小七和弦）是CEGB是原位，然后第一转位是CM7/E，也就是E...（如EGBC），第二转位是G...（如GBCE），以此类推共有三个和弦转位。再比如下图9，原位是D7（D属七和弦），对应的三个转位是D7/♯F、D7/A、D7/C。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205000556.png" width="550"><center>图 9</center></center><h2 id="音调">音调</h2><p>  对于一首歌，如果调太高了唱不上去，我们通常会降调，音阶整体上移或下移就是变调（变调是不会改变旋律本身的）。首先是自然大调和自然小调，在其基础上对六音和七音进行升降就得到和声大调、旋律大调、和声小调、旋律小调。</p><h3 id="自然大调">自然大调</h3><p>  总结来说，<strong>听起来像CDEFGABC的就是自然大调</strong>，上述是C大调。再比如说，♭D大调是♭D♭EF♭G♭A♭BC♭D，E大调是E♯F♯GAB♯C♯DE，这些自然大调的音阶结构，都是如下图10所示：</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205103723.png" width="550"><center>图 10</center></center><h3 id="自然小调">自然小调</h3><p>  总结来说，<strong>听起来像ABCDEFGA的就是自然大调</strong>，上述是A小调。再比如说，C小调是CD♭EFG♭A♭BC。自然小调的音阶结构如下图11所示。由此，我们又能够看出，C大调和A小调的音是一样的，只是顺序不同而已，因此它们称为<strong>关系大小调</strong>。除此之外，C大调的C和A小调的A之间差了一个小3°，因此所有的关系大小调间也是差了一个小3°。例如，C小调的关系大调是♭E大调。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205110501.png" width="550"><center>图 11</center></center><h3 id="如何辨别一首歌的调">如何辨别一首歌的调</h3><blockquote><p>  这里貌似教程少了这方面的内容，所以另外找了个讲的很好的视频补上！<strong>其实就是听最后的结尾旋律，一般流行乐的结尾音就是这个调的调名啦</strong>，不过我乐感好拉跨（羡慕绝对音感的人）。</p></blockquote>    <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">        <iframe src="//player.bilibili.com/player.html?aid=43075656&bvid=BV1cb411S7ra&cid=141283989&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>    </div><h3 id="调性">调性</h3><p>  即在自然大调和自然小调的基础上对六音和七音进行升降，如下图12所示。例如：要找E和声大调，首先找到E自然大调E♯F♯GAB♯C♯DE，然后降低六音得到E♯F♯GABC♯DE，此时再降低七音得到E旋律大调E♯F♯GABCDE。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205140927.png" width="550"><center>图 12</center></center><h2 id="音符">音符</h2><p>  音符就比较简单了，即所谓表示演奏时间的长短。这一部分因为自己好歹学了多年演奏，比较熟练所以就懒得记太多了。图13是从全音符到六十四分音符单个的写法（六十四一般用不到）。图14是节拍的写法，例如：3/4念作四三拍，表示以四分音符为一拍，一个小节是三拍。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205141824.png" width="550"><center>图 13</center></center><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205142042.png" width="550"><center>图 14</center></center><h3 id="附点音符">附点音符</h3><p>  附点音符=原音符+原音符的一半，如图15。附点在乐谱上的写法也要注意，如果音符在第n线上，那个附点标记在这条线的上面的间；如果音符在间上，那么直接标记在这个间就可以了。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205142607.png" width="550"><center>图 15</center></center><h3 id="休止符">休止符</h3><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205143000.png" width="550"><center>图 16</center></center><h3 id="连音">连音</h3><p>  概念比较简单，注意连音的写法。如果音符是四分音符，标了三连音的符号之后（三连音对应到2），相当于4个四分音符也就是两拍，即<strong>在两拍内演奏完三连音</strong>。再比如如下图17，音符是十六分音符（五、六、七连音对应到4），相当于4个十六分音符也就是一拍，即<strong>在一拍内演奏完五、六、七连音</strong>。以此类推，9～15连音对应到8进行相应的计算。</p><center><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/music/20220205144219.png" width="550"><center>图 17</center></center>]]></content>
     
     
     <categories>
@@ -226,8 +286,6 @@
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>编曲</tag>
       
@@ -253,7 +311,7 @@
       
       <category>知识科普</category>
       
-      <category>课程论文</category>
+      <category>课程相关</category>
       
     </categories>
     
@@ -281,8 +339,6 @@
     <categories>
       
       <category>知识科普</category>
-      
-      <category>文化漫谈</category>
       
       <category>课程论文</category>
       
@@ -328,7 +384,7 @@
       
       <tag>Mit Cheetah</tag>
       
-      <tag>笔记</tag>
+      <tag>论文</tag>
       
     </tags>
     

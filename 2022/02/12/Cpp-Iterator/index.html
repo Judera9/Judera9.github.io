@@ -16,24 +16,20 @@
   <meta name="author" content="Jude">
   <meta name="keywords" content="">
   
-    <meta name="description" content="这篇是机器人引论课的个人调查报告，感谢同小组的同学，大家一起顺利完成从问卷制作到最终答辩的全过程。感觉研究不够深入，但这个话题我很感兴趣！封面是ヴィヴィ，没记错是2021年四月番。">
+    <meta name="description" content="STL六大组件 因为于老师没讲STL，所以补一下课。STL的六大部件是下面这些：容器（Container）、算法（Algorithm）、迭代器（Iterator）、仿函数（Function object）、适配器（Adaptor）、空间配置器（allocator）。其他的以后碰到了再说，现在先学一下Iterator并简单做下实验。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器人娱乐与文学">
-<meta property="og:url" content="https://judera9.github.io/2022/01/30/Robot-Introduction/index.html">
+<meta property="og:title" content="C++ Iterator 迭代器学习">
+<meta property="og:url" content="https://judera9.github.io/2022/02/12/Cpp-Iterator/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
-<meta property="og:description" content="这篇是机器人引论课的个人调查报告，感谢同小组的同学，大家一起顺利完成从问卷制作到最终答辩的全过程。感觉研究不够深入，但这个话题我很感兴趣！封面是ヴィヴィ，没记错是2021年四月番。">
+<meta property="og:description" content="STL六大组件 因为于老师没讲STL，所以补一下课。STL的六大部件是下面这些：容器（Container）、算法（Algorithm）、迭代器（Iterator）、仿函数（Function object）、适配器（Adaptor）、空间配置器（allocator）。其他的以后碰到了再说，现在先学一下Iterator并简单做下实验。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/vivy-1.png">
-<meta property="article:published_time" content="2022-01-30T03:56:39.000Z">
-<meta property="article:modified_time" content="2022-02-13T12:35:50.018Z">
+<meta property="article:published_time" content="2022-02-12T12:43:55.000Z">
+<meta property="article:modified_time" content="2022-02-12T14:53:07.653Z">
 <meta property="article:author" content="Jude">
-<meta property="article:tag" content="机器人">
-<meta property="article:tag" content="文学">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/vivy-1.png">
   
   
-  <title>机器人娱乐与文学 - Jude&#39;s Blog</title>
+  <title>C++ Iterator 迭代器学习 - Jude&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -178,12 +174,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default5.png') no-repeat center center;
+         style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="机器人娱乐与文学">
+            <span class="h2" id="subtitle" title="C++ Iterator 迭代器学习">
               
             </span>
 
@@ -193,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-30 11:56" pubdate>
-        2022年1月30日 中午
+      <time datetime="2022-02-12 20:43" pubdate>
+        2022年2月12日 晚上
       </time>
     </span>
   
@@ -204,7 +200,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      164 字
     </span>
   
 
@@ -213,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      2 分钟
     </span>
   
 
@@ -242,41 +238,19 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器人娱乐与文学</h1>
+            <h1 style="display: none">C++ Iterator 迭代器学习</h1>
             
             <div class="markdown-body">
-              
-
-	<div class="row">
-    <embed src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/file/robotIntroductionPaper.pdf" width="100%" height="550" type="application/pdf">
-	</div>
-
-
-
+              <h2 id="stl六大组件">STL六大组件</h2>
+<p>因为于老师没讲STL，所以补一下课。STL的六大部件是下面这些：容器（Container）、算法（Algorithm）、迭代器（Iterator）、仿函数（Function
+object）、适配器（Adaptor）、空间配置器（allocator）。其他的以后碰到了再说，现在先学一下Iterator并简单做下实验。</p>
+<h2 id="section"></h2>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E7%9F%A5%E8%AF%86%E7%A7%91%E6%99%AE/">知识科普</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%96%87%E5%AD%A6/">文学</a>
-                    
-                  </div>
                 
               </div>
               
@@ -285,9 +259,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/30/Music-Theory/">
+                      <a href="/2022/02/12/Music-Chord/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">乐理基础</span>
+                        <span class="hidden-mobile">和弦基础</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -295,8 +269,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/30/Takarazuka-Revue/">
-                        <span class="hidden-mobile">宝冢与歌剧少女</span>
+                      <a href="/2022/02/12/Introduction-to-Pico-MicroPython-Plugin-Of-Pycharm/">
+                        <span class="hidden-mobile">介绍树莓派Pico | MicroPython插件</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -313,26 +287,6 @@
                   
                 
                 
-  <div id="valine"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#valine', function() {
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
-        var options = Object.assign(
-          {"appId":"rWP5Th0qagfznphon6NebcDz-MdYXbMMI","appKey":"N6SsCayJVsJro8mdKlTR49ub","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
-          {
-            el: "#valine",
-            path: window.location.pathname
-          }
-        )
-        new Valine(options);
-        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
-          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
 
               </article>
             
