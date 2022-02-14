@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Note of Modern Control 2021</title>
+    <link href="/2022/02/14/Note-Of-Modern-Control-2021/"/>
+    <url>/2022/02/14/Note-Of-Modern-Control-2021/</url>
+    
+    <content type="html"><![CDATA[<h2 id="course">Course</h2><p>  欢迎大家关注我们实验室b站账号，这个课程录像的质量还是很高的，可以作为入门ModernControl的课程资料，下半学期学了一部分最优估计的内容，包括KalmanFilter和DynamicProgramming，主要是前者。很遗憾MPC没有时间讲了，所以这一部分只能等下次开课老师讲的时候来补。<em>本课程有提供github仓库。</em></p><ul><li><ahref="https://space.bilibili.com/474380277?from=search&amp;seid=9415905800355105743&amp;spm_id_from=333.337.0.0">CLEAR_LAB</a></li><li><ahref="https://space.bilibili.com/474380277/channel/collectiondetail?sid=111390">ME424现代控制与最优估计</a></li></ul><h2 id="note">Note</h2><p>  这是自己的期末复习Note，因为博客显示有size限制，所以提供<ahref="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/NoteOfModernControl.pdf">下载链接</a>：</p><div class="row">    <embed src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/file/期末复习笔记-content.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/file/期末复习笔记-part1.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/file/期末复习笔记-part2.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/file/期末复习笔记-part3.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>课程相关</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>控制</tag>
+      
+      <tag>b站</tag>
+      
+      <tag>机器人</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Anaconda in PyCharm</title>
     <link href="/2022/02/13/Anaconda-in-PyCharm/"/>
     <url>/2022/02/13/Anaconda-in-PyCharm/</url>
@@ -13,9 +44,9 @@
     
     <categories>
       
-      <category>学习笔记</category>
-      
       <category>知识科普</category>
+      
+      <category>学习笔记</category>
       
       <category>工具使用</category>
       
@@ -92,28 +123,28 @@
     
     <categories>
       
+      <category>知识科普</category>
+      
       <category>学习笔记</category>
       
       <category>Raspberry Pico</category>
-      
-      <category>知识科普</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>Raspberry</tag>
-      
-      <tag>MicroPython</tag>
-      
-      <tag>嵌入式</tag>
-      
       <tag>PyCharm</tag>
       
       <tag>Python</tag>
       
+      <tag>Raspberry</tag>
+      
       <tag>Pico</tag>
+      
+      <tag>MicroPython</tag>
+      
+      <tag>嵌入式</tag>
       
     </tags>
     
@@ -286,9 +317,9 @@
     
     <categories>
       
-      <category>杂学笔记</category>
-      
       <category>知识科普</category>
+      
+      <category>杂学笔记</category>
       
       <category>陆地冲浪/冲浪/滑雪</category>
       
@@ -377,7 +408,7 @@
       
       <category>知识科普</category>
       
-      <category>课程论文</category>
+      <category>课程相关</category>
       
     </categories>
     
