@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jude">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简单介绍STL六大组件以及几种不同Iterator的失效情况">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL入门与Iterator失效">
+<meta property="og:url" content="https://judera9.github.io/2022/02/12/2022-2-12-Cpp-Iterator/index.html">
+<meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="简单介绍STL六大组件以及几种不同Iterator的失效情况">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/index_banner7.jpg">
+<meta property="article:published_time" content="2022-02-12T12:43:55.000Z">
+<meta property="article:modified_time" content="2022-02-15T02:02:57.637Z">
+<meta property="article:author" content="Jude">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Iterator">
+<meta property="article:tag" content="STL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/index_banner7.jpg">
+  
+  
+  <title>STL入门与Iterator失效 - Jude&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jude&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home Page
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About Me
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default7.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="STL入门与Iterator失效">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-12 20:43" pubdate>
+        2022年2月12日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">STL入门与Iterator失效</h1>
+            
+            <div class="markdown-body">
+              <h2 id="stl六大组件">STL六大组件</h2>
+<p>  因为于老师没讲STL，所以补一下课。STL的六大部件是下面这些：容器（Container）、算法（Algorithm）、迭代器（Iterator）、仿函数（Function
+object）、适配器（Adaptor）、空间配置器（allocator）。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://www.cnblogs.com/welen/articles/3533008.html
+">[1]</span></a></sup>下面分别简单介绍一下：</p>
+<h3 id="容器-container">容器 Container</h3>
+
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="center" width="170">
+<center><p>容器</p></center>
+</td>
+<td valign="center" width="700">
+<center><p>特性</p></center>
+</td>
+<td valign="center" width="130">
+<center><p>所在头文件</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>向量vector</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;可以用常数时间访问和修改任意元素，</span>在序列尾部进行插入和删除时，具有常数时间复杂度，对任意项的插入和删除就有的时间复杂度与到末尾的距离成正比，尤其对向量头的添加和删除的代价是惊人的高的</p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;vector&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>双端队列deque</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;基本上与向量相同，</span>唯一的不同是，其在序列头部插入和删除操作也具有常量时间复杂度</span></p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;deque&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>表list</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;对任意元素的访问与对两端的距离成正比，但对某个位置上插入和删除一个项的花费为常数时间。</span></p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;list&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>队列queue</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;插入只可以在尾部进行，删除、检索和修改只允许从头部进行。按照先进先出的原则。</span></p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;queue&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>堆栈stack</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;堆栈是项的有限序列，并满足序列中被删除、检索和修改的项只能是最近插入序列的项。即按照后进先出的</span>原则</p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;stack&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>集合set</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;由节点组成的红黑树，每个节点都包含着一个元素，节点之间以某种作用于元素对的谓词排列，没有两个不同的元素能够拥有相同的次序，具有快速查找的功能</span>。但是它是以牺牲插入删除操作的效率为代价的</p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;set&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>多重集合multiset</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;和集合基本相同，但可以支持重复元素具有快速查找能力</span></p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;set&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>映射map</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;由{键，值}对组成的集合，以某种作用于键对上的谓词排列。具有快速查找能力</span></p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;map&gt;</p></center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="170">
+<center><p>多重集合multimap</p></center>
+</td>
+<td valign="center" width="700">
+<p>&emsp;&emsp;比起映射，一个键可以对应多了值。具有快速查找能力</span></p>
+</td>
+<td valign="center" width="130">
+<center><p>&lt;map&gt;</p></center>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<h3 id="算法-algorithm">算法 Algorithm</h3>
+<p>  由头文件<code>&lt;algorithm&gt;</code>，<code>&lt;numeric&gt;</code>和<code>&lt;functional&gt;</code>组成，<code>&lt;algorithm&gt;</code>是STL头文件中最大的一个，由一大堆模板函数组成，其中常用到的功能范
+围涉及到比较、交换、查找、遍历操作、复制、修改、移除、反转、排序、合并等。。<code>&lt;numeric&gt;</code>体积很小，只包括几个在序列上面进行简单数学运算的模板函数，包括加法和乘法在序列上的一些操作。<code>&lt;functional&gt;</code>中则定义了一些模板类，用以声明函数对象。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://www.cnblogs.com/welen/articles/3533008.html
+">[1]</span></a></sup></p>
+<h3 id="迭代器-iterator">迭代器 Iterator</h3>
+<p>  实现位于<code>&lt;itertator&gt;</code>中，在某种程度上，可以理解为指针来使用。容器适配器
+stack 和 queue
+没有迭代器，它们包含有一些成员函数，可以用来对元素进行访问。另外，有的Iterator能够使用<code>++p</code>，<code>p++</code>，<code>*p</code>操作，还可以被复制或赋值，以及用<code>==</code>和<code>!=</code>等比较运算符。具体的每种Iterator的用法是不一样的，需要查手册。一般迭代器都会有对应的常量迭代器，能够避免用户修改指向的内容（类似const
+void*的指针）。<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="http://c.biancheng.net/view/6675.html
+">[3]</span></a></sup></p>
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td colspan="3" valign="center">
+<p align="center">
+迭代器功能
+</p>
+</center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="350">
+<p>
+输入迭代器 Input iterator
+</p>
+</td>
+<td valign="center" width="350">
+<center>
+<p>
+Reads forward
+</p>
+</center>
+</td>
+<td valign="center" width="300">
+<center>
+<p>
+istream
+</p>
+</center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="350">
+<p>
+输出迭代器 Output iterator
+</p>
+</td>
+<td valign="center" width="350">
+<center>
+<p>
+Writes forward
+</p>
+</center>
+</td>
+<td valign="center" width="300">
+<center>
+<p>
+ostream, inserter
+</p>
+</center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="350">
+<p>
+前向迭代器 Forward iterator
+</p>
+</td>
+<td valign="center" width="350">
+<center>
+<p>
+Read and Writes forward
+</p>
+</center>
+</td>
+<td valign="center" width="300">
+<center>
+<p>
+ 
+</p>
+</center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="350">
+<p>
+双向迭代器 Bidirectional iterator
+</p>
+</td>
+<td valign="center" width="350">
+<center>
+<p>
+Read and Writes forward and backward</span>
+</p>
+</center>
+</td>
+<td valign="center" width="300">
+<center>
+<p>
+list, set, multiset, map, mul, timap</span>
+</p>
+</center>
+</td>
+</tr>
+<tr>
+<td valign="center" width="350">
+<p>
+随机迭代器 Random access iterator
+</p>
+</td>
+<td valign="center" width="350">
+<center>
+<p>
+Read and Write with random access
+</p>
+</center>
+</td>
+<td valign="center" width="300">
+<center>
+<p>
+vector, deque, array, string
+</p>
+</center>
+</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 举个例子，如何使用Iterator</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; v&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>&#125;;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; v.<span class="hljs-built_in">size</span>(); ++i) <span class="hljs-comment">// use for loop to iterate</span><br>        cout &lt;&lt; v[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    cout &lt;&lt; endl;<br><br>    vector&lt;<span class="hljs-keyword">int</span>&gt;::iterator i; <span class="hljs-comment">// declare iterator</span><br>    <span class="hljs-keyword">for</span> (i = v.<span class="hljs-built_in">begin</span>(); i != v.<span class="hljs-built_in">end</span>(); ++i) <span class="hljs-comment">// use `i &lt; v.end()` is also fine</span><br>        cout &lt;&lt; *i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    cout &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="仿函数-functor">仿函数 Functor</h3>
+<p>  仿函数(functor)又称之为函数对象（function
+object），其实就是重载了()操作符的struct或者class，使一个类的使用看上去象一个函数。这些仿函数可以用关联，聚合，依赖的类之间的关系，与用到他们的类组合在一起，这样有利于资源的管理。C语言使用函数指针和回调函数来实现仿函数；在C++里，我们通过在一个类中重载括号运算符的方法使用一个函数对象，而不是一个普通函数。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/K346K346/article/details/82818801
+">[2]</span></a></sup></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 在C语言中，例如一个用来排序的函数可以这样使用仿函数</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-comment">/* Callback function */</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare_ints_function</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* A, <span class="hljs-keyword">void</span>* B)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> *((<span class="hljs-keyword">int</span>*)(A)) &lt; *((<span class="hljs-keyword">int</span>*)(B));<br>&#125;<br><br><span class="hljs-comment">/* Declaration of C sorting function */</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* first_item, <span class="hljs-keyword">size_t</span> item_size, <span class="hljs-keyword">void</span>* last_item, <span class="hljs-keyword">int</span>(*cmpfunc)(<span class="hljs-keyword">void</span>*, <span class="hljs-keyword">void</span>*))</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> items[]=&#123;<span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;;<br>    sort((<span class="hljs-keyword">void</span>*)(items), <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>), (<span class="hljs-keyword">void</span>*)(items +<span class="hljs-number">3</span>), compare_ints_function);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 在C++中，重载括号运算符实现仿函数</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IsGreaterThanThresholdFunctor</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">IsGreaterThanThresholdFunctor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> t)</span> : threshold(t) &#123;</span>&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span> <span class="hljs-keyword">const</span> </span>&#123; <span class="hljs-comment">// 可以用户design这一部分</span><br>        <span class="hljs-keyword">return</span> num &gt; threshold;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> threshold; <span class="hljs-comment">// 利用成员变量的特性，避免全局变量</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">RecallFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *start, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> *end, IsGreaterThanThresholdFunctor myFunctor)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> *i = start; i != end + <span class="hljs-number">1</span>; i++) &#123;<br>        count = <span class="hljs-built_in">myFunctor</span>(*i) ? count + <span class="hljs-number">1</span> : count; <span class="hljs-comment">// 传参给operator()函数</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> count;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> a[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">11</span>, <span class="hljs-number">5</span>, <span class="hljs-number">19</span>&#125;;<br>    <span class="hljs-keyword">int</span> result = <span class="hljs-built_in">RecallFunc</span>(a, a + <span class="hljs-number">4</span>, <span class="hljs-built_in">IsGreaterThanThresholdFunctor</span>(<span class="hljs-number">10</span>));<br>    cout &lt;&lt; result &lt;&lt; endl; <span class="hljs-comment">// 3</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="适配器-adaptor-空间配置器-allocator">适配器 Adaptor &amp;
+空间配置器 Allocator</h3>
+<p>  适配器是用来修改其他组件接口的STL组件，是带有一个参数的类模板（这个参数是操作的值的数据类型）。STL定义了3种形式的适配器：容器适配器，迭代器适配器，函数适配器。</p>
+<ul>
+<li><p><strong>容器适配器</strong>：包括栈（stack）、队列(queue)、优先(priority_queue)。使用容器适配器，stack就可以被实现为基本容器类型（vector,dequeue,list）的适配。可以把stack看作是某种特殊的vctor,deque或者list容器，只是其操作仍然受到stack本身属性的限制。queue和priority_queue与之类似。容器适配器的接口更为简单，只是受限比一般容器要多。</p></li>
+<li><p><strong>迭代器适配器</strong>：修改为某些基本容器定义的迭代器的接口的一种STL组件。反向迭代器和插入迭代器都属于迭代器适配器，迭代器适配器扩展了迭代器的功能。</p></li>
+<li><p><strong>函数适配器</strong>：通过转换或者修改其他函数对象使其功能得到扩展。这一类适配器有否定器（相当于"非"操作）、绑定器、函数指针适配器。函数对象适配器的作用就是使函数转化为函数对象，或是将多参数的函数对象转化为少参数的函数对象。</p></li>
+</ul>
+<p>  STL内存配置器为容器分配并管理内存，统一的内存管理使得STL库的可用性、可移植行、以及效率都有了很大的提升。SGI-STL的空间配置器有2种，一种仅仅对c语言的malloc和free进行了简单的封装，而另一个设计到小块内存的管理等，运用了内存池技术等。在SGI-STL中默认的空间配置器是第二级的配置器。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://www.cnblogs.com/welen/articles/3533008.html
+">[1]</span></a></sup></p>
+<h2 id="具体学习iterator">具体学习Iterator</h2>
+<h3 id="自增操作">自增操作</h3>
+<p>  注意<code>A(i++);</code>是先执行<code>A(i)</code>，再执行<code>i++;</code>，后者相反。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;<br>    cout &lt;&lt; i++ &lt;&lt; endl; <span class="hljs-comment">// 1</span><br>    cout &lt;&lt; ++i &lt;&lt; endl; <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
+<h3 id="迭代器失效">迭代器失效</h3>
+<p>可以参考<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2">第四个Reference</a>，讲的很细致。关键的点基本都在下面：<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2
+">[4]</span></a></sup></p>
+<ul>
+<li>C++标准中，<strong>顺序容器的erase函数会返回iterator，但关联容器的erase函数不返回iterator</strong>；</li>
+<li>对于顺序容器vector、deque，删除当前的iterator会使后面所有元素的iterator都失效。这是因为vector、deque使用了连续分配的内存，删除一个元素导致后面所有的元素会向前移动一个位置。erase方法可以返回下一个有效的iterator；</li>
+<li>对于关联容器map、set、multimap、multiset，删除当前的iterator，仅仅会使当前的iterator失效，只要在erase时，递增当前iterator即可。这是因为map之类的容器，使用了红黑树来实现，插入、删除一个结点不会对其他结点造成影响；</li>
+<li>对于顺序容器list，erase方法可以返回下一个有效的iterator。由于list是一个链表，删除当前的iterator，仅仅会使当前的iterator失效，所以也
+可以在erase时，递增当前的iterator。</li>
+<li>erase函数返回被删除元素的下一个元素的迭代器。<strong>在STL中，不能以指针来看待迭代器，指针是与内存绑定的，而
+迭代器是与容器里的元素绑定的</strong>。</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<section class="footnotes">
+<div class="footnote-list">
+<ol>
+<li>
+<span id="fn:1"
+class="footnote-text"><span>https://www.cnblogs.com/welen/articles/3533008.html
+<a href="#fnref:1" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:2"
+class="footnote-text"><span>https://blog.csdn.net/K346K346/article/details/82818801
+<a href="#fnref:2" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:3"
+class="footnote-text"><span>http://c.biancheng.net/view/6675.html
+<a href="#fnref:3" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:4"
+class="footnote-text"><span>https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2
+<a href="#fnref:4" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+</ol>
+</div>
+</section>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Iterator/">Iterator</a>
+                    
+                      <a class="hover-with-bg" href="/tags/STL/">STL</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/02/13/2022-2-13-Anaconda-in-PyCharm/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Anaconda in PyCharm</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/12/2022-2-12-Introduction-to-Pico-MicroPython-Plugin-Of-Pycharm/">
+                        <span class="hidden-mobile">介绍树莓派Pico | MicroPython插件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

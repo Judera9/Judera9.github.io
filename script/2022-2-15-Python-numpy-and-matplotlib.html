@@ -1,0 +1,770 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jude">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="In this part, I will introduce the mian packages will be used in digitial image process. Numpy Numpy is the core library for scientific computing in Python. It provides a high-performance multidimensi">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Python numpy and matplotlib">
+<meta property="og:url" content="https://judera9.github.io/script/2022-2-15-Python-numpy-and-matplotlib.html">
+<meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="In this part, I will introduce the mian packages will be used in digitial image process. Numpy Numpy is the core library for scientific computing in Python. It provides a high-performance multidimensi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-15T15:11:53.000Z">
+<meta property="article:modified_time" content="2022-02-16T16:10:23.979Z">
+<meta property="article:author" content="Jude">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Python numpy and matplotlib - Jude&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jude&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home Page
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About Me
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Python numpy and matplotlib">
+              
+            </span>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <p>In this part, I will introduce the mian packages will be used in
+digitial image process.</p>
+<h2 id="numpy">Numpy</h2>
+<p>Numpy is the core library for scientific computing in Python. It
+provides a high-performance multidimensional array object, and tools for
+working with these arrays. If you are already familiar with MATLAB, you
+might find this <a
+target="_blank" rel="noopener" href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">tutorial</a>
+useful to get started with Numpy.</p>
+<p>To use Numpy, we first need to import the <code>numpy</code>
+package:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-comment">#if u don&#x27;t have numpy, please use pip/conda install numpy </span><br></code></pre></td></tr></table></figure>
+<h3 id="arrays">Arrays</h3>
+<p>A numpy array is a grid of values, all of the same type, and is
+indexed by a tuple of nonnegative integers. The number of dimensions is
+the rank of the array; the shape of an array is a tuple of integers
+giving the size of the array along each dimension.</p>
+<p>We can initialize numpy arrays from nested Python lists, and access
+elements using square brackets:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">a = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])  <span class="hljs-comment"># Create a rank 1 array</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(a), a.shape, a[<span class="hljs-number">0</span>], a[<span class="hljs-number">1</span>], a[<span class="hljs-number">2</span>])<br>a[<span class="hljs-number">0</span>] = <span class="hljs-number">5</span>                 <span class="hljs-comment"># Change an element of the array</span><br><span class="hljs-built_in">print</span>(a)                  <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">&lt;class &#39;numpy.ndarray&#39;&gt; (3,) 1 2 3
+[5 2 3]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">b = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]])   <span class="hljs-comment"># Create a rank 2 array</span><br><span class="hljs-built_in">print</span>(b)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[1 2 3]
+ [4 5 6]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(b.shape)<br><span class="hljs-built_in">print</span>(b[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>], b[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], b[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>])<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">(2, 3)
+1 2 4</code></pre></div>
+<p>Numpy also provides many functions to create arrays:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">a = np.zeros((<span class="hljs-number">2</span>,<span class="hljs-number">2</span>))  <span class="hljs-comment"># Create an array of all zeros</span><br><span class="hljs-built_in">print</span>(a)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[0. 0.]
+ [0. 0.]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">b = np.ones((<span class="hljs-number">1</span>,<span class="hljs-number">2</span>))   <span class="hljs-comment"># Create an array of all ones</span><br><span class="hljs-built_in">print</span>(b)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[1. 1.]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">c = np.full((<span class="hljs-number">2</span>,<span class="hljs-number">2</span>), <span class="hljs-number">7</span>) <span class="hljs-comment"># Create a constant array</span><br><span class="hljs-built_in">print</span>(c)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[7 7]
+ [7 7]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">d = np.eye(<span class="hljs-number">2</span>)        <span class="hljs-comment"># Create a 2x2 identity matrix</span><br><span class="hljs-built_in">print</span>(d)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[1. 0.]
+ [0. 1.]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">e = np.random.random((<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)) <span class="hljs-comment"># Create an array filled with random values</span><br><span class="hljs-built_in">print</span>(e)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[0.83956305 0.31308388]
+ [0.07434287 0.25186774]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">f = np.arange(<span class="hljs-number">6</span>).reshape((<span class="hljs-number">3</span>, <span class="hljs-number">2</span>))<br><span class="hljs-built_in">print</span>(f)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[0 1]
+ [2 3]
+ [4 5]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">g=f.reshape((<span class="hljs-number">2</span>,-<span class="hljs-number">1</span>))<br><span class="hljs-built_in">print</span>(g)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[0 1 2]
+ [3 4 5]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">help</span>(np.reshape)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">Help on function reshape in module numpy:
+
+reshape(a, newshape, order=&#39;C&#39;)
+    Gives a new shape to an array without changing its data.
+    
+    Parameters
+    ----------
+    a : array_like
+        Array to be reshaped.
+    newshape : int or tuple of ints
+        The new shape should be compatible with the original shape. If
+        an integer, then the result will be a 1-D array of that length.
+        One shape dimension can be -1. In this case, the value is
+        inferred from the length of the array and remaining dimensions.
+    order : &#123;&#39;C&#39;, &#39;F&#39;, &#39;A&#39;&#125;, optional
+        Read the elements of `a` using this index order, and place the
+        elements into the reshaped array using this index order.  &#39;C&#39;
+        means to read / write the elements using C-like index order,
+        with the last axis index changing fastest, back to the first
+        axis index changing slowest. &#39;F&#39; means to read / write the
+        elements using Fortran-like index order, with the first index
+        changing fastest, and the last index changing slowest. Note that
+        the &#39;C&#39; and &#39;F&#39; options take no account of the memory layout of
+        the underlying array, and only refer to the order of indexing.
+        &#39;A&#39; means to read / write the elements in Fortran-like index
+        order if `a` is Fortran *contiguous* in memory, C-like order
+        otherwise.
+    
+    Returns
+    -------
+    reshaped_array : ndarray
+        This will be a new view object if possible; otherwise, it will
+        be a copy.  Note there is no guarantee of the *memory layout* (C- or
+        Fortran- contiguous) of the returned array.
+    
+    See Also
+    --------
+    ndarray.reshape : Equivalent method.
+    
+    Notes
+    -----
+    It is not always possible to change the shape of an array without
+    copying the data. If you want an error to be raised when the data is copied,
+    you should assign the new shape to the shape attribute of the array::
+    
+     &gt;&gt;&gt; a = np.zeros((10, 2))
+    
+     # A transpose makes the array non-contiguous
+     &gt;&gt;&gt; b = a.T
+    
+     # Taking a view makes it possible to modify the shape without modifying
+     # the initial object.
+     &gt;&gt;&gt; c = b.view()
+     &gt;&gt;&gt; c.shape = (20)
+     Traceback (most recent call last):
+        ...
+     AttributeError: Incompatible shape for in-place modification. Use
+     `.reshape()` to make a copy with the desired shape.
+    
+    The `order` keyword gives the index ordering both for *fetching* the values
+    from `a`, and then *placing* the values into the output array.
+    For example, let&#39;s say you have an array:
+    
+    &gt;&gt;&gt; a = np.arange(6).reshape((3, 2))
+    &gt;&gt;&gt; a
+    array([[0, 1],
+           [2, 3],
+           [4, 5]])
+    
+    You can think of reshaping as first raveling the array (using the given
+    index order), then inserting the elements from the raveled array into the
+    new array using the same kind of index ordering as was used for the
+    raveling.
+    
+    &gt;&gt;&gt; np.reshape(a, (2, 3)) # C-like index ordering
+    array([[0, 1, 2],
+           [3, 4, 5]])
+    &gt;&gt;&gt; np.reshape(np.ravel(a), (2, 3)) # equivalent to C ravel then C reshape
+    array([[0, 1, 2],
+           [3, 4, 5]])
+    &gt;&gt;&gt; np.reshape(a, (2, 3), order=&#39;F&#39;) # Fortran-like index ordering
+    array([[0, 4, 3],
+           [2, 1, 5]])
+    &gt;&gt;&gt; np.reshape(np.ravel(a, order=&#39;F&#39;), (2, 3), order=&#39;F&#39;)
+    array([[0, 4, 3],
+           [2, 1, 5]])
+    
+    Examples
+    --------
+    &gt;&gt;&gt; a = np.array([[1,2,3], [4,5,6]])
+    &gt;&gt;&gt; np.reshape(a, 6)
+    array([1, 2, 3, 4, 5, 6])
+    &gt;&gt;&gt; np.reshape(a, 6, order=&#39;F&#39;)
+    array([1, 4, 2, 5, 3, 6])
+    
+    &gt;&gt;&gt; np.reshape(a, (3,-1))       # the unspecified value is inferred to be 2
+    array([[1, 2],
+           [3, 4],
+           [5, 6]])</code></pre></div>
+<h3 id="array-indexing">Array indexing</h3>
+<p>Numpy offers several ways to index into arrays.</p>
+<p>Slicing: Similar to Python lists, numpy arrays can be sliced. Since
+arrays may be multidimensional, you must specify a slice for each
+dimension of the array:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># Create the following rank 2 array with shape (3, 4)</span><br><span class="hljs-comment"># [[ 1  2  3  4]</span><br><span class="hljs-comment">#  [ 5  6  7  8]</span><br><span class="hljs-comment">#  [ 9 10 11 12]]</span><br>a = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>], [<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>]])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;a:\n&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(a))<br><br><span class="hljs-comment"># Use slicing to pull out the subarray consisting of the first 2 rows</span><br><span class="hljs-comment"># and columns 1 and 2; b is the following array of shape (2, 2):</span><br><span class="hljs-comment"># [[2 3]</span><br><span class="hljs-comment">#  [6 7]]</span><br>b = a[:<span class="hljs-number">2</span>, <span class="hljs-number">1</span>:<span class="hljs-number">3</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;b:\n&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(b))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">a:
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+b:
+[[2 3]
+ [6 7]]</code></pre></div>
+<p>A slice of an array is a view into the same data, so modifying it
+will modify the original array.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(a[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br>b[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>] = <span class="hljs-number">77</span>    <span class="hljs-comment"># b[0, 0] is the same piece of data as a[0, 1]</span><br><span class="hljs-built_in">print</span>(a[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]) <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">2
+77</code></pre></div>
+<p>You can also mix integer indexing with slice indexing. However, doing
+so will yield an array of lower rank than the original array. Note that
+this is quite different from the way that MATLAB handles array
+slicing:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Create the following rank 2 array with shape (3, 4)</span><br>a = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>], [<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>]])<br><span class="hljs-built_in">print</span>(a)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]</code></pre></div>
+<p>Two ways of accessing the data in the middle row of the array. Mixing
+integer indexing with slices yields an array of lower rank, while using
+only slices yields an array of the same rank as the original array:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">row_r1 = a[<span class="hljs-number">1</span>, :]    <span class="hljs-comment"># Rank 1 view of the second row of a  </span><br>row_r2 = a[<span class="hljs-number">1</span>:<span class="hljs-number">2</span>, :]  <span class="hljs-comment"># Rank 2 view of the second row of a</span><br>row_r3 = a[[<span class="hljs-number">1</span>], :]  <span class="hljs-comment"># Rank 2 view of the second row of a</span><br><span class="hljs-built_in">print</span>(row_r1, row_r1.shape)<br><span class="hljs-built_in">print</span>(row_r2, row_r2.shape)<br><span class="hljs-built_in">print</span>(row_r3, row_r3.shape)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[5 6 7 8] (4,)
+[[5 6 7 8]] (1, 4)
+[[5 6 7 8]] (1, 4)</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># We can make the same distinction when accessing columns of an array:</span><br>col_r1 = a[:, <span class="hljs-number">1</span>]<br>col_r2 = a[:, <span class="hljs-number">1</span>:<span class="hljs-number">2</span>]<br><span class="hljs-built_in">print</span>(col_r1, col_r1.shape)<br><span class="hljs-built_in">print</span>(col_r2, col_r2.shape)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[ 2  6 10] (3,)
+[[ 2]
+ [ 6]
+ [10]] (3, 1)</code></pre></div>
+<p>Integer array indexing: When you index into numpy arrays using
+slicing, the resulting array view will always be a subarray of the
+original array. In contrast, integer array indexing allows you to
+construct arbitrary arrays using the data from another array. Here is an
+example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">a = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br><br><span class="hljs-comment"># An example of integer array indexing.</span><br><span class="hljs-comment"># The returned array will have shape (3,) and </span><br><span class="hljs-built_in">print</span>(a[[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]])<br><br><span class="hljs-comment"># The above example of integer array indexing is equivalent to this:</span><br><span class="hljs-built_in">print</span>(np.array([a[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>], a[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], a[<span class="hljs-number">2</span>, <span class="hljs-number">0</span>]]))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[1 4 5]
+[1 4 5]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># When using integer array indexing, you can reuse the same</span><br><span class="hljs-comment"># element from the source array:</span><br><span class="hljs-built_in">print</span>(a[[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>]])<br><br><span class="hljs-comment"># Equivalent to the previous integer array indexing example</span><br><span class="hljs-built_in">print</span>(np.array([a[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], a[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]]))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[2 2]
+[2 2]</code></pre></div>
+<p>One useful trick with integer array indexing is selecting or mutating
+one element from each row of a matrix:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Create a new array from which we will select elements</span><br>a = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>], [<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>], [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]])<br><span class="hljs-built_in">print</span>(a)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[ 1  2  3]
+ [ 4  5  6]
+ [ 7  8  9]
+ [10 11 12]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Create an array of indices</span><br>b = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br><br><span class="hljs-comment"># Select one element from each row of a using the indices in b</span><br><span class="hljs-built_in">print</span>(a[np.arange(<span class="hljs-number">4</span>), b])  <span class="hljs-comment"># Prints &quot;[ 1  6  7 11]&quot;</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[ 1  6  7 11]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Mutate one element from each row of a using the indices in b</span><br>a[np.arange(<span class="hljs-number">4</span>), b] += <span class="hljs-number">10</span><br><span class="hljs-built_in">print</span>(a)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[11  2  3]
+ [ 4  5 16]
+ [17  8  9]
+ [10 21 12]]</code></pre></div>
+<p>Boolean array indexing: Boolean array indexing lets you pick out
+arbitrary elements of an array. Frequently this type of indexing is used
+to select the elements of an array that satisfy some condition. Here is
+an example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br>a = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br><br>bool_idx = (a &gt; <span class="hljs-number">2</span>)  <span class="hljs-comment"># Find the elements of a that are bigger than 2;</span><br>                    <span class="hljs-comment"># this returns a numpy array of Booleans of the same</span><br>                    <span class="hljs-comment"># shape as a, where each slot of bool_idx tells</span><br>                    <span class="hljs-comment"># whether that element of a is &gt; 2.</span><br><br><span class="hljs-built_in">print</span>(bool_idx)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[False False]
+ [ True  True]
+ [ True  True]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># We use boolean array indexing to construct a rank 1 array</span><br><span class="hljs-comment"># consisting of the elements of a corresponding to the True values</span><br><span class="hljs-comment"># of bool_idx</span><br><span class="hljs-built_in">print</span>(a[bool_idx])<br><br><span class="hljs-comment"># We can do all of the above in a single concise statement:</span><br><span class="hljs-built_in">print</span>(a[a &gt; <span class="hljs-number">2</span>])<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[3 4 5 6]
+[3 4 5 6]</code></pre></div>
+<p>For brevity we have left out a lot of details about numpy array
+indexing; if you want to know more you should read the
+documentation.</p>
+<h3 id="datatypes">Datatypes</h3>
+<p>Every numpy array is a grid of elements of the same type. Numpy
+provides a large set of numeric datatypes that you can use to construct
+arrays. Numpy tries to guess a datatype when you create an array, but
+functions that construct arrays usually also include an optional
+argument to explicitly specify the datatype. Here is an example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">x = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>])  <span class="hljs-comment"># Let numpy choose the datatype</span><br>y = np.array([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>])  <span class="hljs-comment"># Let numpy choose the datatype</span><br>z = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], dtype=np.int64)  <span class="hljs-comment"># Force a particular datatype</span><br><br><span class="hljs-built_in">print</span>(x.dtype, y.dtype, z.dtype)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">int64 float64 int64</code></pre></div>
+<p>You can read all about numpy datatypes in the <a
+target="_blank" rel="noopener" href="http://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html">documentation</a>.</p>
+<h3 id="array-math">Array math</h3>
+<p>Basic mathematical functions operate elementwise on arrays, and are
+available both as operator overloads and as functions in the numpy
+module:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]], dtype=np.float64)<br>y = np.array([[<span class="hljs-number">5</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">7</span>,<span class="hljs-number">8</span>]], dtype=np.float64)<br><br><span class="hljs-comment"># Elementwise sum; both produce the array</span><br><span class="hljs-built_in">print</span>(x + y)<br><span class="hljs-built_in">print</span>(np.add(x, y))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[ 6.  8.]
+ [10. 12.]]
+[[ 6.  8.]
+ [10. 12.]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Elementwise difference; both produce the array</span><br><span class="hljs-built_in">print</span>(x - y)<br><span class="hljs-built_in">print</span>(np.subtract(x, y))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[-4. -4.]
+ [-4. -4.]]
+[[-4. -4.]
+ [-4. -4.]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Elementwise product; both produce the array</span><br><span class="hljs-built_in">print</span>(x * y)<br><span class="hljs-built_in">print</span>(np.multiply(x, y))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[ 5. 12.]
+ [21. 32.]]
+[[ 5. 12.]
+ [21. 32.]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Elementwise division; both produce the array</span><br><span class="hljs-comment"># [[ 0.2         0.33333333]</span><br><span class="hljs-comment">#  [ 0.42857143  0.5       ]]</span><br><span class="hljs-built_in">print</span>(x / y)<br><span class="hljs-built_in">print</span>(np.divide(x, y))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[0.2        0.33333333]
+ [0.42857143 0.5       ]]
+[[0.2        0.33333333]
+ [0.42857143 0.5       ]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Elementwise square root; produces the array</span><br><span class="hljs-comment"># [[ 1.          1.41421356]</span><br><span class="hljs-comment">#  [ 1.73205081  2.        ]]</span><br><span class="hljs-built_in">print</span>(np.sqrt(x))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[1.         1.41421356]
+ [1.73205081 2.        ]]</code></pre></div>
+<p>Note that unlike MATLAB, <code>*</code> is elementwise
+multiplication, not matrix multiplication. We instead use the dot
+function to compute inner products of vectors, to multiply a vector by a
+matrix, and to multiply matrices. dot is available both as a function in
+the numpy module and as an instance method of array objects:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">x = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]])<br>y = np.array([[<span class="hljs-number">5</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">7</span>,<span class="hljs-number">8</span>]])<br><br>v = np.array([<span class="hljs-number">9</span>,<span class="hljs-number">10</span>])<br>w = np.array([<span class="hljs-number">11</span>, <span class="hljs-number">12</span>])<br><br><span class="hljs-comment"># Inner product of vectors; both produce 219</span><br><span class="hljs-built_in">print</span>(v.dot(w))<br><span class="hljs-built_in">print</span>(np.dot(v, w))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">219
+219</code></pre></div>
+<p>You can also use the <code>@</code> operator which is equivalent to
+numpy's <code>dot</code> operator.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(v @ w)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">219</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Matrix / vector product; both produce the rank 1 array [29 67]</span><br><span class="hljs-built_in">print</span>(x.dot(v))<br><span class="hljs-built_in">print</span>(np.dot(x, v))<br><span class="hljs-built_in">print</span>(x @ v)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[29 67]
+[29 67]
+[29 67]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Matrix / matrix product; both produce the rank 2 array</span><br><span class="hljs-comment"># [[19 22]</span><br><span class="hljs-comment">#  [43 50]]</span><br><span class="hljs-built_in">print</span>(x.dot(y))<br><span class="hljs-built_in">print</span>(np.dot(x, y))<br><span class="hljs-built_in">print</span>(x @ y)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[19 22]
+ [43 50]]
+[[19 22]
+ [43 50]]
+[[19 22]
+ [43 50]]</code></pre></div>
+<p>Numpy provides many useful functions for performing computations on
+arrays; one of the most useful is <code>sum</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">x = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]])<br><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(x))  <span class="hljs-comment"># Compute sum of all elements; prints &quot;10&quot;</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(x, axis=<span class="hljs-number">0</span>))  <span class="hljs-comment"># Compute sum of each column; prints &quot;[4 6]&quot;</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(x, axis=<span class="hljs-number">1</span>))  <span class="hljs-comment"># Compute sum of each row; prints &quot;[3 7]&quot;</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">10
+[4 6]
+[3 7]</code></pre></div>
+<p>You can find the full list of mathematical functions provided by
+numpy in the <a
+target="_blank" rel="noopener" href="http://docs.scipy.org/doc/numpy/reference/routines.math.html">documentation</a>.</p>
+<p>Apart from computing mathematical functions using arrays, we
+frequently need to reshape or otherwise manipulate data in arrays. The
+simplest example of this type of operation is transposing a matrix; to
+transpose a matrix, simply use the T attribute of an array object:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(x)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;transpose\n&quot;</span>, x.T)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[1 2]
+ [3 4]]
+transpose
+ [[1 3]
+ [2 4]]</code></pre></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">v = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]])<br><span class="hljs-built_in">print</span>(v )<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;transpose\n&quot;</span>, v.T)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[[1 2 3]]
+transpose
+ [[1]
+ [2]
+ [3]]</code></pre></div>
+<h2 id="matplotlib">Matplotlib</h2>
+<p>Matplotlib is a plotting library. In this section give a brief
+introduction to the <code>matplotlib.pyplot</code> module, which
+provides a plotting system similar to that of MATLAB.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br></code></pre></td></tr></table></figure>
+<h3 id="image-operations">Image operations</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">image = plt .imread (<span class="hljs-string">&#x27;demo.jpg&#x27;</span>)<br>plt . imshow ( image )<br>plt.show()<br></code></pre></td></tr></table></figure>
+<figure>
+<img
+src="Lab1%20-%20numpy%20and%20matplotlib_files/Lab1%20-%20numpy%20and%20matplotlib_68_0.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<p>The first line reads the image ’demo.jpg’ from the hard drive. The
+second line enqueues an image for display at some point in the future.
+The final lines blocks the interpreter to show the image. As this image
+is larger than we need, it is a good idea to make it smaller. This can
+be done in mu ltiple ways, but a kind of simple first approach is to
+only keep one of five pixels. This can be done using the fancy indexing
+in numpy. For example</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">smaller_image = image [<span class="hljs-number">0</span>: -<span class="hljs-number">1</span>:<span class="hljs-number">5</span> , <span class="hljs-number">0</span>: -<span class="hljs-number">1</span>:<span class="hljs-number">5</span> , :]<br>plt . imshow ( smaller_image )<br>plt . show ()<br><span class="hljs-built_in">print</span> (<span class="hljs-string">&quot; Original image size is: &#123;&#125;&quot;</span>. <span class="hljs-built_in">format</span> ( image . shape [<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]))<br><span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;New image size is: &#123;&#125;&quot;</span>. <span class="hljs-built_in">format</span> ( smaller_image . shape [<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]))<br></code></pre></td></tr></table></figure>
+<figure>
+<img
+src="Lab1%20-%20numpy%20and%20matplotlib_files/Lab1%20-%20numpy%20and%20matplotlib_70_0.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<div class="code-wrapper"><pre><code class="hljs"> Original image size is: (389, 390, 3)
+New image size is: (78, 78, 3)</code></pre></div>
+<p>The first line here uses fancy indexing to pick out only every fifth
+pixel. It starts at the first pixel (index 0), and stops at the last one
+(index -1), with the step between pixels being 5. This is done for the
+first two dimensions (the height and width dimensions). For the final
+dimension (the color dimension) all information is kept. The final two
+lines print the sizes of the original image, and of the new smaller
+image. Now, we will intrduce how to convert matrix to image.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br>smaller_im=Image.fromarray(smaller_image)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(smaller_im))<br>smaller_im.save(<span class="hljs-string">&#x27;smaller_demo.jpg&#x27;</span>)<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">Unlike MATLAB, Python have a lot of image process libary, like PIL, imageio, skimage, opencv</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">&lt;class &#39;PIL.Image.Image&#39;&gt;
+
+
+
+
+
+&#39;\nUnlike MATLAB, Python have a lot of image process libary, like PIL, imageio, skimage, opencv\n&#39;</code></pre></div>
+<p>The first line converts np.array type to PIL.Image.Image type. The
+third line saves the smaller_im in jpg format.</p>
+<h3 id="plotting">Plotting</h3>
+<p>The most important function in <code>matplotlib</code> is plot, which
+allows you to plot 2D data. Here is a simple example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Compute the x and y coordinates for points on a sine curve</span><br>x = np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">3</span> * np.pi, <span class="hljs-number">0.1</span>)<br>y = np.sin(x)<br><br><span class="hljs-comment"># Plot the points using matplotlib</span><br>plt.plot(x, y)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">[&lt;matplotlib.lines.Line2D at 0x7f5531800b50&gt;]</code></pre></div>
+<figure>
+<img
+src="Lab1%20-%20numpy%20and%20matplotlib_files/Lab1%20-%20numpy%20and%20matplotlib_76_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<p>With just a little bit of extra work we can easily plot multiple
+lines at once, and add a title, legend, and axis labels:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">y_sin = np.sin(x)<br>y_cos = np.cos(x)<br><br><span class="hljs-comment"># Plot the points using matplotlib</span><br>plt.plot(x, y_sin)<br>plt.plot(x, y_cos)<br>plt.xlabel(<span class="hljs-string">&#x27;x axis label&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;y axis label&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Sine and Cosine&#x27;</span>)<br>plt.legend([<span class="hljs-string">&#x27;Sine&#x27;</span>, <span class="hljs-string">&#x27;Cosine&#x27;</span>])<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs">&lt;matplotlib.legend.Legend at 0x7f553191eb10&gt;</code></pre></div>
+<figure>
+<img
+src="Lab1%20-%20numpy%20and%20matplotlib_files/Lab1%20-%20numpy%20and%20matplotlib_78_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h3 id="subplots">Subplots</h3>
+<p>You can plot different things in the same figure using the subplot
+function. Here is an example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Compute the x and y coordinates for points on sine and cosine curves</span><br>x = np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">3</span> * np.pi, <span class="hljs-number">0.1</span>)<br>y_sin = np.sin(x)<br>y_cos = np.cos(x)<br><br><span class="hljs-comment"># Set up a subplot grid that has height 2 and width 1,</span><br><span class="hljs-comment"># and set the first such subplot as active.</span><br>plt.subplot(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># Make the first plot</span><br>plt.plot(x, y_sin)<br>plt.title(<span class="hljs-string">&#x27;Sine&#x27;</span>)<br><br><span class="hljs-comment"># Set the second subplot as active, and make the second plot.</span><br>plt.subplot(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>plt.plot(x, y_cos)<br>plt.title(<span class="hljs-string">&#x27;Cosine&#x27;</span>)<br><br><span class="hljs-comment"># Show the figure.</span><br>plt.show()<br></code></pre></td></tr></table></figure>
+<figure>
+<img
+src="Lab1%20-%20numpy%20and%20matplotlib_files/Lab1%20-%20numpy%20and%20matplotlib_81_0.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<p>You can read much more about the <code>subplot</code> function in the
+<a
+target="_blank" rel="noopener" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.subplot">documentation</a>.</p>
+<p>Python have a lot of libaries and usage, if u encounter difficulties
+in future class.</p>
+<p><strong>Please look for help document-&gt;google-&gt;(source
+code)-&gt;TA</strong></p>
+
+
+  
+</article>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
