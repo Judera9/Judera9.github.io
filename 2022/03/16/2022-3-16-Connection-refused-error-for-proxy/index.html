@@ -16,28 +16,24 @@
   <meta name="author" content="Jude">
   <meta name="keywords" content="">
   
-    <meta name="description" content="树莓派Pico时2021年发布的微型控制器，买来把玩一下。树莓派的品控还是很值得信赖的，虽然相比最大竞争对手ESP32现在Pico还是小菜鸡哈哈哈！">
+    <meta name="description" content="这几天我用的科学上网工具更新配置，所以暂时关掉不用。但是在Ubuntu-Network-Network Proxy处关掉代理后发现用wget下载东西时一直报Failed to connect to 127.0.0.1 port 7080: Connection refused这样的错误，立刻就想到这可能是proxy并没有完全禁用，或者是ip和端口没有切换回来。因此，用下面的命令查看当前代理情况">
 <meta property="og:type" content="article">
-<meta property="og:title" content="介绍树莓派Pico | MicroPython插件">
-<meta property="og:url" content="https://judera9.github.io/2022/02/12/2022-2-12-Introduction-to-Pico-MicroPython-Plugin-Of-Pycharm/index.html">
+<meta property="og:title" content="解决proxy导致的Connection refused">
+<meta property="og:url" content="https://judera9.github.io/2022/03/16/2022-3-16-Connection-refused-error-for-proxy/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
-<meta property="og:description" content="树莓派Pico时2021年发布的微型控制器，买来把玩一下。树莓派的品控还是很值得信赖的，虽然相比最大竞争对手ESP32现在Pico还是小菜鸡哈哈哈！">
+<meta property="og:description" content="这几天我用的科学上网工具更新配置，所以暂时关掉不用。但是在Ubuntu-Network-Network Proxy处关掉代理后发现用wget下载东西时一直报Failed to connect to 127.0.0.1 port 7080: Connection refused这样的错误，立刻就想到这可能是proxy并没有完全禁用，或者是ip和端口没有切换回来。因此，用下面的命令查看当前代理情况">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/pico/20220212190432.png">
-<meta property="article:published_time" content="2022-02-12T10:18:56.000Z">
-<meta property="article:modified_time" content="2022-02-14T04:29:12.096Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/cytus2/cytus4.jpg">
+<meta property="article:published_time" content="2022-03-16T03:11:34.000Z">
+<meta property="article:modified_time" content="2022-03-16T03:27:36.302Z">
 <meta property="article:author" content="Jude">
-<meta property="article:tag" content="Raspberry">
-<meta property="article:tag" content="Pico">
-<meta property="article:tag" content="MicroPython">
-<meta property="article:tag" content="嵌入式">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="PyCharm">
+<meta property="article:tag" content="Proxy">
+<meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/pico/20220212190432.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/cytus2/cytus4.jpg">
   
   
-  <title>介绍树莓派Pico | MicroPython插件 - Jude&#39;s Blog</title>
+  <title>解决proxy导致的Connection refused - Jude&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,12 +178,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/index_banner7.jpg') no-repeat center center;
+         style="background: url('/img/default8.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="介绍树莓派Pico | MicroPython插件">
+            <span class="h2" id="subtitle" title="解决proxy导致的Connection refused">
               
             </span>
 
@@ -197,8 +193,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-12 18:18" pubdate>
-        2022年2月12日 晚上
+      <time datetime="2022-03-16 11:11" pubdate>
+        2022年3月16日 上午
       </time>
     </span>
   
@@ -208,7 +204,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      639 字
     </span>
   
 
@@ -217,7 +213,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17 分钟
+      6 分钟
     </span>
   
 
@@ -246,113 +242,16 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">介绍树莓派Pico | MicroPython插件</h1>
+            <h1 style="display: none">解决proxy导致的Connection refused</h1>
             
             <div class="markdown-body">
-              <h2 id="raspberry-pico">Raspberry Pico</h2>
-<p>推荐网页：<a target="_blank" rel="noopener" href="https://pico.org.cn/">树莓派 Pico 中文站</a></p>
-<blockquote>
-<p>上面的站点提供了树莓派 Pico 开发板的说明文档，以及完备的 RP2040
-芯片资料，本文也有参考上面的内容。</p>
-</blockquote>
-<h3 id="pico-规格参数">Pico 规格参数</h3>
-<p>  这里涉及了很多嵌入式方面的知识，这一块我学的不是很好，有一些看得不是很明白的以后用到再来学吧。看了看相关的评测<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://www.zhihu.com/question/440677296
-">[3]</span></a></sup>，ESP32不仅比Pico便宜而且外设还丰富的多，而且也支持MicroPython。不过我自己也只是买着玩玩，不用在意这些，个人感觉主要树莓派学习门槛更低吧。</p>
-<ul>
-<li>双核 Arm Cortex-M0 + @ 133MHz</li>
-<li>芯片内置 264KB SRAM 和 2MB 的板载闪存</li>
-<li>通过专用 QSPI 总线支持最高 16MB 的片外闪存</li>
-<li>DMA 控制器</li>
-<li>30 个 GPIO 引脚，其中 4 个可用作模拟输入</li>
-<li>2 个 UART、2 个 SPI 控制器和 2 个 I2C 控制器</li>
-<li>16 个 PWM 通道</li>
-<li>USB 1.1 主机和设备支持</li>
-<li>8 个树莓派可编程 I/O（PIO）状态机，用于自定义外围设备支持</li>
-<li>支持 UF2 的 USB 大容量存储启动模式，用于拖放式编程</li>
-</ul>
-<blockquote>
-<p><strong>SRAM是什么</strong>：SRAM (static RAM) is random access
-memory (RAM) that retains data bits in its memory as long as power is
-being supplied. Unlike dynamic RAM (DRAM), which stores bits in cells
-consisting of a capacitor and a transistor, SRAM does not have to be
-periodically refreshed. Static RAM provides faster access to data and is
-more expensive than DRAM. SRAM is used for a computer's cache memory and
-as part of the random access memory digital-to-analog converter on a
-video
-card.<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://whatis.techtarget.com/definition/SRAM-static-random-access-memory
-">[1]</span></a></sup></p>
-</blockquote>
-<blockquote>
-<p><strong>QSPI是什么</strong>：QSPI是Queued
-SPI的简写，是Motorola公司推出的SPI接口的扩展，比SPI应用更加广泛。在SPI协议的基础上，Motorola公司对其功能进行了增强，增加了队列传输机制，推出了队列串行外围接口协议（即QSPI协议）。片外闪存顾名思义就是外接的Flash存储空间。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://www.cnblogs.com/firege/p/9435349.html
-">[2]</span></a></sup></p>
-</blockquote>
-<blockquote>
-<p><strong>PIO是什么</strong>：这是应该是Pico最大的亮点，我没有看得很明白官方的说明。大概就是说能够使用PIO来实现硬件接口，相对于软件模拟的方式，可以达到更高的时钟精度、高得多的I/O吞吐量，还能分担一点CPU的计算工作，比如奇偶校验、和校验等。<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://www.zhihu.com/question/440677296
-">[3]</span></a></sup></p>
-</blockquote>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/pico/20220212190432.png" srcset="/img/loading.gif" lazyload width="1000">
-<center>
-Pico原理图
-</center>
-</center>
-<h3 id="pico提供的开发工具">Pico提供的开发工具</h3>
-<p>  有一个C++的SDK，是专门给Pico设计的，感觉没有必要，用这套SDK不如用STM32系列的SDK。除了C++之外还有一个MicroPython的SDK，我是打算用这个来做点小东西，顺便学习一下各种嵌入式常见的外设。除此之外，学一些MicroPython也挺好的，主要看这个文档<a
-target="_blank" rel="noopener" href="https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf">Pico
-Python SDK</a>。除此之外还有<a
-target="_blank" rel="noopener" href="https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf">RP2040
-硬件设计</a>、<a
-target="_blank" rel="noopener" href="https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf">RP2040
-Datasheet</a>和<a
-target="_blank" rel="noopener" href="https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf">树莓派
-Pico
-Datasheet</a>这三个文档也可以作为学习过程的参考，主要和RP2040和Pico的硬件外设有关。</p>
-<h2 id="pycharm-micropython-插件">PyCharm MicroPython 插件</h2>
-<p>  直接在PyCharm的Settings-Plugins中去搜索“MicroPython”插件然后安装，完成后需要在Project中进行配置，在Settings-Languages
-&amp; Frameworks-MicroPython对开启该插件进行勾选，然后选择对应的Device
-type和Device path（我是在linux
-ubuntu下所以是dev/ttyACM0）。完成配置后使用如下程序进行测试，如果LED灯闪烁说明配置成功（REPL显示对应输出）：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> machine <span class="hljs-keyword">import</span> Pin<br><span class="hljs-keyword">import</span> time<br><br>led = Pin(<span class="hljs-number">25</span>, Pin.OUT)<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    led.value(<span class="hljs-number">1</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;led light on&quot;</span>)<br>    time.sleep(<span class="hljs-number">1</span>)<br><br>    led.value(<span class="hljs-number">0</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;led light off&quot;</span>)<br>    time.sleep(<span class="hljs-number">1</span>)<br><br></code></pre></td></tr></table></figure>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/pico/20220212200558.png" srcset="/img/loading.gif" lazyload width="600">
-<center>
-Pico原理图
-</center>
-</center>
-<h2 id="reference">Reference</h2>
-<section class="footnotes">
-<div class="footnote-list">
-<ol>
-<li>
-<span id="fn:1"
-class="footnote-text"><span>https://whatis.techtarget.com/definition/SRAM-static-random-access-memory
-<a href="#fnref:1" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:2"
-class="footnote-text"><span>https://www.cnblogs.com/firege/p/9435349.html
-<a href="#fnref:2" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:3"
-class="footnote-text"><span>https://www.zhihu.com/question/440677296
-<a href="#fnref:3" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-</ol>
-</div>
-</section>
+              <p>  这几天我用的科学上网工具更新配置，所以暂时关掉不用。但是在<em>Ubuntu-Network-Network
+Proxy</em>处关掉代理后发现用<code>wget</code>下载东西时一直报<code>Failed
+to connect to 127.0.0.1 port 7080: Connection
+refused</code>这样的错误，立刻就想到这可能是proxy并没有完全禁用，或者是ip和端口没有切换回来。因此，用下面的命令查看当前代理情况，并尝试取消代理设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">$ env|grep -I proxy <span class="hljs-comment"># find whether proxy is used</span><br><br>no_proxy=<br>https_proxy=http://127.0.0.1:7890/<br>http_proxy=http://127.0.0.1:7890/<br>all_proxy=socks://127.0.0.1:7891/<br><br><span class="hljs-comment"># try to reset proxy, I success on this</span><br>$ <span class="hljs-built_in">export</span> http_proxy=<span class="hljs-string">&quot;&quot;</span><br>$ <span class="hljs-built_in">export</span> https_proxy=<span class="hljs-string">&quot;&quot;</span><br>$ <span class="hljs-built_in">export</span> HTTP_PROXY=<span class="hljs-string">&quot;&quot;</span><br>$ <span class="hljs-built_in">export</span> HTTPS_PROXY=<span class="hljs-string">&quot;&quot;</span><br><br>$ wget ... <span class="hljs-comment"># okay!</span><br></code></pre></td></tr></table></figure>
+<p>  在网上看到有的人用<code>unset</code>指令也能关闭代理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">unset</span> http_proxy<br>$ <span class="hljs-built_in">unset</span> ftp_proxy<br>$ <span class="hljs-built_in">unset</span> all_proxy<br>$ <span class="hljs-built_in">unset</span> https_proxy<br>$ <span class="hljs-built_in">unset</span> no_proxy<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -362,11 +261,7 @@ class="footnote-text"><span>https://www.zhihu.com/question/440677296
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E7%9F%A5%E8%AF%86%E7%A7%91%E6%99%AE/">知识科普</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Raspberry-Pico/">Raspberry Pico</a>
+                      <a class="hover-with-bg" href="/categories/Tricks/">Tricks</a>
                     
                   </div>
                 
@@ -374,17 +269,9 @@ class="footnote-text"><span>https://www.zhihu.com/question/440677296
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Raspberry/">Raspberry</a>
+                      <a class="hover-with-bg" href="/tags/Proxy/">Proxy</a>
                     
-                      <a class="hover-with-bg" href="/tags/Pico/">Pico</a>
-                    
-                      <a class="hover-with-bg" href="/tags/MicroPython/">MicroPython</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Python/">Python</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PyCharm/">PyCharm</a>
+                      <a class="hover-with-bg" href="/tags/Ubuntu/">Ubuntu</a>
                     
                   </div>
                 
@@ -395,9 +282,9 @@ class="footnote-text"><span>https://www.zhihu.com/question/440677296
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/02/12/2022-2-12-Cpp-Iterator/">
+                      <a href="/2022/03/16/2022-3-16-Image-Spatial-Operations-and-Filtering/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">STL入门与Iterator失效</span>
+                        <span class="hidden-mobile">Image Spatial Operations and Filtering</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -405,8 +292,8 @@ class="footnote-text"><span>https://www.zhihu.com/question/440677296
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/04/2022-2-4-Music-Arrangment-Content/">
-                        <span class="hidden-mobile">编曲笔记目录</span>
+                      <a href="/2022/03/04/2022-3-4-Image-Interpolation/">
+                        <span class="hidden-mobile">Image Interpolation</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
