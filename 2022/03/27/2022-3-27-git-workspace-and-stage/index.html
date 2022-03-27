@@ -1,0 +1,589 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jude">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="其实git虽然用的很多，不过自己对它的原理和简单的commit、push、pull以外的其他功能并不熟悉，因此在这里做个笔记。首先给出下面这张速查cheat sheet，不过仅作参考，里面有些实现我自己更习惯用别的指令（后面详说）：   git-cheat-sheet  工作区与暂存区   首先说一下Git版本管理的原理，Git的特点是分布式管理，即每个人电脑上有一份完整的代码，因此不需要联网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git workspace and stage">
+<meta property="og:url" content="https://judera9.github.io/2022/03/27/2022-3-27-git-workspace-and-stage/index.html">
+<meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="其实git虽然用的很多，不过自己对它的原理和简单的commit、push、pull以外的其他功能并不熟悉，因此在这里做个笔记。首先给出下面这张速查cheat sheet，不过仅作参考，里面有些实现我自己更习惯用别的指令（后面详说）：   git-cheat-sheet  工作区与暂存区   首先说一下Git版本管理的原理，Git的特点是分布式管理，即每个人电脑上有一份完整的代码，因此不需要联网">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/jiaocha-1.png">
+<meta property="article:published_time" content="2022-03-27T12:57:58.000Z">
+<meta property="article:modified_time" content="2022-03-27T13:25:29.519Z">
+<meta property="article:author" content="Jude">
+<meta property="article:tag" content="解决报错">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/jiaocha-1.png">
+  
+  
+  <title>git workspace and stage - Jude&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jude&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home Page
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About Me
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="git workspace and stage">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-27 20:57" pubdate>
+        2022年3月27日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">git workspace and stage</h1>
+            
+            <div class="markdown-body">
+              <p>  其实git虽然用的很多，不过自己对它的原理和简单的<code>commit</code>、<code>push</code>、<code>pull</code>以外的其他功能并不熟悉，因此在这里做个笔记。首先给出下面这张速查<a
+target="_blank" rel="noopener" href="http://www.cheat-sheets.org/saved-copy/git-cheat-sheet.pdf">cheat
+sheet</a>，不过仅作参考，里面有些实现我自己更习惯用别的指令（后面详说）：</p>
+<figure>
+<img
+src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/git-cheat-sheet.png" srcset="/img/loading.gif" lazyload
+alt="git-cheat-sheet" />
+<figcaption aria-hidden="true">git-cheat-sheet</figcaption>
+</figure>
+<h2 id="工作区与暂存区">工作区与暂存区</h2>
+<p>  首先说一下Git版本管理的原理，Git的特点是分布式管理，即每个人电脑上有一份完整的代码，因此不需要联网也能本地工作。因此，<strong>Git的核心技术与功能就在于其智能的merge手段上</strong>。</p>
+<p>  Git的工作流如下图所示，当前本地仓库目录是工作区，有一个隐藏目录<code>.git</code>文件夹，需要在Windows或Linux的资源管理器打开显示选项才能看到。当<code>add</code>之后，文件就添加到暂存区stage里，而通过<code>commit</code>能够将暂存区内的文件提交到History版本库中。版本库中的HEAD指针指向当前分支，如下图的<code>master</code>分支。<strong>个人理解：暂存区相当告诉用户Git在跟踪某个文件的最新修改，因此可以使用随意一点，一般不会使用<code>rm
+--cached</code>这种命令来撤销跟踪；相对而言，<code>commit</code>的使用需要小心谨慎，提交前最好稍微检查一下代码，尽量不要commit错误代码</strong>。这个问题可以参考这个<a
+target="_blank" rel="noopener" href="https://www.jianshu.com/p/c9f131e22a60">删除 commit
+的三种方法</a>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/0.jpeg" srcset="/img/loading.gif" lazyload alt="git-repo" style="zoom: 80%;" /></p>
+<p>  首先是add阶段，如果我们希望某个文件不要被Git跟踪，那么将其添加到<code>.gitignore</code>中，针对特定项目的<code>.gitignore</code>模板可以在<a
+target="_blank" rel="noopener" href="https://github.com/github/gitignore">官方仓库</a>中找到。下图左边箭头的意义是，<strong>用上游的最后版本，覆盖下游的修改</strong>。</p>
+<blockquote>
+<p><code>git reset -- files</code> 撤销最后一次<code>git add
+files</code>，你也可以用<code>git reset</code>
+撤销所有暂存区域文件。这行代码作用要与下面的情况区分：当错误提交了某些代码到History库中了（或者提交了<code>&gt;2GB</code>大文件），那么就可以使用<code>git
+reset HEAD^</code>来退回到上一次commit，<strong>使用<code>git reset --
+files</code>对版本库中的文件是不会有任何作用的</strong></p>
+<p><code>git checkout -- files</code>
+把文件从暂存区域复制到工作目录，用来丢弃本地修改。<strong>注意作用是从暂存区复制内容来覆盖本地工作区，而不是从暂存区删除内容</strong>，这种情况要用<code>git
+rm --cached file</code>或<code>git rm --cached -r
+./</code>来取消暂存区中对该文件的track</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/basic-usage.svg" srcset="/img/loading.gif" lazyload alt="img" style="zoom:67%;" /></p>
+<p>  另一个用于解决版本库中<code>commit</code>错误的方式是使用<code>--
+amend</code>参数，Git会使用与当前提交相同的父节点进行一次新提交，旧的提交会被取消。这样目测也可以解决大文件上传问题和版本库错误代码问题。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/commit-amend.svg" srcset="/img/loading.gif" lazyload alt="img" style="zoom:67%;" /></p>
+<h2 id="其他图示">其他图示</h2>
+<p>  感谢<a
+target="_blank" rel="noopener" href="http://marklodato.github.io/visual-git-guide/index-zh-cn.html#checkout">Git图解</a>这个网站浅显易懂的说明和非常棒的图示，下面是网页中一些我觉得对理解有帮助的图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/conventions.svg" srcset="/img/loading.gif" lazyload alt="img" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/diff.svg" srcset="/img/loading.gif" lazyload alt="img" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/checkout-files.svg" srcset="/img/loading.gif" lazyload alt="img" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/reset-commit.svg" srcset="/img/loading.gif" lazyload alt="img" style="zoom:67%;" /></p>
+<h2 id="举例说明">举例说明</h2>
+<p>  久违的把我一年前刚用Git时创建的仓库拿来练习一下，首先<code>clone</code>到本地。这时候可能会有<code>Permission
+denied
+(publickey)</code>的错误，<strong>这可能是由于<code>ssh</code>配置有问题，也有可能是地址打错了</strong>，也有可能再运行一次就成功了（doge</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">$ git <span class="hljs-built_in">clone</span> git@github.com:Judera9/GitLearning.git<br>Cloning into <span class="hljs-string">&#x27;GitLearning&#x27;</span>...<br>remote: Enumerating objects: 61, <span class="hljs-keyword">done</span>.<br>remote: Counting objects: 100% (61/61), <span class="hljs-keyword">done</span>.<br>remote: Compressing objects: 100% (29/29), <span class="hljs-keyword">done</span>.<br>remote: Total 61 (delta 34), reused 54 (delta 27), pack-reused 0<br>Receiving objects: 100% (61/61), 5.16 KiB | 1.29 MiB/s, <span class="hljs-keyword">done</span>.<br>Resolving deltas: 100% (34/34), <span class="hljs-keyword">done</span>.<br><br></code></pre></td></tr></table></figure>
+<p>  看了一下，有个之前创建的<code>dev</code>分支，不妨切换过去试试（其中的那个<code>v1.0</code>时tag，如果切换过去会显示为<code>detached
+branch</code>）。然后，现在添加一张<code>kiana.png</code>的图片到工作区进行测试。<strong>现在这个图片的状态是<code>Untracked
+files</code></strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git checkout<br>dev             master          origin/HEAD     v1.0<br>HEAD            origin/dev      origin/master<br><br>$ git checkout dev<br>Switched to a new branch <span class="hljs-string">&#x27;dev&#x27;</span><br>Branch <span class="hljs-string">&#x27;dev&#x27;</span> <span class="hljs-built_in">set</span> up to track remote branch <span class="hljs-string">&#x27;dev&#x27;</span> from <span class="hljs-string">&#x27;origin&#x27;</span>.<br><br>$ git status<br>On branch dev<br>Your branch is up to date with <span class="hljs-string">&#x27;origin/dev&#x27;</span>.<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        kiana.png<br><br>nothing added to commit but untracked files present (use <span class="hljs-string">&quot;git add&quot;</span> to track)<br></code></pre></td></tr></table></figure>
+<p>  接下来按顺序进行如下操作：<em>添加到暂存区、添加到版本库、从版本库中删除并恢复至工作区</em>，试了一下用<code>git
+reset --
+files</code>并没有work，然后发现是我理解错了（这个的作用只是覆盖暂存区修改，相当于撤销最后一次<code>add</code>），需要指定操作类型（<code>git
+reset [--soft | --mixed | --hard]
+[HEAD]</code>），试了一下<code>hard</code>，果然直接把之前的commit全部撤销了，<strong>将暂存区和工作区都恢复到上一次commit之前的时间点</strong>。那么这个用来解决经常碰到的“<code>push</code>到一半，由于上传文件大于2GB无法继续”的问题是OK的，只是<strong>注意在<code>commit</code>之后的做了任何修改的话最好备份一下</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git add kiana.png<br><br>$ git commit -m <span class="hljs-string">&#x27;update a picture named kiana.png&#x27;</span><br>[dev 3782fd7] update a picture named kiana.png<br> 1 file changed, 0 insertions(+), 0 deletions(-)<br> create mode 100644 kiana.png<br> <br>$ git lg<br>* 3782fd7 (HEAD -&gt; dev) update a picture named kiana.png<br>*   28c639f (origin/dev) solve the conflict<br>|\<br>| * 2892887 yousa lyrics <span class="hljs-keyword">in</span> English<br>* | e935669 泠鸢中文歌曲-大喜<br>|/<br>* 14dea89 yousa lyrics added<br>* 54e37cb commit a no bug dev<br>... <span class="hljs-comment"># 省略</span><br><br>$ git status<br>On branch dev<br>Your branch is ahead of <span class="hljs-string">&#x27;origin/dev&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>nothing to commit, working tree clean<br><br>$ git reset -- kiana.png<br><br>$ git checkout -- kiana.png<br><br>$ git status<br>On branch dev<br>Your branch is ahead of <span class="hljs-string">&#x27;origin/dev&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>nothing to commit, working tree clean<br><br>$ git reset --hard<br>HEAD is now at 3782fd7 update a picture named kiana.png<br><br>$ git status<br>On branch dev<br>Your branch is behind <span class="hljs-string">&#x27;origin/dev&#x27;</span> by 1 commit, and can be fast-forwarded.<br>  (use <span class="hljs-string">&quot;git pull&quot;</span> to update your <span class="hljs-built_in">local</span> branch)<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        kiana.png<br><br>nothing added to commit but untracked files present (use <span class="hljs-string">&quot;git add&quot;</span> to track)<br></code></pre></td></tr></table></figure>
+<p>  上面这个问题如果换用<code>-soft</code>选项可能是更好的选项，因为相对来说更加安全。从结果看来只是单纯的回退到了之前的版本，内容拷贝到暂存区中了。感觉和<code>--mixed</code>差别不大，后者是默认参数，即<strong>用上一次的commit覆盖当前暂存区</strong>。如果要继续取消track这个文件，可以用<code>rm
+--cached file</code>（虽然没啥意义）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git reset --soft HEAD^<br><br>$ git status<br>On branch dev<br>Your branch is behind <span class="hljs-string">&#x27;origin/dev&#x27;</span> by 1 commit, and can be fast-forwarded.<br>  (use <span class="hljs-string">&quot;git pull&quot;</span> to update your <span class="hljs-built_in">local</span> branch)<br><br>Changes to be committed:<br>  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)<br>        new file:   kiana.png<br><br></code></pre></td></tr></table></figure>
+<h2 id="reference">Reference</h2>
+<section class="footnotes">
+<div class="footnote-list">
+<ol>
+<li>
+<span id="fn:1"
+class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-reset.html">git
+reset 命令</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:2" class="footnote-text"><span><a
+target="_blank" rel="noopener" href="http://marklodato.github.io/visual-git-guide/index-zh-cn.html#checkout">图解Git</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:3" class="footnote-text"><span><a
+target="_blank" rel="noopener" href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Git.md">CS-note-Git</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:4"
+class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c9f131e22a60">删除
+commit 的三种方法</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+</ol>
+</div>
+</section>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%A7%A3%E5%86%B3%E6%8A%A5%E9%94%99/">解决报错</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Git/">Git</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/27/2022-3-27-Intensity-Transform-and-Spatial-Filtering/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">灰度变换与空间滤波</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/27/2022-3-27-CondaHTTPError-Solution/">
+                        <span class="hidden-mobile">CondaHTTPError解决方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
