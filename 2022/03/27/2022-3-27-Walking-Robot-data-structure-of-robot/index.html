@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar2.png">
+  <link rel="icon" href="/img/avatar2.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,16 +16,16 @@
   <meta name="author" content="Jude">
   <meta name="keywords" content="">
   
-    <meta name="description" content="文章使用的涉及的相关.m文件在这里。 关节+连杆   在实时的机器人运动学求解中，我们很难对所有关节的运动一起求解，所以需要构建一种数据结构来描述求解顺序，然后可以通过递归的方式去顺序求解。那么如何去将机器人划分为smaller units来构建数据结构？有如下两种方式，因为机器人除了body其他肢体都是符合单一的joint+link的结构，所以使用左边建模更加方便。  数据结构 树-复">
+    <meta name="description" content="大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。文章使用的涉及的相关.m文件在这里。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="行走机器人 数据结构与编程">
+<meta property="og:title" content="行走机器人-数据结构与编程">
 <meta property="og:url" content="https://judera9.github.io/2022/03/27/2022-3-27-Walking-Robot-data-structure-of-robot/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
-<meta property="og:description" content="文章使用的涉及的相关.m文件在这里。 关节+连杆   在实时的机器人运动学求解中，我们很难对所有关节的运动一起求解，所以需要构建一种数据结构来描述求解顺序，然后可以通过递归的方式去顺序求解。那么如何去将机器人划分为smaller units来构建数据结构？有如下两种方式，因为机器人除了body其他肢体都是符合单一的joint+link的结构，所以使用左边建模更加方便。  数据结构 树-复">
+<meta property="og:description" content="大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。文章使用的涉及的相关.m文件在这里。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220303143030115.png">
 <meta property="article:published_time" content="2022-03-27T13:30:39.000Z">
-<meta property="article:modified_time" content="2022-03-27T13:44:21.000Z">
+<meta property="article:modified_time" content="2022-06-12T14:31:02.546Z">
 <meta property="article:author" content="Jude">
 <meta property="article:tag" content="Matlab">
 <meta property="article:tag" content="树">
@@ -34,7 +34,7 @@
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220303143030115.png">
   
   
-  <title>行走机器人 数据结构与编程 - Jude&#39;s Blog</title>
+  <title>行走机器人-数据结构与编程 - Jude&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -184,7 +184,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="行走机器人 数据结构与编程">
+            <span class="h2" id="subtitle" title="行走机器人-数据结构与编程">
               
             </span>
 
@@ -205,7 +205,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.5k 字
+      2.6k 字
     </span>
   
 
@@ -243,10 +243,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">行走机器人 数据结构与编程</h1>
+            <h1 style="display: none">行走机器人-数据结构与编程</h1>
             
             <div class="markdown-body">
-              <p>文章使用的涉及的相关<code>.m</code>文件在<a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/WakingRobot%20support%20files">这里</a>。</p>
+              <p>大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。文章使用的涉及的相关<code>.m</code>文件在<a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/WakingRobot%20support%20files">这里</a>。</p>
+<span id="more"></span>
 <h3 id="关节连杆">关节+连杆</h3>
 <p>  <strong>在实时的机器人运动学求解中，我们很难对所有关节的运动一起求解，所以需要构建一种数据结构来描述求解顺序，然后可以通过递归的方式去顺序求解</strong>。那么如何去将机器人划分为smaller units来构建数据结构？有如下两种方式，因为机器人除了body其他肢体都是符合单一的joint+link的结构，所以使用左边建模更加方便。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220303143030115.png" srcset="/img/loading.gif" lazyload alt="image-20220303143030115" style="zoom:67%;" /></p>
