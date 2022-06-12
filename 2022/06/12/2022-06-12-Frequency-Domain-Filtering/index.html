@@ -1,0 +1,830 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jude">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="文章使用的相关.ipynb文件在这里。其中lab5对应本文频率域滤波。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="频率域滤波">
+<meta property="og:url" content="https://judera9.github.io/2022/06/12/2022-06-12-Frequency-Domain-Filtering/index.html">
+<meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="文章使用的相关.ipynb文件在这里。其中lab5对应本文频率域滤波。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491320186081.png">
+<meta property="article:published_time" content="2022-06-12T06:50:42.000Z">
+<meta property="article:modified_time" content="2022-06-12T12:11:43.674Z">
+<meta property="article:author" content="Jude">
+<meta property="article:tag" content="DIP">
+<meta property="article:tag" content="傅里叶变换">
+<meta property="article:tag" content="频域">
+<meta property="article:tag" content="滤波">
+<meta property="article:tag" content="NumPy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491320186081.png">
+  
+  
+  <title>频率域滤波 - Jude&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jude&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home Page
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About Me
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default3.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="频率域滤波">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-12 14:50" pubdate>
+        2022年6月12日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      17k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      139 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">频率域滤波</h1>
+            
+            <div class="markdown-body">
+              <p>文章使用的相关<code>.ipynb</code>文件在<a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/DIP%20support%20files/spatial%20operation%20and%20filtering">这里</a>。其中lab5对应本文频率域滤波。</p>
+<span id="more"></span>
+<h2 id="introduction">Introduction</h2>
+<p>Frequency domain filtering handle the Fourier transform of an image, then calculate its inverse Fourier transform and get the processed image. This could be depicted as the following equation, in which <span class="math inline">\(H(u,v)\)</span> is the filtering transfer function. <span class="math display">\[
+g(x,y)=\mathcal{F}^{-1}[H(u,v)F(u,v)]
+\]</span> We need to multiply <span class="math inline">\(H(u,v)\)</span> and <span class="math inline">\(F(u,v)\)</span> by <span class="math inline">\((-1)^{x+y}\)</span> for shifting and centering the frequency domain function. Why we need to do this? Take 1dimensional DFT for example, the following equation is DFT, apparently we are interested in the positive indices for representing a period <span class="math inline">\([0, M]\)</span>, which in the frequency domain lies in the red area below: <span class="math display">\[
+\begin{aligned}
+F(u) &amp;=\sum^{M-1}_{n=0}f_n e^{-j2\pi nm/M} \\
+F(u,v) &amp;= \sum^{M-1}_{x=0}\sum^{N-1}_{y=0}f(x,y) e^{-j2\pi(ux/M+vy/N)}\\
+\\
+&amp;\left\{\begin{aligned}
+&amp;f(n)(-1)^n \Leftrightarrow F(u-M/2) \\
+&amp;f(x,y)(-1)^{x+y} \Leftrightarrow F(u-M/2,v-N/2) \\
+\end{aligned} 
+\right.\\
+\end{aligned}
+\]</span> <span class="math display">\[
+\begin{aligned}
+F^{shift}&amp;=\sum^{M/2-1}_{n=0}(-1)^nf_n e^{-j2\pi nm/M} +\sum^{M-1}_{n=M/2}(-1)^nf_n e^{-j2\pi nm/M} \\
+&amp;=\sum^{M/2-1}_{n=0}e^{-j\pi n}f_n e^{-j2\pi nm/M} +\sum^{M-1}_{n=M/2}e^{-j\pi n}f_n e^{-j2\pi nm/M} \\
+&amp;=\sum^{M/2-1}_{n=0}f_n e^{-j2\pi (n+M/2)m/M} +\sum^{M-1}_{n=M/2}e^{-j\pi n}f_n e^{-j2\pi (n+M/2)m/M} \\
+&amp;=\sum^{-1}_{n=-M/2}f_n e^{-j2\pi nm/M} +\sum^{M/2-1}_{n=0}f_n e^{-j2\pi nm/M} \\
+&amp;=\sum^{M/2-1}_{n=-M/2}f_n e^{-j2\pi nm/M} \\
+\\
+&amp;\mbox{2D is similar, after shifted the DFT is:} \\
+F^{shift}&amp;=\sum^{M/2-1}_{x=-M/2}\sum^{N/2-1}_{y=-N/2}f(x,y) e^{-j2\pi(ux/M+vy/N)}\\
+\end{aligned}
+\]</span></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPwatermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ExMzY3NjY2MTk1,size_6,color_FFFFFF,t_70#pic_center.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述" style="zoom: 33%;" /></p>
+<p>According to the periodicity of DFT, the function in <span class="math inline">\([M/2, M]\)</span> is the same with <span class="math inline">\([-M/2, 0]\)</span>. For the sake of better visualizing the red area, we would like to move the DC component to the center, that is, multiply a <span class="math inline">\((-1)^x\)</span> for 1dimensional DFT. For 2 dimension it is the same, the proof are given above. As seen in the following example, the right one is more elegant and could show us more knowledge about the image frequency domain.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 40%;" /></p>
+<p>Frequency domain filtering has important researching value, <strong>some tasks may be difficult to represent by equations in spatial domain, but could be perfectly revealed in frequency domain</strong>. Therefore, we usually see frequency domain filtering as a tool for understanding the effect and principle of a filter template, but implement it in spatial domain.</p>
+<p>If the frequency domain of <span class="math inline">\(h(x,y)\)</span>, that is, <span class="math inline">\(H(u,v)\)</span> should be real and symmetry. <span class="math inline">\(H(u,v)\)</span> should be real because that we want to have a zero-phase result, therefore the spatial domain should be symmetry, so the frequency domain should be real. Similarly, we hope to get a real result after doing IDFT or IFFT, so the frequency domain has better be symmetry. Here one of the proof: <span class="math display">\[
+\begin{aligned}
+&amp;\mbox{h(x,y) is real &lt;=&gt; H(u,v) is symmetry: }\\
+H^{*}(u,v)&amp;=[\sum^{M-1}_{x=0}\sum^{N-1}_{y=0}h(x,y)e^{-j2\pi(ux/M+vy/N)}]^{*} \\
+&amp;=\sum^{M-1}_{x=0}\sum^{N-1}_{y=0}h^{*}(x,y)e^{j2\pi(ux/M+vy/N)} \\
+&amp;=\sum^{M-1}_{x=0}\sum^{N-1}_{y=0}h(x,y)e^{-j2\pi([-u]x/M+[-v]y/N)} \\
+&amp;=H(-u,-v) \\
+\end{aligned}
+\]</span> Besides, <strong>we can find the noise pattern much more easier in frequency domain</strong>, and then use some delicate method to eliminate them, like we would discuss in task 4.</p>
+<h2 id="fft-and-ifft">FFT and IFFT</h2>
+<p>In actual application, we usually use FFT rather than DFT, because the DFT has higher time complexity. I implement DFT by two methods, which are matrix multiplication and FFT algorithm, then analyze the difference. We start by analyze 1 dimension situation:</p>
+<h3 id="principle-and-implementation">Principle and Implementation</h3>
+<p>The DFT process could be done by implementing the following matrix, <span class="math inline">\(F(u^i)\)</span> is the <span class="math inline">\(i\)</span> th frequency value and <span class="math inline">\(f_i\)</span> is the <span class="math inline">\(i\)</span> th spatial value. This is simple to understand, therefore I do not put pseudo code for this original DFT method. <span class="math display">\[
+\begin{aligned}
+&amp;\mbox{omega is the frequency component: } \omega=e^{2\pi j/M}\\
+\begin{bmatrix}
+F(u^0) \\F(u^1)\\F(u^2)\\...\\F(u^{M-1})
+\end{bmatrix}&amp;=
+\begin{bmatrix}
+1 &amp;1 &amp;1 &amp;...&amp;1 \\
+1 &amp; \omega&amp; \omega^2&amp;...&amp; \omega^{M-1}\\
+1 &amp; \omega^2&amp; \omega^4&amp;...&amp; \omega^{2(M-1)}\\
+... &amp; ... &amp; ... &amp; ... &amp; ... \\
+1 &amp; \omega^{M-1}&amp; \omega^{2(M-1)}&amp;...&amp; \omega^{(M-1)(M-1)}\\
+\end{bmatrix}
+\begin{bmatrix}
+f_0 \\f_1\\f_2\\...\\f_{M-1}
+\end{bmatrix}
+\end{aligned}
+\]</span> We could easily draw a conclusion that DFT is a <span class="math inline">\(O(N^2)\)</span> algorithm, because this matrix multiplication actually use two <code>for</code> loops. Now we hope to use a <em>divide and conquer</em> concept to implement a <span class="math inline">\(O(NlogN)\)</span> method, utilizing <strong>the symmetry property of even and odd functions</strong>. Here is the pseudocode of FFT (it could be a long discussion if prove FFT in detail):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><pre><code class="hljs pseudocode">def FFT(P):<br>	n=len(P)<br>	if n == 1:<br>		return P<br>	w = e^(2*pi*i/n)<br>	Pe, Po = [p0, p2,...,p_&#123;n-2&#125;], [p1, p3,...,p_&#123;n-1&#125;]<br>	ye, yo = FFT(Pe), FFT(Po)<br>	y = zeros(n)<br>	for j in range(n/2):<br>		y[j] = ye[j] + w^j * yo[j]<br>		y[j+n/2] = ye[j] - w^j * yo[j]<br>	return y<br></code></pre></td></tr></table></figure>
+<p>As for 2 dimensional FFT and IFFT, we could implement them by doing 1 dimensional FFT or IFFT twice, along axis 1 and axis 0 separately, this is proved as following: <span class="math display">\[
+\begin{aligned}
+F(u,v) &amp;= \sum^{M-1}_{x=0}\sum^{N-1}_{y=0}f(x,y) e^{-j2\pi(ux/M+vy/N)}\\
+&amp;=\sum^{M-1}_{x=0}e^{-j2\pi ux/M}(\sum^{N-1}_{y=0}f(x,y) e^{-j2\pi vy/N})\\
+&amp;=\sum^{M-1}_{x=0}F(x,v) e^{-j2\pi ux/M}\\
+F(x,v)&amp;=\sum^{N-1}_{y=0}f(x,y) e^{-j2\pi vy/N}
+\end{aligned}
+\]</span> Notice that we need to pad zeros for FFT, because it only support sequence size of <span class="math inline">\(2^n\)</span> (every <em>divide and conquer</em> method does) as 1 dimension. I notice that <code>numpy</code> do not pad zeros, after searching for reference, I found that <code>numpy</code> would not use 2 as base number anymore, but 4, 8, or the others. This may sacrifice the time cost a little bit, I do not implement this.</p>
+<p>However, padding zeros would affect the frequency spectrum, because padding would change the size of <span class="math inline">\((M,N)\)</span>, and the interpolation points would increase. This would not change the appearance of frequency spectrum largely, but make it smoother.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16483617961875.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<p>IFFT is very similar to FFT, because they are a pair of Fourier transform couple. The pseudo code for it is shown below. The results of inverse transforming the above frequency domain is shown below. I show the result without deleting the zero-pad area for IFFT, I also implement a method <code>def cut_zero_columns</code> for it.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs pseudocode">def IFFT(P):<br>	n=len(P)<br>	if n == 1:<br>		return P<br>	w = e^(2*pi*i/n)<br>	Pe, Po = [p0, p2,...,p_&#123;n-2&#125;], [p1, p3,...,p_&#123;n-1&#125;]<br>	ye, yo = IFFT(Pe), IFFT(Po)<br>	y = zeros(n)<br>	for j in range(n/2):<br>		y[j] = ye[j] + w^j * yo[j]<br>		y[j+n/2] = ye[j] - w^j * yo[j]<br>	return y / 2<br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16483625326037.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<h3 id="proof-for-correctness">Proof for Correctness</h3>
+<p>I randomly generate a sequence and do FFT and DFT on it, comparing the result with <code>numpy.fft.ftt</code>. Then I use IFFT and DFT to transform the frequency domain result in spatial domain, comparing with <code>numpy.fft.ifft</code>. The graph of this sequence below prove the correctness of my algorithms. The 2D FFT and IFFT result are shown in the above part.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16483594045422.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<h3 id="time-complexity">Time Complexity</h3>
+<p>First let's see the complexity of 1 dimensional FFT and IFFT, the x-axis of the following graph is <span class="math inline">\(2^n\)</span>, because I do not implement padding for 1 dimensional situation. DFT has greater time complexity than IFFT as we expected, but DFT is faster when the graph size is lower than about <span class="math inline">\(2^7=128\)</span>, here might be the reasons:</p>
+<ol type="1">
+<li><code>numpy</code> has optimization over matrix multiplication</li>
+<li>recursive methods naturally occupy larger space complexity, and frequently stack functions might affect the speed of program (actually this would happen when M is large)</li>
+</ol>
+<p>Therefore I set a threshold of <span class="math inline">\(2^7\)</span> above which using FFT and Below it using DFT.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16483594253683.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<p>For the 2D situation, although FFT is still faster than DFT, but the testing time is too long. So I just run a few <span class="math inline">\(M\)</span> size, the advantage of FFT is not so obvious. Actually a size of <span class="math inline">\(M=8000\)</span> is too large for nowadays PC monitor. The "step" effect of FFT is due to the zero-pad strategy.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-164836469072610.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<h2 id="distance-matrix">Distance Matrix</h2>
+<p>Many of the following frequency domain filters are designed under this distance matrix. For convenience, I implement a method to calculate distance matrix given image shape, using <code>numpy.meshgrid</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">distance_matrix</span>(<span class="hljs-params">img_shape</span>):</span><br>    half_len = (img_shape[<span class="hljs-number">0</span>] // <span class="hljs-number">2</span>, img_shape[<span class="hljs-number">1</span>] // <span class="hljs-number">2</span>)<br>    n_0 = np.arange(img_shape[<span class="hljs-number">0</span>]) - half_len[<span class="hljs-number">0</span>]<br>    n_1 = np.arange(img_shape[<span class="hljs-number">1</span>]) - half_len[<span class="hljs-number">1</span>]<br>    x, y = np.meshgrid(n_1, n_0)<br>    <span class="hljs-keyword">return</span> np.sqrt(x**<span class="hljs-number">2</span> + y**<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="task-1">Task 1</h2>
+<p>The convolution theory connects spatial domain and frequency domain. The spatial Sobel filtering is using the functions defined in last lab, shown in the second figure below. The proof for frequency domain Sobel, given a <span class="math inline">\(M\times N\)</span> input <span class="math inline">\(f(x, y)\)</span>: <span class="math display">\[
+\begin{aligned}
+&amp;\mbox{If need, pad the margin and get PxQ, transform to: } \\
+f_s&amp;=(-1)^{x+y}f(x,y) \\
+F(u, v)&amp;=DFT\{f_s(x, y)\} \ or \ FFT\{f_s(x, y)\} \\
+&amp;\mbox{Given a spatial template h(x, y), transform to: } \\
+H(u, v)&amp;=DFT\{h(x, y)\} \ or \ FFT\{h(x, y)\} \\
+&amp;\mbox{Filtering, correspond to spatial convolution: } \\
+G(u, v)&amp;=H(u,v)F(u,v) \\
+&amp;\mbox{Finally, get the result: } \\
+g(x,y) &amp;= \{real[\mathcal{F}^{-1}[G(u,v)]]\}\\
+g_s(x,y) &amp;= (-1)^{x+y}g(x,y) \\
+\\
+&amp;\mbox{Sobel templates in frequency domain: } \\
+h_1&amp;=\begin{bmatrix}
+-1 &amp; -2 &amp; -1 \\
+0 &amp; 0 &amp; 0\\
+1 &amp; 2 &amp; 1 \\
+\end{bmatrix}\quad h_2=\begin{bmatrix}
+-1 &amp; 0 &amp; 1 \\
+-2 &amp; 0 &amp; 2\\
+-1 &amp; 0 &amp; 1 \\
+\end{bmatrix}
+\end{aligned}
+\]</span> Substitute the two templates of Sobel <span class="math inline">\(h_1, h_2\)</span> into the process above, we get the frequency representation of Sobel templates, which are shown in figure 3 and 4 below. The results of filtering using them separately are shown in figure 5 and 6. We can see that each template extract the high frequency component of one dimension, abandoning the low frequency smooth component. The last figure is the frequency filtering result, it is the same with the spatial operation.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491320186081.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 80%;" /></p>
+<p>The time spatial operation cost is <code>0.965 s</code> while frequency costs <code>0.590 s</code>. It turns out that convolution in spatial domain takes more time than matrix dot product in frequency domain. This match our expectation, because <code>numpy</code> has optimization over matrix operation. Definitely, this is also relevant with the corresponding optimization methods (The Big Mat method for spatial domain and FFT for frequency domain).</p>
+<p>Below is the frequency domain Laplace filtering, we can see that it has explicit different pattern with Sobel filtering. Comparing them, I would conclude that:</p>
+<ol type="1">
+<li>Sobel templates would reject some high frequency components near the margin, so it could withdraw noise when extracting the edge information. Laplace leaves all the high frequency components, therefore when low frequency parts are removed, the weight of noise would increase.</li>
+<li>Laplace filter reject more low frequency component than Sobel, so its edges are thinner than Sobel.</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491523423054.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<h2 id="task-2">Task 2</h2>
+<p>The ideal lowpass filter in frequency domain is, <span class="math inline">\(D_0\)</span> is the cutoff frequency: <span class="math display">\[
+H(u,v)=\left\{
+\begin{aligned}
+1, \quad D(u,v) \leq D_0 \\
+0, \quad D(u,v) &gt; D_0
+\end{aligned}
+\right.
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPimage-20220327184802545.png" srcset="/img/loading.gif" lazyload alt="image-20220327184802545" style="zoom:50%;" /></p>
+<p>What the filter has done is shown below. The ideal lowpass filter directly cutoff the high frequency parts, leaving the low frequency. We can see from the following graph that the low frequency occupies larger power than the high frequency parts. The filtered high frequency parts are margin information and noises in spatial domain.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-164837131014416.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<p>The results of different <span class="math inline">\(D_0\)</span> is below:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-164837020747914.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<p><strong>When the radius of ILPF increases, the blur effect and the filtered power decrease. IDLF would cause "ringing" effect, which is due to the property of <span class="math inline">\(sinc\)</span> function</strong>. The following graph is the spatial feature of a ILPF with radius of 10. It is a <span class="math inline">\(sinc\)</span> function in 2D. This function convolves with every pixels (impulses) in the image, then many lobes would overlay with each other, these small lobes are the reason of "ringing". <strong>The small lobes are significant when the radius of ILPF is small, so increasing <span class="math inline">\(D_0\)</span> would be helpful to reduce "ringing"</strong>. This is reasonable and correspondent with the lab results above.</p>
+<p>By the way, The upstanding center results in the blur effect, because it strengthen the low frequency parts. Besides, its holding area is too large, therefore the convolution results with pixel impulses would overlap. When <span class="math inline">\(D_0\)</span> increases, the area is smaller, and blur is less.</p>
+<table>
+<tr>
+<td>
+<center>
+<img src="lab5实验报告.assets/output-164837212819417.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:50%;" />
+</center>
+</td>
+<td>
+<center>
+<img src="lab5实验报告.assets/output-164837319386618.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:50%;" />
+</center>
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<img src="lab5实验报告.assets/output-164837407272019.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:50%;" />
+</center>
+</td>
+<div class="code-wrapper"><pre><code class="hljs">&lt;td&gt;&lt;center&gt;&lt;img src=&quot;lab5实验报告.assets/output-164837408549120.png&quot; alt=&quot;output&quot; style=&quot;zoom:50%;&quot; /&gt;&lt;/center&gt;&lt;/td&gt;&lt;/tr&gt;</code></pre></div>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">lowpass_freq</span>(<span class="hljs-params">img_shape, d0</span>):</span><br>    dm = distance_matrix(img_shape)<br>    <span class="hljs-keyword">return</span> (dm &lt;= d0).astype(<span class="hljs-built_in">int</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="task-3">Task 3</h2>
+<h3 id="gaussian-lowpass-filter">Gaussian lowpass Filter</h3>
+<p>The equation of gaussian lowpass filter is shown below, <span class="math inline">\(D_0\)</span> is the cutoff frequency: <span class="math display">\[
+H(u,v)=e^{-D^2(u,v)/2D_0^2}
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPimage-20220327184721007.png" srcset="/img/loading.gif" lazyload alt="image-20220327184721007" style="zoom:50%;" /></p>
+<p>The gaussian filter is better than ILPF, because it do not have small lobes discussed above, which causes the "ringing" effect. However, this means that it sacrifices its effectiveness of lowpass filtering. In the following image, we can see that GLPF has a smooth transition.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-164837529940422.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<p>The results are shown below:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-164837528703621.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
+<p>From the equation of GLPF, <span class="math inline">\(D_0\)</span> is the standard deviation of gaussian. It represents the strength of filtering, that is, more power would be filtered if <span class="math inline">\(D_0\)</span> decreases. From the following graph, we cannot see any small lobes effect in spatial domain. This is because <strong>the IDFT of gaussian is still gaussian</strong>, which is an important property of gaussian.</p>
+<table>
+<tr>
+<td>
+<center>
+<img src="lab5实验报告.assets/output-164837531769123.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:50%;" />
+</center>
+</td>
+<td>
+<center>
+<img src="lab5实验报告.assets/output-164837532971724.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:50%;" />
+</center>
+</td>
+</tr>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gaussian_lowpass_freq</span>(<span class="hljs-params">img_shape, d0</span>):</span><br>    dm = distance_matrix(img_shape)<br>    <span class="hljs-keyword">return</span> np.exp(-dm ** <span class="hljs-number">2</span> / (<span class="hljs-number">2</span> * d0 ** <span class="hljs-number">2</span>))<br></code></pre></td></tr></table></figure>
+<h3 id="gaussian-highpass-filter">Gaussian highpass filter</h3>
+<p>The equation of Gaussian highpass filter: <span class="math display">\[
+H(u,v)=1-e^{-D^2(u,v)/2D_0^2}
+\]</span> The highpass filter would eliminate the low frequency parts in the center of the following spectrum. Comparing with IHPF and BHPF, the filtering result of GHPF is smoother (discussed later).</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-164837912893225.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<p>The results of gaussian highpass filter:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-164837915234126.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gaussian_highpass_freq</span>(<span class="hljs-params">img_shape, d0</span>):</span><br>    dm = distance_matrix(img_shape)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> - np.exp(-dm ** <span class="hljs-number">2</span> / (<span class="hljs-number">2</span> * d0 ** <span class="hljs-number">2</span>))<br></code></pre></td></tr></table></figure>
+<h2 id="task-4">Task 4</h2>
+<p>A Butterworth notch reject filter is composed of multiple highpass filter couples, the proof is: <span class="math display">\[
+\begin{aligned}
+&amp;\mbox{A single butterworth highpass filter: } \\
+H(u,v)&amp;=\frac{1}{1+[\frac{D(u,v)}{D_0}]^{2n}} \\
+&amp;\mbox{Therefore a notch filter is: } \\
+H_{NR}&amp;=\prod^{Q}_{k=1}H_k(u,v)H_{-k}(u,v) \\
+\end{aligned}
+\]</span></p>
+<p>In the above equation, <span class="math inline">\(Q\)</span> is the number of filter couples, and <span class="math inline">\(H_k, H_{-k}\)</span> are a pair of couple which are symmetry about the center of frequency domain (DC component). The Butterworth notch reject filter could be gotten simply by <span class="math inline">\(H_{NP} = 1 - H_{NR}\)</span>. Here is the Butterworth filters family:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491414987472.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 50%;" /></p>
+<p>The figure to process is the third figure, which has Moiré stripes. Moiré pattern is an important feature in DIP, it would be caused by overlapping of similar frequency stripes (can refer to <a target="_blank" rel="noopener" href="https://blog.csdn.net/Du_Shuang/article/details/107727272">this blog</a> for understanding its principle). <strong>In the first graph, we can see that there are 8 bright points, they are the overlapping frequency component</strong>. To remove the Moiré stripes, I use Butterworth notch reject filter to eliminate these components, the result is shown in the second figure. Then do IFFT and get the final result, shown in the forth figure. I also use a Butterworth notch pass filter to extract the 8 bright points to see what it is, it turns out that they are stripes of different frequency overlapping with each other.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491415596913.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 47%;" /></p>
+<p>The Butterworth notch reject filter is defined by:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">butterworth_highpass_freq</span>(<span class="hljs-params">img_shape, d0, n, center=(<span class="hljs-params"><span class="hljs-number">0</span>, <span class="hljs-number">0</span></span>)</span>):</span><br>    dm = distance_matrix(img_shape, center=center) + <span class="hljs-number">0.000001</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.power(d0 / dm, <span class="hljs-number">2</span> * n))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">butterworth_notch_reject_freq</span>(<span class="hljs-params">img_shape, d0s, n, centers</span>):</span><br>    HNR = np.ones(img_shape)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(d0s)):<br>        Hk = butterworth_highpass_freq(img_shape, d0s[i], n, center=centers[i])<br>        H_minus_k = butterworth_highpass_freq(img_shape, d0s[i], n, center=(-centers[i][<span class="hljs-number">0</span>], -centers[i][<span class="hljs-number">1</span>]))<br>        HNR *= Hk * H_minus_k<br>    <span class="hljs-keyword">return</span> HNR<br></code></pre></td></tr></table></figure>
+<p>The parameters of Butterworth notch reject filter are:</p>
+<ol type="1">
+<li><code>img_shape</code>: a tuple of <span class="math inline">\((M, N)\)</span> for an <span class="math inline">\(M\times N\)</span> shape image</li>
+<li><code>d0s</code>: a list of cutoff frequencies correspond to the list of highpass filter pairs. For example, <code>[10, 5]</code> means that we operate a highpass filter with radius of 10 for the first center in <code>centers</code> , and radius of 5 for the second.</li>
+<li><code>n</code>: the order of Butterworth filters, it could adjust the degree of transition of the filter</li>
+<li><code>centers</code>: a list of centers to operate highpass filters, the size should be the same with <code>d0s</code>. In the method body, I would automatically generate the other symmetrical center.</li>
+</ol>
+<p>All the parameters are tuned by experience referring the spectrum of the image. I tried different <code>centers</code> for 3~4 times to fit the bright points, then I gave <code>d0s</code> according to the size of the bright points.<code>n</code> is given 3 because this is a proper parameter for most situation using Butterworth filters, if it is larger, it might occur some "ring" effect.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this lab, I have done the following experiment and discussion:</p>
+<table>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 35%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Content</th>
+<th>Experiment &amp; Result</th>
+<th>Conclusion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Introduction</td>
+<td>Discuss the basic method of frequency filtering and <strong>the reason of shifting and why <span class="math inline">\(H(u,v)\)</span> should be real and symmetry</strong></td>
+<td>\</td>
+</tr>
+<tr class="even">
+<td>Implement FFT</td>
+<td>Implement the 1D recursive FFT algorithm with base 2, then compare the result with <code>numpy.ftt</code> and self implement DFT which using a transform matrix.</td>
+<td>FFT is an elegant and fantastic algorithm, playing a significant role in modern signal processing area. It reduces the time complexity from <span class="math inline">\(O(N^2)\)</span> to <span class="math inline">\(O(NlogN)\)</span>.</td>
+</tr>
+<tr class="odd">
+<td>Implement FFT2</td>
+<td>The 2D DFT is separable, which means that we can do 1D FFT twice to get the spectrum of an image.</td>
+<td>The base 2 FFT algorithm need zero-pad, so the result of FFT2 might be much larger than DFT. However, this do not have apparent harm on the result, because FFT would done interpolation on the Frequency domain for the zero components. The time complexity is not as good as expected, which might owe to the bottom optimization.</td>
+</tr>
+<tr class="even">
+<td>Sobel Filter in both spatial and frequency domains</td>
+<td>The spatial domain version is from last lab. Then, I discuss the implementation of frequency domain version step by step. Finally, I compare Sobel and Laplace templates.</td>
+<td>The spatial and frequency domain filtering results are very similar. The frequency domain of Sobel templates shows its pattern clearly. From the comparing with Laplace frequency domain, we can understand the pros and cons of both templates better than spatial domain.</td>
+</tr>
+<tr class="odd">
+<td>ILPF</td>
+<td>Implement ideal lowpass filter and discuss the "ring" effect</td>
+<td>When the cutoff frequency <span class="math inline">\(d_0\)</span> decreases, the blur effect and the "ring" effect increases. The "ring" effect is caused by small lobes around the impulse. Increasing <span class="math inline">\(d_0\)</span> would reduce the "ring" effect and blurring, but the function of LPF is also weakened.</td>
+</tr>
+<tr class="even">
+<td>GLPF and GHPF</td>
+<td>Implement gaussian lowpass filter and gaussian highpass filter</td>
+<td>Gaussian filters have larger size than Butterworth filters, which means that its transition around the cutoff frequency is smoother. Therefore, it do not have "ring" effect, but it do not perform as good as Butterworth in filtering.</td>
+</tr>
+<tr class="odd">
+<td>Butterworth notch filters</td>
+<td>Implement the Butterworth filters family, and discuss how notch filter impact on Moiré pattern</td>
+<td>The effect of filtering is great. Moiré pattern is a phenomenon caused by frequency overlapping, so its spectrum has some bright points corresponds to the stripes of certain frequencies. The parameters are chosen most from tuning and experience (need to find the bright points positions).</td>
+</tr>
+</tbody>
+</table>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/DIP/">DIP</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/DIP/">DIP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/">傅里叶变换</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%A2%91%E5%9F%9F/">频域</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%BB%A4%E6%B3%A2/">滤波</a>
+                    
+                      <a class="hover-with-bg" href="/tags/NumPy/">NumPy</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/12/2022-06-12-Lena-the-CV-girl/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Lena the CV girl</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/27/2022-3-27-Walking-Robot-data-structure-of-robot/">
+                        <span class="hidden-mobile">行走机器人 数据结构与编程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
