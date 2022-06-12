@@ -16,16 +16,16 @@
   <meta name="author" content="Jude">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Support .ipynb and images are here Spatial Transforms and Filtering  Spatial Transforms and Filtering  Introduction Task 1  Histogram Equalization  Principle Pseudo Code Implementation   Task 2  Histo">
+    <meta name="description" content="Support .ipynb and images are here Spatial Transforms and Filtering  Spatial Transforms and Filtering  Introduction Task 1  Histogram Equalization  Principle Pseudo Code Implementation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Image Spatial Operations and Filtering">
 <meta property="og:url" content="https://judera9.github.io/2022/03/16/2022-3-16-Image-Spatial-Operations-and-Filtering/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
-<meta property="og:description" content="Support .ipynb and images are here Spatial Transforms and Filtering  Spatial Transforms and Filtering  Introduction Task 1  Histogram Equalization  Principle Pseudo Code Implementation   Task 2  Histo">
+<meta property="og:description" content="Support .ipynb and images are here Spatial Transforms and Filtering  Spatial Transforms and Filtering  Introduction Task 1  Histogram Equalization  Principle Pseudo Code Implementation">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164719957060612.png">
 <meta property="article:published_time" content="2022-03-16T03:33:34.000Z">
-<meta property="article:modified_time" content="2022-03-27T12:50:08.831Z">
+<meta property="article:modified_time" content="2022-03-27T12:50:08.000Z">
 <meta property="article:author" content="Jude">
 <meta property="article:tag" content="DIP">
 <meta property="article:tag" content="NumPy">
@@ -247,13 +247,10 @@
             <h1 style="display: none">Image Spatial Operations and Filtering</h1>
             
             <div class="markdown-body">
-              <p>Support <code>.ipynb</code> and images are <a
-target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/DIP%20support%20files/spatial%20operation%20and%20filtering">here</a></p>
-<h1 id="spatial-transforms-and-filtering">Spatial Transforms and
-Filtering</h1>
+              <p>Support <code>.ipynb</code> and images are <a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/DIP%20support%20files/spatial%20operation%20and%20filtering">here</a></p>
+<h1 id="spatial-transforms-and-filtering">Spatial Transforms and Filtering</h1>
 <ul>
-<li><a href="#spatial-transforms-and-filtering">Spatial Transforms and
-Filtering</a>
+<li><a href="#spatial-transforms-and-filtering">Spatial Transforms and Filtering</a>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#task-1">Task 1</a>
@@ -274,21 +271,18 @@ Filtering</a>
 <li><a href="#implementation-1">Implementation</a></li>
 </ul></li>
 <li><a href="#gamma-transform">Gamma Transform</a></li>
-<li><a href="#local-statistic-enhancement">Local Statistic
-Enhancement</a></li>
+<li><a href="#local-statistic-enhancement">Local Statistic Enhancement</a></li>
 </ul></li>
 <li><a href="#task-3">Task 3</a>
 <ul>
-<li><a href="#local-histogram-equalization">Local Histogram
-Equalization</a>
+<li><a href="#local-histogram-equalization">Local Histogram Equalization</a>
 <ul>
 <li><a href="#principle-2">Principle</a></li>
 <li><a href="#pseudo-code-2">Pseudo Code</a></li>
 <li><a href="#implementation-2">Implementation</a></li>
 </ul></li>
 <li><a href="#gamma-transform-1">Gamma Transform</a></li>
-<li><a href="#local-statistic-enhancement-1">Local Statistic
-Enhancement</a></li>
+<li><a href="#local-statistic-enhancement-1">Local Statistic Enhancement</a></li>
 </ul></li>
 <li><a href="#task-4">Task 4</a>
 <ul>
@@ -322,25 +316,10 @@ Enhancement</a></li>
 </ul></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
-<p>The spatial operations directly operate the pixels of an image, so
-they are usually efficient and low-resource-occupying. Besides, some
-spatial nonlinear filtering techniques, like the median filter discussed
-below, could achieve fantastic results in certain conditions (SAP)
-rather than other transform domain operations. Therefore, it is
-significant to learn and implement some classical image spatial
-operations.</p>
-<p>Spatial operations are mainly divided into intensity transformations
-and spatial filtering. Intensity transformations usually operate with
-single pixels, such as gamma transform, which could generally be
-depicted by <span class="math inline">\(s=T[r]\)</span> (r is a 1 x 1
-input pixel, s is the output pixel). Spatial filtering usually operates
-with the neighbor of pixels, such as linear box filtering.</p>
-<p>The usage of spatial operations are extraordinarily wide, the image
-enhancement and denoising discussed in this lab are just one of them.
-Actually, some of the Neural Network and Deep Learning technologies also
-use spatial operations to extract image features.</p>
-<p>The enhancement methods discussed in this report are listed
-below:</p>
+<p>The spatial operations directly operate the pixels of an image, so they are usually efficient and low-resource-occupying. Besides, some spatial nonlinear filtering techniques, like the median filter discussed below, could achieve fantastic results in certain conditions (SAP) rather than other transform domain operations. Therefore, it is significant to learn and implement some classical image spatial operations.</p>
+<p>Spatial operations are mainly divided into intensity transformations and spatial filtering. Intensity transformations usually operate with single pixels, such as gamma transform, which could generally be depicted by <span class="math inline">\(s=T[r]\)</span> (r is a 1 x 1 input pixel, s is the output pixel). Spatial filtering usually operates with the neighbor of pixels, such as linear box filtering.</p>
+<p>The usage of spatial operations are extraordinarily wide, the image enhancement and denoising discussed in this lab are just one of them. Actually, some of the Neural Network and Deep Learning technologies also use spatial operations to extract image features.</p>
+<p>The enhancement methods discussed in this report are listed below:</p>
 <table>
 <colgroup>
 <col style="width: 44%" />
@@ -355,38 +334,27 @@ below:</p>
 <tbody>
 <tr class="odd">
 <td>Basic intensity transformation (Gamma transform)</td>
-<td>Gamma transform is the simplest method for implementation, and its
-result is pretty good after tuning the <span
-class="math inline">\(\gamma\)</span> factor</td>
+<td>Gamma transform is the simplest method for implementation, and its result is pretty good after tuning the <span class="math inline">\(\gamma\)</span> factor</td>
 </tr>
 <tr class="even">
 <td>Histogram equalization</td>
-<td>It can automatically redistribute the gray scales according to
-histogram, spread out the centralized histogram bins. However, it can
-not generate new gray scales and would sometimes cause "wash-out"</td>
+<td>It can automatically redistribute the gray scales according to histogram, spread out the centralized histogram bins. However, it can not generate new gray scales and would sometimes cause "wash-out"</td>
 </tr>
 <tr class="odd">
 <td>Histogram matching (specification)</td>
-<td>User need to design a probability distribution <span
-class="math inline">\(pdf(z_q)\)</span> as a desired histogram. This
-method could withstand the "wash-out" effect</td>
+<td>User need to design a probability distribution <span class="math inline">\(pdf(z_q)\)</span> as a desired histogram. This method could withstand the "wash-out" effect</td>
 </tr>
 <tr class="even">
 <td>Local Histogram Equalization</td>
-<td>It iterate histogram equalization in small neighbors, the
-enhancement effect in local details is better, but the time-cost
-increases as well</td>
+<td>It iterate histogram equalization in small neighbors, the enhancement effect in local details is better, but the time-cost increases as well</td>
 </tr>
 <tr class="odd">
 <td>Histogram statistic filtering (mean and variance)</td>
-<td>Need to put effort on tuning parameters, but it is more flexible to
-enhance certain areas or details. Prior knowledge might be
-essential</td>
+<td>Need to put effort on tuning parameters, but it is more flexible to enhance certain areas or details. Prior knowledge might be essential</td>
 </tr>
 </tbody>
 </table>
-<p>The denoising (SAP) methods discussed in this report are also listed
-below:</p>
+<p>The denoising (SAP) methods discussed in this report are also listed below:</p>
 <table>
 <colgroup>
 <col style="width: 40%" />
@@ -401,33 +369,22 @@ below:</p>
 <tbody>
 <tr class="odd">
 <td>Box filter (Linear filter)</td>
-<td>Actually is calculating average in a neighbor. It could smooth some
-of the noise, but the edge blur are also apparent</td>
+<td>Actually is calculating average in a neighbor. It could smooth some of the noise, but the edge blur are also apparent</td>
 </tr>
 <tr class="even">
 <td>Median filter</td>
-<td>Might be the best choice for SAP, because it would not cause edge
-blur effect. But for many other kinds of noise, it might not be a good
-choice</td>
+<td>Might be the best choice for SAP, because it would not cause edge blur effect. But for many other kinds of noise, it might not be a good choice</td>
 </tr>
 <tr class="odd">
 <td>Gaussian low pass filter (Linear filter)</td>
-<td>For gaussian noise it might be a good choice, but it also cause edge
-blur like box filter does (but less blur rather than box filter)</td>
+<td>For gaussian noise it might be a good choice, but it also cause edge blur like box filter does (but less blur rather than box filter)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="task-1">Task 1</h2>
 <h3 id="histogram-equalization">Histogram Equalization</h3>
 <h4 id="principle">Principle</h4>
-<p><span class="math inline">\(s\)</span> is the processed pixel, <span
-class="math inline">\(r\)</span> is the input pixel and <span
-class="math inline">\(p_i(i)\)</span> is the corresponding PDF of gray
-scale. Note that this is the proof for continuous condition, discrete is
-similar, changing integral to sum, and the <span
-class="math inline">\(s=T(r)\)</span> step need to map <span
-class="math inline">\(s\)</span> to the nearest integer. <span
-class="math display">\[
+<p><span class="math inline">\(s\)</span> is the processed pixel, <span class="math inline">\(r\)</span> is the input pixel and <span class="math inline">\(p_i(i)\)</span> is the corresponding PDF of gray scale. Note that this is the proof for continuous condition, discrete is similar, changing integral to sum, and the <span class="math inline">\(s=T(r)\)</span> step need to map <span class="math inline">\(s\)</span> to the nearest integer. <span class="math display">\[
 \begin{aligned}
 s &amp; =T(r)=(L-1)\int^{r}_0p_r(w)dw \\
 prove \ how \ &amp; it \ works: \\
@@ -439,37 +396,22 @@ s &amp; =T(r)=(L-1)\int^{r}_0p_r(w)dw
 \right. \\
 \\
 \Rightarrow
-\frac{ds}{dr} &amp;
-=\frac{dT(r)}{dr}=(L-1)\frac{d}{dr}[\int^r_0p_r(w)dw]=(L-1)p_r(r) \\
-\Rightarrow p_s(s)
-&amp;=p_r(r)|\frac{dr}{ds}|=p_r(r)|\frac{1}{(L-1)p_r(r)}|=\frac{1}{L-1}
-\quad 0\leq s\leq L-1
+\frac{ds}{dr} &amp; =\frac{dT(r)}{dr}=(L-1)\frac{d}{dr}[\int^r_0p_r(w)dw]=(L-1)p_r(r) \\
+\Rightarrow p_s(s) &amp;=p_r(r)|\frac{dr}{ds}|=p_r(r)|\frac{1}{(L-1)p_r(r)}|=\frac{1}{L-1} \quad 0\leq s\leq L-1
 \end{aligned}
 \]</span></p>
 <h4 id="pseudo-code">Pseudo Code</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hist</span>(<span class="hljs-params">arr</span>):</span><br>	<span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	return the histogram of a given array (ravel or unravel are both fine)</span><br><span class="hljs-string">	&quot;&quot;&quot;</span><br>	init histogram <span class="hljs-keyword">with</span> zeros<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> whole gray scale<br>        calculate the number of pixels that <span class="hljs-string">&#x27;value = i&#x27;</span><br>    <span class="hljs-keyword">return</span> histogram<br></code></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hist_equ</span>(<span class="hljs-params">arr</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Remap the gray scale of arr according to CDF(r)</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    input_hist = hist(arr) <span class="hljs-comment"># `hist` is defined above</span><br>    calculate p(r) by normalizing -&gt; r_pdf<br>    calculate integral[p(r)] by accumulate p(r) -&gt; r_cdf<br>    init output <span class="hljs-keyword">with</span> zeros<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">256</span>:<br>    	change pixels(arr) that <span class="hljs-string">&#x27;value = i&#x27;</span> into <span class="hljs-string">&#x27;value = r_cdf[i]&#x27;</span> -&gt; output<br>    <span class="hljs-keyword">return</span> output<br></code></pre></td></tr></table></figure>
 <h4 id="implementation">Implementation</h4>
-<p>Prove the correctness of my histogram method, I compare it with
-<code>np.histogram</code>, it turns out that they are the same. Note
-that I do not iterate the whole image with two <code>for</code> loops,
-because of two reason:</p>
+<p>Prove the correctness of my histogram method, I compare it with <code>np.histogram</code>, it turns out that they are the same. Note that I do not iterate the whole image with two <code>for</code> loops, because of two reason:</p>
 <ol type="1">
-<li><code>numpy</code> is written by high quality C in bottom, it is
-much more efficient than row python codes</li>
-<li>the tricky <code>np.sum</code> method has bottom acceleration
-supported by <code>numpy</code>, so I iterate all the possible gray
-values rather than iterate the (H, W) axis with two <code>for</code>
-loops (Although iterate gray scales has higher time complexity than
-iterate the image with two <code>for</code>, it is actually faster)</li>
+<li><code>numpy</code> is written by high quality C in bottom, it is much more efficient than row python codes</li>
+<li>the tricky <code>np.sum</code> method has bottom acceleration supported by <code>numpy</code>, so I iterate all the possible gray values rather than iterate the (H, W) axis with two <code>for</code> loops (Although iterate gray scales has higher time complexity than iterate the image with two <code>for</code>, it is actually faster)</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">// <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hist</span></span><br><span class="hljs-function"><span class="hljs-title">_hist</span> = <span class="hljs-title">np</span>.<span class="hljs-title">zeros</span>(<span class="hljs-params">_max - _min + <span class="hljs-number">1</span></span>)</span><br><span class="hljs-function"><span class="hljs-title">for</span> <span class="hljs-title">v</span> <span class="hljs-title">in</span> <span class="hljs-title">range</span>(<span class="hljs-params">_min, _max + <span class="hljs-number">1</span></span>):</span><br>    _hist[v] = np.<span class="hljs-built_in">sum</span>(arr == v)<br></code></pre></td></tr></table></figure>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-16471935845342.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
-<p>Only use one <code>for</code> loop to implement this algorithm.
-Actually, the optimize methods for python is similar with
-<code>@matlab</code>, which is efficient with matrix operations.
-Therefore, the object of optimizing python code could be concluded
-as:</p>
+<p>Only use one <code>for</code> loop to implement this algorithm. Actually, the optimize methods for python is similar with <code>@matlab</code>, which is efficient with matrix operations. Therefore, the object of optimizing python code could be concluded as:</p>
 <ol type="1">
 <li>use less <code>for</code> loops</li>
 <li>use more <code>numpy</code> methods and matrix operations</li>
@@ -478,106 +420,61 @@ as:</p>
 <h2 id="task-2">Task 2</h2>
 <h3 id="histogram-match">Histogram Match</h3>
 <h4 id="principle-1">Principle</h4>
-<p>First consider the continuous condition, we want to get a transform
-of <span class="math inline">\(z=\hat{T}[r]\)</span>, <span
-class="math inline">\(p(z)\)</span> is the desired histogram designed.
-We introduce a variable <span class="math inline">\(s\)</span> for
-transition, and we get <span
-class="math inline">\(z=G^{-1}[T(r)]\)</span>: <span
-class="math display">\[
+<p>First consider the continuous condition, we want to get a transform of <span class="math inline">\(z=\hat{T}[r]\)</span>, <span class="math inline">\(p(z)\)</span> is the desired histogram designed. We introduce a variable <span class="math inline">\(s\)</span> for transition, and we get <span class="math inline">\(z=G^{-1}[T(r)]\)</span>: <span class="math display">\[
 \begin{aligned}
 s&amp;=T(r)=(L-1)\int_0^rp_r(w)dw \\
 G(z)&amp;=(L-1)\int^r_0p_z(t)dt=s \\
 &amp;\Rightarrow
 z=G^{-1}[T(r)]=G^{-1}(s)
 \end{aligned}
-\]</span> The discrete time condition is similar, we do not need to
-solve <span class="math inline">\(G^{-1}\)</span> any more, because we
-can get a integer mapping relationship (round) using <span
-class="math inline">\(s_k=G(z_q)\)</span>, if we want to know <span
-class="math inline">\(z_q\)</span>, just iterate the array of <span
-class="math inline">\(s_k\)</span>. Here is the proof: <span
-class="math display">\[
+\]</span> The discrete time condition is similar, we do not need to solve <span class="math inline">\(G^{-1}\)</span> any more, because we can get a integer mapping relationship (round) using <span class="math inline">\(s_k=G(z_q)\)</span>, if we want to know <span class="math inline">\(z_q\)</span>, just iterate the array of <span class="math inline">\(s_k\)</span>. Here is the proof: <span class="math display">\[
 \begin{aligned}
-s_k&amp;=T(r_k)=(L-1)\sum^k_{j=0}p_r(r_j)=\frac{L-1}{MN}\sum^k_{j=0}n_j
-\\
+s_k&amp;=T(r_k)=(L-1)\sum^k_{j=0}p_r(r_j)=\frac{L-1}{MN}\sum^k_{j=0}n_j \\
 G(z_q)&amp;=(L-1)\sum^q_{i=0}p_z(z_i)=s_k \\
 &amp;\Rightarrow
 z_q=G^{-1}(s_k)=G^{-1}[T(r_k)]
 \end{aligned}
 \]</span></p>
 <h4 id="pseudo-code-1">Pseudo Code</h4>
-<p>First we need to design a <code>z_q</code>, and pass its
-histogram</p>
+<p>First we need to design a <code>z_q</code>, and pass its histogram</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hist_match</span>(<span class="hljs-params">arr, spec_hist</span>):</span><br>	<span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	Do histogram match according to given spec_hist</span><br><span class="hljs-string">	&quot;&quot;&quot;</span><br>	input_hist = hist(arr) <span class="hljs-comment"># `hist` is defined above</span><br>	calculate CDF(s_k) <span class="hljs-keyword">as</span> we do <span class="hljs-keyword">in</span> histogram equalization -&gt; s_k<br>	calculate CDF(z_q2s_k) <span class="hljs-keyword">from</span> the given histogram(spec_hist) -&gt; z_q2s_k<br>	init output <span class="hljs-keyword">with</span> zeros<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">256</span>:<br>    	find the indices that satisfy <span class="hljs-string">&#x27;s_k &lt;= z_q2s_k&#x27;</span> <span class="hljs-keyword">and</span> choose the smallest -&gt; idx<br>    	change pixels(arr) that <span class="hljs-string">&#x27;value = i&#x27;</span> into idx -&gt; output<br>    <span class="hljs-keyword">return</span> output<br></code></pre></td></tr></table></figure>
 <h4 id="implementation-1">Implementation</h4>
-<p>I design two <span class="math inline">\(pdf(z_q)\)</span> here, the
-blue one is expected to be better for easing the "wash-out" effect.</p>
+<p>I design two <span class="math inline">\(pdf(z_q)\)</span> here, the blue one is expected to be better for easing the "wash-out" effect.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-16471964888277.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
-<p>Notice that I also only use one <code>for</code> loop, I use many
-<code>numpy</code> tricks to avoid using <code>for</code>. During the
-for loop, I cut some of the iteration values of all these variables, it
-works out correctly.</p>
+<p>Notice that I also only use one <code>for</code> loop, I use many <code>numpy</code> tricks to avoid using <code>for</code>. During the for loop, I cut some of the iteration values of all these variables, it works out correctly.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># def hist_match</span><br>input_hist = hist(arr.ravel())<br>s_k = np.<span class="hljs-built_in">round</span>(<span class="hljs-number">255</span> / np.<span class="hljs-built_in">sum</span>(input_hist) * np.cumsum(input_hist))<br>z_q2s_k = np.<span class="hljs-built_in">round</span>(<span class="hljs-number">255</span> * np.cumsum(spec_hist))<br>output_image = np.zeros_like(arr)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):  <span class="hljs-comment"># r -&gt; s</span><br>    idx = np.where(s_k[i] &lt;= z_q2s_k)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]  <span class="hljs-comment"># s -&gt; z</span><br>    output_image[arr == i] = idx<br><span class="hljs-keyword">return</span> output_image<br></code></pre></td></tr></table></figure>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rust">rk: <span class="hljs-number">0</span> sk: <span class="hljs-number">147</span> zq2sk: <span class="hljs-number">145</span> zq: <span class="hljs-number">57</span><br>rk: <span class="hljs-number">1</span> sk: <span class="hljs-number">155</span> zq2sk: <span class="hljs-number">155</span> zq: <span class="hljs-number">60</span><br>rk: <span class="hljs-number">2</span> sk: <span class="hljs-number">163</span> zq2sk: <span class="hljs-number">163</span> zq: <span class="hljs-number">63</span><br>rk: <span class="hljs-number">3</span> sk: <span class="hljs-number">166</span> zq2sk: <span class="hljs-number">166</span> zq: <span class="hljs-number">64</span><br>rk: <span class="hljs-number">4</span> sk: <span class="hljs-number">171</span> zq2sk: <span class="hljs-number">171</span> zq: <span class="hljs-number">66</span><br>rk: <span class="hljs-number">5</span> sk: <span class="hljs-number">175</span> zq2sk: <span class="hljs-number">173</span> zq: <span class="hljs-number">67</span><br>rk: <span class="hljs-number">6</span> sk: <span class="hljs-number">180</span> zq2sk: <span class="hljs-number">178</span> zq: <span class="hljs-number">69</span><br>rk: <span class="hljs-number">7</span> sk: <span class="hljs-number">184</span> zq2sk: <span class="hljs-number">183</span> zq: <span class="hljs-number">71</span><br>rk: <span class="hljs-number">8</span> sk: <span class="hljs-number">186</span> zq2sk: <span class="hljs-number">185</span> zq: <span class="hljs-number">72</span><br>...<br></code></pre></td></tr></table></figure>
 <h3 id="gamma-transform">Gamma Transform</h3>
-<p>The principle could not be simpler. It is one of the most widely used
-intensity transformation method, actually it has a pretty good effect on
-enhancing Q3_2.tif and Q3_3.tif. The time it costs is also very low:
-<span class="math display">\[
+<p>The principle could not be simpler. It is one of the most widely used intensity transformation method, actually it has a pretty good effect on enhancing Q3_2.tif and Q3_3.tif. The time it costs is also very low: <span class="math display">\[
 s=cr^{\gamma}
 \]</span></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gamma_transform</span>(<span class="hljs-params">arr, gamma</span>):</span><br>    gamma_img = np.<span class="hljs-built_in">round</span>(np.power(arr / <span class="hljs-number">255.0</span>, gamma) * <span class="hljs-number">255</span>).astype(<span class="hljs-built_in">int</span>)<br>    <span class="hljs-keyword">return</span> gamma_img<br></code></pre></td></tr></table></figure>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h3 id="local-statistic-enhancement">Local Statistic Enhancement</h3>
-<p>The statistic property we are interested are mean and variance
-(secondary moment), here we can calculate the global mean <span
-class="math inline">\(m_G\)</span> and variance <span
-class="math inline">\(\sigma^2_G\)</span>, then get the standard
-variance <span class="math inline">\(\sigma_G\)</span>: <span
-class="math display">\[
+<p>The statistic property we are interested are mean and variance (secondary moment), here we can calculate the global mean <span class="math inline">\(m_G\)</span> and variance <span class="math inline">\(\sigma^2_G\)</span>, then get the standard variance <span class="math inline">\(\sigma_G\)</span>: <span class="math display">\[
 \begin{aligned}
 \mu_2(r)&amp; =\sigma^2=\sum^{L-1}_{i=0}(r_i-m)^2p(r_i) \\
 m&amp; =\sum^{L-1}_{i=0}r_ip(r_i) \\
 \end{aligned}
-\]</span> During local enhancement, we calculate mean and variance of
-the neighbor, then use the last equation below to decide whether enhance
-the current pixel or not. <span
-class="math inline">\(E,k_0,k_1,k_2,k_3\)</span> are the parameters to
-design and tune. <span class="math display">\[
+\]</span> During local enhancement, we calculate mean and variance of the neighbor, then use the last equation below to decide whether enhance the current pixel or not. <span class="math inline">\(E,k_0,k_1,k_2,k_3\)</span> are the parameters to design and tune. <span class="math display">\[
 \begin{aligned}
 m_{S_{xy}} &amp; =\sum^{L-1}_{i=0}r_ip_{S_{xy}}(r_i) \\
-\sigma^2_{S_{xy}} &amp;
-=\sum^{L-1}_{i=0}(r_i-m_{S_{xy}})^2p_{S_{xy}}(r_i) \\
+\sigma^2_{S_{xy}} &amp; =\sum^{L-1}_{i=0}(r_i-m_{S_{xy}})^2p_{S_{xy}}(r_i) \\
 g(x,y) &amp; =\left\{
 \begin{aligned}
-&amp; E \cdot f(x,y), \quad k_0m_G\leq m_{S_{xy}} \leq k_1m_G , \
-k_2\sigma_G
+&amp; E \cdot f(x,y), \quad k_0m_G\leq m_{S_{xy}} \leq k_1m_G , \ k_2\sigma_G
 \leq \sigma_{S_{xy}} \leq k_3\sigma_G\\
 &amp; f(x,y), \quad otherwise
 \end{aligned}
 \right.
 \end{aligned}
-\]</span> This method is <code>def local_statistic_adjust(arr, k0, k1,
-k2, k3, E, m_size=3)</code> in the code file submitted, I have not done
-many optimization, therefore this method runs more than 10 seconds for
-Q3_2.tif.</p>
-<p>The result is not desirable, might because the parameter need to be
-tuned more carefully. However, this image is not suitable for using this
-method to enhance, because the details do not behave similarly. Another
-approach for utilizing histogram statistics should be designed.</p>
+\]</span> This method is <code>def local_statistic_adjust(arr, k0, k1, k2, k3, E, m_size=3)</code> in the code file submitted, I have not done many optimization, therefore this method runs more than 10 seconds for Q3_2.tif.</p>
+<p>The result is not desirable, might because the parameter need to be tuned more carefully. However, this image is not suitable for using this method to enhance, because the details do not behave similarly. Another approach for utilizing histogram statistics should be designed.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164719917401210.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h2 id="task-3">Task 3</h2>
 <h3 id="local-histogram-equalization">Local Histogram Equalization</h3>
 <h4 id="principle-2">Principle</h4>
-<p>There is no equations and proof for this algorithm. Actually, we does
-histogram equalization for every neighbors. However, this is a very
-expensive process, therefore I think of another tricky way to implement
-this algorithm. Like we discussed above, we should use
-<code>numpy</code> as much as possible and try to reduce operations
-under <code>for</code> loops. Therefore, I re-organize the neighbors
-into a <code>Big_Mat</code> and done operations parallelly. <span
-class="math display">\[
+<p>There is no equations and proof for this algorithm. Actually, we does histogram equalization for every neighbors. However, this is a very expensive process, therefore I think of another tricky way to implement this algorithm. Like we discussed above, we should use <code>numpy</code> as much as possible and try to reduce operations under <code>for</code> loops. Therefore, I re-organize the neighbors into a <code>Big_Mat</code> and done operations parallelly. <span class="math display">\[
 \begin{aligned}
 A &amp;= \begin{bmatrix}
 a_{11} &amp; a_{12} &amp; a_{13} &amp; ... &amp; a_{1n} \\
@@ -588,23 +485,13 @@ a_{m1} &amp; a_{m2} &amp; a_{m3} &amp; ... &amp; a_{mn} \\
 \end{bmatrix} \quad
 \\
 Big_Mat &amp;= \begin{bmatrix}
-a_{11} &amp; a_{12} &amp; a_{13} &amp; a_{21} &amp; a_{22} &amp; a_{23}
-&amp; a_{31} &amp; a_{32} &amp; a_{33} \\
-a_{12} &amp; a_{13} &amp; a_{14} &amp; a_{22} &amp; a_{23} &amp; a_{24}
-&amp; a_{32} &amp; a_{33} &amp; a_{34}\\
-&amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp; \\
-a_{(m-2)(n-2)} &amp; a_{(m-2)(n-1)} &amp; a_{(m-2)n} &amp;
-a_{(m-1)(n-2)} &amp; a_{(m-1)(n-1)} &amp; a_{(m-1)n} &amp; a_{m(n-2)}
-&amp; a_{m(n-1)} &amp; a_{mn}\\
+a_{11} &amp; a_{12} &amp; a_{13} &amp; a_{21} &amp; a_{22} &amp; a_{23} &amp; a_{31} &amp; a_{32} &amp; a_{33} \\
+a_{12} &amp; a_{13} &amp; a_{14} &amp; a_{22} &amp; a_{23} &amp; a_{24} &amp; a_{32} &amp; a_{33} &amp; a_{34}\\
+ &amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp; \\
+ a_{(m-2)(n-2)} &amp; a_{(m-2)(n-1)} &amp; a_{(m-2)n} &amp; a_{(m-1)(n-2)} &amp; a_{(m-1)(n-1)} &amp; a_{(m-1)n} &amp; a_{m(n-2)} &amp; a_{m(n-1)} &amp; a_{mn}\\
 \end{bmatrix} \\
 \end{aligned}
-\]</span> Another optimizing method is to maintain a global <span
-class="math inline">\(pdf\)</span>, then push and pop elements while
-iterating the neighbors, after judging by experience I think the first
-one could be more effective, so I just leave the proof here. <span
-class="math inline">\(n_{L_k}\)</span> is the deleted and <span
-class="math inline">\(n_{R_k}\)</span> is the new comer pixels: <span
-class="math display">\[
+\]</span> Another optimizing method is to maintain a global <span class="math inline">\(pdf\)</span>, then push and pop elements while iterating the neighbors, after judging by experience I think the first one could be more effective, so I just leave the proof here. <span class="math inline">\(n_{L_k}\)</span> is the deleted and <span class="math inline">\(n_{R_k}\)</span> is the new comer pixels: <span class="math display">\[
 \begin{aligned}
 p_r(r_k)&amp;=\frac{n_k}{n} \quad\quad k=0, 1, ..., K-1\\
 \hat{p_r}(r_k)&amp;=\frac{1}{n}[n_k-n_{L_k}+n_{R_k}]=p_r(r_k)+\frac{1}{n}[n_{R_k}-n_{L_k}]
@@ -616,50 +503,22 @@ p_r(r_k)&amp;=\frac{n_k}{n} \quad\quad k=0, 1, ..., K-1\\
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hist_equ</span>(<span class="hljs-params">arr, local=<span class="hljs-literal">True</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    This equalization method deal with a different input, arr is not a (H, W) image any more but a (HW x m_size^2) Big_Mat.Actually this method is the core for local histogram equalization, because many core operations are packed here</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>	get the total pixels number (H x W) -&gt; _parallel<br>    get the total neighbor pixel number (m_size x m_size) -&gt; _m2<br>    _half <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>/<span class="hljs-number">2</span> of neighbor scale <span class="hljs-comment"># m_size is odd, _half is the smaller half</span><br>    get hist(arr, _parallel) <span class="hljs-keyword">with</span> size of (_parallel x <span class="hljs-number">256</span>) -&gt; input_hist <span class="hljs-comment"># call from the `hist` method above, return histogram is with size (HW x 256)</span><br>    calculate p(r) by normalizing <span class="hljs-keyword">for</span> each row of input_hist -&gt; r_pdf <span class="hljs-comment"># size is (HW, 256)</span><br>    calculate integral[p(r)] by accumulate p(r) <span class="hljs-keyword">for</span> each row of r_pdf -&gt; r_cdf <span class="hljs-comment"># size is (HW, 256)</span><br>    init output <span class="hljs-keyword">with</span> zeros <span class="hljs-comment"># output is (, HW), can be reshape to (H, W), and that is the result of all the local histrogram equalization process</span><br>    find the center pixel values <span class="hljs-keyword">for</span> <span class="hljs-built_in">all</span> the neighborhoods -&gt; center_pixel <span class="hljs-comment"># this is because that we only care with the result of hisotgram equalization of the center pixel, therefore we have no need to calculate the other m_size^2 - 1 pixels </span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> (H x W): <span class="hljs-comment"># itherate all the neighborhoods</span><br>    	find the histogram equalization result <span class="hljs-keyword">for</span> the center_pixel of the No.i neighborhood -&gt; r_cdf[i, center_pixel[i]]<br>        then update this equalized value to output[i]<br>    <span class="hljs-keyword">return</span> output<br></code></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">local_hist_equ</span>(<span class="hljs-params">arr, m_size</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Nearly all the local histogram equalization process are packed in above methods, here just call them to get the result!</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    call img2big_mat to get the Big_Mat -&gt; _big_mat<br>    call hist_equ to get the result <span class="hljs-keyword">with</span> size (, HW) -&gt;  output_image<br>    then reshape output_image to (H, W)<br>    <span class="hljs-keyword">return</span> output_image<br></code></pre></td></tr></table></figure>
 <h4 id="implementation-2">Implementation</h4>
-<p>I have done this method with only one <code>for</code> loop as well,
-therefore the speed is very fast compare to the first version of my code
-(which has two <code>for</code> loop and runs much slower). Here is my
-first version code, it call the <code>hist_equ(arr)</code> implemented
-for only one neighborhood, not the efficient <code>hist_equ(arr,
-_parallel)</code> used above:</p>
+<p>I have done this method with only one <code>for</code> loop as well, therefore the speed is very fast compare to the first version of my code (which has two <code>for</code> loop and runs much slower). Here is my first version code, it call the <code>hist_equ(arr)</code> implemented for only one neighborhood, not the efficient <code>hist_equ(arr, _parallel)</code> used above:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># def local_hist_equ_deprecated</span><br>local_equalized = np.zeros_like(img)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_half, _H, stride):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_half, _W, stride):<br>        local_equalized[i - <span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>] = hist_equ(padded_img[i - s_half:i + l_half, j - s_half:j + l_half])[s_half, s_half]<br></code></pre></td></tr></table></figure>
-<p>The implementation codes could be found in supplementary files, I do
-not list them here. Then I would compare the efficiency of the two
-strategy. I do local histogram equalization for <code>m_size = 3, 5,
-7</code> and plot their running time below:</p>
+<p>The implementation codes could be found in supplementary files, I do not list them here. Then I would compare the efficiency of the two strategy. I do local histogram equalization for <code>m_size = 3, 5, 7</code> and plot their running time below:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164722285939316.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h3 id="gamma-transform-1">Gamma Transform</h3>
-<p>The gamma transform principle and codes are discussed above in
-<em>Task 1</em>, here I show the result of it. Surprisingly, the details
-could be enhanced perfectly as well. In my opinion, I believe that the
-other intensity transformation methods could enhance the details
-perfectly as well, like the <em>contrast stretching</em> method.
-Besides, these intensity transformation methods are usually simple and
-fast.</p>
+<p>The gamma transform principle and codes are discussed above in <em>Task 1</em>, here I show the result of it. Surprisingly, the details could be enhanced perfectly as well. In my opinion, I believe that the other intensity transformation methods could enhance the details perfectly as well, like the <em>contrast stretching</em> method. Besides, these intensity transformation methods are usually simple and fast.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-16471925885981.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h3 id="local-statistic-enhancement-1">Local Statistic Enhancement</h3>
-<p>The statistic distribution of Q3_3.tif is much simpler than Q3_2.tif,
-therefore using statistic method would complete the enhancement task,
-and the parameters I tuned for the effect shown below are: <code>k0 =
-0.02, k1 = 0.5, k2 = 0, k3 = 0.5, E = 30</code>. However, the effect is
-not as good as gamma transform and local histogram equalization.</p>
+<p>The statistic distribution of Q3_3.tif is much simpler than Q3_2.tif, therefore using statistic method would complete the enhancement task, and the parameters I tuned for the effect shown below are: <code>k0 = 0.02, k1 = 0.5, k2 = 0, k3 = 0.5, E = 30</code>. However, the effect is not as good as gamma transform and local histogram equalization.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164722229456914.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h2 id="task-4">Task 4</h2>
 <h3 id="box-filter">Box Filter</h3>
 <h4 id="principle-3">Principle</h4>
-<p>Could also be named as <em>Mean Filter</em>, from a view of Frequency
-Domain, it is a kind of low pass filter. Therefore, some edge
-information are lost and cause blur effect. Below, <span
-class="math inline">\(n\)</span> is the kernel size: <span
-class="math display">\[
+<p>Could also be named as <em>Mean Filter</em>, from a view of Frequency Domain, it is a kind of low pass filter. Therefore, some edge information are lost and cause blur effect. Below, <span class="math inline">\(n\)</span> is the kernel size: <span class="math display">\[
 R=\frac{1}{n^2}\sum^{n^2}_{i=1}z_i \\
-\]</span> For implementing all the filtering methods, I use the
-<code>Big_Mat</code> strategy discussed in task 3, here proves that this
-strategy is useful for all kinds of spatial operations associated with
-kernels (neighborhoods). It is actually a code design optimization
-method for changing image convolution (correlation) into matrix
-multiplication, which has many acceleration methods for different
-languages: <span class="math display">\[
+\]</span> For implementing all the filtering methods, I use the <code>Big_Mat</code> strategy discussed in task 3, here proves that this strategy is useful for all kinds of spatial operations associated with kernels (neighborhoods). It is actually a code design optimization method for changing image convolution (correlation) into matrix multiplication, which has many acceleration methods for different languages: <span class="math display">\[
 \begin{aligned}
 &amp;Image \ A ,\ \ Kernel \ K \\
 A &amp;= \begin{bmatrix}
@@ -670,169 +529,77 @@ a_{31} &amp; a_{32} &amp; a_{33} &amp; ... &amp; a_{3n} \\
 a_{m1} &amp; a_{m2} &amp; a_{m3} &amp; ... &amp; a_{mn} \\
 \end{bmatrix} \quad
 K = \begin{bmatrix}
-k_1 &amp; k_2 &amp; k_3 \\
-k_4 &amp; k_5 &amp; k_6 \\
-k_7 &amp; k_8 &amp; k_9 \\
+k_1 &amp; k_2 &amp; k_3 \\ 
+k_4 &amp; k_5 &amp; k_6 \\ 
+k_7 &amp; k_8 &amp; k_9 \\ 
 \end{bmatrix} \\
 \\
 Mat &amp;= \begin{bmatrix}
-a_{11} &amp; a_{12} &amp; a_{13} &amp; a_{21} &amp; a_{22} &amp; a_{23}
-&amp; a_{31} &amp; a_{32} &amp; a_{33} \\
-a_{12} &amp; a_{13} &amp; a_{14} &amp; a_{22} &amp; a_{23} &amp; a_{24}
-&amp; a_{32} &amp; a_{33} &amp; a_{34}\\
-&amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp; \\
-a_{(m-2)(n-2)} &amp; a_{(m-2)(n-1)} &amp; a_{(m-2)n} &amp;
-a_{(m-1)(n-2)} &amp; a_{(m-1)(n-1)} &amp; a_{(m-1)n} &amp; a_{m(n-2)}
-&amp; a_{m(n-1)} &amp; a_{mn}\\
+a_{11} &amp; a_{12} &amp; a_{13} &amp; a_{21} &amp; a_{22} &amp; a_{23} &amp; a_{31} &amp; a_{32} &amp; a_{33} \\
+a_{12} &amp; a_{13} &amp; a_{14} &amp; a_{22} &amp; a_{23} &amp; a_{24} &amp; a_{32} &amp; a_{33} &amp; a_{34}\\
+ &amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp;  &amp; ... &amp; \\
+ a_{(m-2)(n-2)} &amp; a_{(m-2)(n-1)} &amp; a_{(m-2)n} &amp; a_{(m-1)(n-2)} &amp; a_{(m-1)(n-1)} &amp; a_{(m-1)n} &amp; a_{m(n-2)} &amp; a_{m(n-1)} &amp; a_{mn}\\
 \end{bmatrix} \\
 \\
 \hat{k} &amp;= \begin{bmatrix}
-k_1 &amp; k_2 &amp; k_3 &amp; k_4 &amp; k_5 &amp; k_6 &amp; k_7 &amp;
-k_8 &amp; k_9\end{bmatrix}^{T} \\
+k_1 &amp; k_2 &amp; k_3 &amp; k_4 &amp; k_5 &amp; k_6 &amp; k_7 &amp; k_8 &amp; k_9\end{bmatrix}^{T} \\
 &amp; Conv2d(A,K) = (Mat \cdot \hat{k}).Reshape(H, W) \\
 \end{aligned}
-\]</span> Another reason for using this <em>Big Mat</em> strategy is
-that python has a smart memory allocating bottom logic, therefore, the
-<code>big_mat</code> created has a well-designed memory distribution in
-bottom, without <strong>hard copy</strong> (by <code>np.copy</code>) of
-anything.</p>
+\]</span> Another reason for using this <em>Big Mat</em> strategy is that python has a smart memory allocating bottom logic, therefore, the <code>big_mat</code> created has a well-designed memory distribution in bottom, without <strong>hard copy</strong> (by <code>np.copy</code>) of anything.</p>
 <h4 id="pseudo-code-3">Pseudo Code</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">linear_filter</span>(<span class="hljs-params">arr, box_size</span>):</span><br>    generate the box filtering kernel <span class="hljs-keyword">from</span> given box_size<br>    _H, _W are the shapes of <span class="hljs-built_in">input</span> image<br>	_half <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>/<span class="hljs-number">2</span> of neighbor scale <span class="hljs-comment"># m_size is odd, _half is the smaller half</span><br>	_l_half  = _half + <span class="hljs-number">1</span> <span class="hljs-comment"># _l_half is the larger half</span><br>    get the Big Mat by calling img2big_mat(arr) -&gt; arr_big<br>    <span class="hljs-keyword">return</span> arr_big @ kernel <span class="hljs-comment"># &#x27;@&#x27; of course is matrix multiplication</span><br></code></pre></td></tr></table></figure>
 <h4 id="implementation-3">Implementation</h4>
-<p>The implementation use the <code>img2big_mat</code> method discussed
-in Task 3, and <code>linear_filtered</code> is calculated by matrix
-multiplication, thus it runs very fast (without using any
-<code>for</code> loop)!</p>
+<p>The implementation use the <code>img2big_mat</code> method discussed in Task 3, and <code>linear_filtered</code> is calculated by matrix multiplication, thus it runs very fast (without using any <code>for</code> loop)!</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">linear_filter</span>(<span class="hljs-params">arr, box_size=<span class="hljs-number">0</span>, kernel=<span class="hljs-literal">None</span>, pad_mode=<span class="hljs-string">&#x27;constant&#x27;</span></span>):</span><br>    <span class="hljs-keyword">if</span> box_size != <span class="hljs-number">0</span>:<br>        kernel = <span class="hljs-number">1</span> / (box_size ** <span class="hljs-number">2</span>) * np.ones((box_size, box_size))<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">assert</span> kernel <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br><br>    _H = arr.shape[<span class="hljs-number">0</span>]<br>    _W = arr.shape[<span class="hljs-number">1</span>]<br>    _kernel_size = kernel.shape[<span class="hljs-number">0</span>]<br>    _half = _kernel_size // <span class="hljs-number">2</span><br>    _l_half = _half + <span class="hljs-number">1</span><br>    _, arr_big = img2big_mat(arr, _kernel_size, pad_mode=pad_mode)<br>    linear_filtered = (arr_big @ kernel.ravel()).reshape(_H, _W)<br>    <span class="hljs-keyword">return</span> linear_filtered<br></code></pre></td></tr></table></figure>
 <h3 id="median-filter">Median Filter</h3>
 <h4 id="principle-4">Principle</h4>
-<p>This is a kind of nonlinear spatial filter, it chooses the statistic
-median value of a neighborhood as its center pixel value. The principle
-is simple so I do not put redundant equations here.</p>
+<p>This is a kind of nonlinear spatial filter, it chooses the statistic median value of a neighborhood as its center pixel value. The principle is simple so I do not put redundant equations here.</p>
 <h4 id="pseudo-code-4">Pseudo Code</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">order_filter</span>(<span class="hljs-params">arr, n_size</span>):</span><br>    _H, _W are the shapes of <span class="hljs-built_in">input</span> image<br>	_half <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>/<span class="hljs-number">2</span> of neighbor scale <span class="hljs-comment"># m_size is odd, _half is the smaller half</span><br>	_l_half  = _half + <span class="hljs-number">1</span> <span class="hljs-comment"># _l_half is the larger half</span><br>    pad the original image -&gt; _padded<br>    init order_filtered <span class="hljs-keyword">with</span> zeros<br>    <span class="hljs-keyword">for</span> i start <span class="hljs-keyword">from</span> _half to (_H + _half)<br>		<span class="hljs-keyword">for</span> j start form _half to (_W + _half)<br>			find median of the correspond neighborhood -&gt; order_filtered[i-<span class="hljs-number">1</span>, j-<span class="hljs-number">1</span>]<br>	<span class="hljs-keyword">return</span> order_filtered<br></code></pre></td></tr></table></figure>
 <h4 id="implementation-4">Implementation</h4>
-<p>Because this is a nonlinear operation, so I could not use <em>Big
-Mat</em> here for optimizing. As known, matrix multiplication is a
-linear math tool. However, I use <code>np.median</code> instead, and the
-speed turns out to be fast enough, even though I iterate using two
-<code>for</code> loops.</p>
+<p>Because this is a nonlinear operation, so I could not use <em>Big Mat</em> here for optimizing. As known, matrix multiplication is a linear math tool. However, I use <code>np.median</code> instead, and the speed turns out to be fast enough, even though I iterate using two <code>for</code> loops.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">order_filter</span>(<span class="hljs-params">arr, n_size, pad_mode=<span class="hljs-string">&#x27;constant&#x27;</span></span>):</span><br>    <span class="hljs-keyword">assert</span> n_size % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>  <span class="hljs-comment"># only handel odd kernel</span><br>    _H = arr.shape[<span class="hljs-number">0</span>]<br>    _W = arr.shape[<span class="hljs-number">1</span>]<br>    _half = n_size // <span class="hljs-number">2</span><br>    _l_half = _half + <span class="hljs-number">1</span><br>    padded = np.pad(arr, (_half, _half), mode=pad_mode)<br>    order_filtered = np.zeros_like(arr)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_half, _H):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_half, _W):<br>            order_filtered[i - <span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>] = np.median(padded[i - _half:i + _l_half, j - _half:j + _l_half])<br>    <span class="hljs-keyword">return</span> order_filtered<br></code></pre></td></tr></table></figure>
 <h3 id="gaussian-filter">Gaussian Filter</h3>
 <h4 id="principle-5">Principle</h4>
-<p>Actually, this is a weighted <em>Mean Filter</em>, and the weights
-are decided by gaussian distribution. The gaussian kernel could be
-designed by giving <span class="math inline">\(\sigma\)</span> and <span
-class="math inline">\(K\)</span>, the standard deviation. Here is the
-proof: <span class="math display">\[
+<p>Actually, this is a weighted <em>Mean Filter</em>, and the weights are decided by gaussian distribution. The gaussian kernel could be designed by giving <span class="math inline">\(\sigma\)</span> and <span class="math inline">\(K\)</span>, the standard deviation. Here is the proof: <span class="math display">\[
 w(s,t)=G(s,t)=Ke^{-\frac{s^2+t^2}{2\sigma^2}}=Ke^{-\frac{r^2}{2\sigma^2}}
-\]</span>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/image-20220314102642943.png" srcset="/img/loading.gif" lazyload alt="image-20220314102642943" style="zoom:67%;" /></p>
-<p>According to the <span class="math inline">\(3\sigma\)</span>
-principle, the size of a gaussian kernel should be <span
-class="math inline">\([6\sigma,6\sigma]\)</span>, and it should ceil to
-the nearest odd integer. For example, <span
-class="math inline">\(\sigma=1\)</span> would lead to a <span
-class="math inline">\([7,7]\)</span> kernel. Another important step for
-designing gaussian kernel is to get the Distance Matrix shown above.</p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/image-20220314102642943.png" srcset="/img/loading.gif" lazyload alt="image-20220314102642943" style="zoom:67%;" /></p>
+<p>According to the <span class="math inline">\(3\sigma\)</span> principle, the size of a gaussian kernel should be <span class="math inline">\([6\sigma,6\sigma]\)</span>, and it should ceil to the nearest odd integer. For example, <span class="math inline">\(\sigma=1\)</span> would lead to a <span class="math inline">\([7,7]\)</span> kernel. Another important step for designing gaussian kernel is to get the Distance Matrix shown above.</p>
 <h4 id="pseudo-code-5">Pseudo Code</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gaussian_filter</span>(<span class="hljs-params">arr, sigma, K</span>):</span><br>    calculate kernel size <span class="hljs-keyword">from</span> sigma -&gt; _kernel_size<br>    get _H, _W <span class="hljs-keyword">from</span> the shapes of arr -&gt; _H, _W<br>    design the Distance Matrix R<br>    genereate gaussian kernel <span class="hljs-keyword">from</span> the equation given <span class="hljs-keyword">in</span> proof -&gt; kernel<br>    do linear filtering just like box_filter does -&gt; gaussian_filtered<br>    <span class="hljs-keyword">return</span> gaussian_filtered<br></code></pre></td></tr></table></figure>
 <h4 id="implementation-5">Implementation</h4>
-<p>I haven't think a better way to get the distance matrix
-<code>R</code>, so as seen I use many <code>flip</code> methods to
-design it, they might be redundant and complex. However, the time cost
-is very low, because I do not use <code>for</code> loop for the
-filtering process. The core optimizing approach is as the above
-algorithms.</p>
+<p>I haven't think a better way to get the distance matrix <code>R</code>, so as seen I use many <code>flip</code> methods to design it, they might be redundant and complex. However, the time cost is very low, because I do not use <code>for</code> loop for the filtering process. The core optimizing approach is as the above algorithms.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gaussian_filter</span>(<span class="hljs-params">arr, sigma, K, pad_mode=<span class="hljs-string">&#x27;constant&#x27;</span></span>):</span><br>    _kernel_size = np.ceil(<span class="hljs-number">6</span> * sigma).astype(<span class="hljs-built_in">int</span>)<br>    _H = arr.shape[<span class="hljs-number">0</span>]<br>    _W = arr.shape[<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> _kernel_size % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        _kernel_size += <span class="hljs-number">1</span><br><br>    <span class="hljs-comment"># get the distance matrix</span><br>    R_gen_size = (_kernel_size - <span class="hljs-number">1</span>) // <span class="hljs-number">2</span><br>    R_gen_row = np.arange(<span class="hljs-number">1</span>, R_gen_size + <span class="hljs-number">1</span>) ** <span class="hljs-number">2</span><br>    R_gen = np.zeros((R_gen_size, R_gen_size))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, R_gen_size + <span class="hljs-number">1</span>):<br>        R_gen[i - <span class="hljs-number">1</span>] = R_gen_row + R_gen_row[i - <span class="hljs-number">1</span>]<br>    R_right = np.vstack((np.flipud(R_gen), R_gen_row, R_gen))<br>    R_mid = np.r_[np.flip(R_gen_row), [<span class="hljs-number">0</span>], R_gen_row]<br>    R_left = np.fliplr(R_right)<br>    R = np.hstack((R_left, R_mid.reshape(_kernel_size, <span class="hljs-number">1</span>), R_right))<br><br>    <span class="hljs-comment"># generate coefficient w</span><br>    G = K * np.exp(-R / (<span class="hljs-number">2</span> * sigma ** <span class="hljs-number">2</span>))<br>    kernel = <span class="hljs-number">1</span> / np.<span class="hljs-built_in">sum</span>(G) * G<br><br>    <span class="hljs-keyword">assert</span> _kernel_size % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>  <span class="hljs-comment"># only handel odd kernel</span><br>    gaussian_filtered = linear_filter(arr, kernel=kernel, pad_mode=pad_mode)<br>    <span class="hljs-keyword">return</span> gaussian_filtered<br></code></pre></td></tr></table></figure>
 <h2 id="results">Results</h2>
 <p>Tasks for this lab are listed below:</p>
 <ol type="1">
-<li>Implement the <strong>histogram equalization</strong> to the input
-images Q3_1_1.tif and Q3_1_2.tif</li>
-<li>Specify a histogram for image Q3_2.tif and implement the
-<strong>specified histogram matching</strong> to the input image
-Q3_2.tif</li>
-<li>Implement the <strong>local histogram equalization</strong> to the
-input images Q3_3.tif</li>
-<li>Implement an algorithm to <strong>reduce the salt and pepper
-noise</strong> of an image</li>
+<li>Implement the <strong>histogram equalization</strong> to the input images Q3_1_1.tif and Q3_1_2.tif</li>
+<li>Specify a histogram for image Q3_2.tif and implement the <strong>specified histogram matching</strong> to the input image Q3_2.tif</li>
+<li>Implement the <strong>local histogram equalization</strong> to the input images Q3_3.tif</li>
+<li>Implement an algorithm to <strong>reduce the salt and pepper noise</strong> of an image</li>
 </ol>
 <h3 id="task-1-1">Task 1</h3>
-<p>This is the result for Q3_1_1, the time used for my histogram
-equalization method is <code>0.22960257530212402</code> seconds. The
-result is the same as <code>opencv</code>, and the histogram are
-distributed as we expected. <strong>A very interesting phenomenon is
-that the gray scale with the most pixels would become sparse after
-redistribution, and on the contrary, the gray scale with only a few
-pixels tend to be dense after equalization</strong>. The explanation is
-simple and reasonable: the remapping process refers to <span
-class="math inline">\(cdf(r)\)</span> which of course would jump when
-the gray scale occupies a large amount of pixels (just name them
-<em>dominant gray scales</em>). These <em>dominant gray scales</em> need
-to be distributed far from each other to make the image have larger
-contrast, and they actually do.</p>
+<p>This is the result for Q3_1_1, the time used for my histogram equalization method is <code>0.22960257530212402</code> seconds. The result is the same as <code>opencv</code>, and the histogram are distributed as we expected. <strong>A very interesting phenomenon is that the gray scale with the most pixels would become sparse after redistribution, and on the contrary, the gray scale with only a few pixels tend to be dense after equalization</strong>. The explanation is simple and reasonable: the remapping process refers to <span class="math inline">\(cdf(r)\)</span> which of course would jump when the gray scale occupies a large amount of pixels (just name them <em>dominant gray scales</em>). These <em>dominant gray scales</em> need to be distributed far from each other to make the image have larger contrast, and they actually do.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-16471951140013.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-16471951396674.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
-<p>This is the result for Q3_1_2, the time used for my histogram
-equalization method is <code>0.23404693603515625</code> seconds. The
-histogram is also as expected.</p>
+<p>This is the result for Q3_1_2, the time used for my histogram equalization method is <code>0.23404693603515625</code> seconds. The histogram is also as expected.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-16471957811395.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-16471957969016.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h3 id="task-2-1">Task 2</h3>
-<p>The two designed <span class="math inline">\(pdf(z_q)\)</span> are
-plotted above, we could see that the first one is better as we expected.
-The following figures proved that using histogram matching could
-decrease the "wash-out" effect of histogram equalization. The time
-costed for <span class="math inline">\(z_{q1}\)</span> and <span
-class="math inline">\(z_{q2}\)</span> are
-<code>0.6347625255584717</code> and <code>0.62331223487854</code>.</p>
+<p>The two designed <span class="math inline">\(pdf(z_q)\)</span> are plotted above, we could see that the first one is better as we expected. The following figures proved that using histogram matching could decrease the "wash-out" effect of histogram equalization. The time costed for <span class="math inline">\(z_{q1}\)</span> and <span class="math inline">\(z_{q2}\)</span> are <code>0.6347625255584717</code> and <code>0.62331223487854</code>.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164719941724311.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:72%;" /></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164719957060612.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
-<p>However, it dramatically turns out that gamma transform might be the
-best solution for this enhancement task. As seen in the following, I
-just casually give a factor <span
-class="math inline">\(\gamma=0.35\)</span> and the details hidden in the
-right corner appear, and there is not any "wash-out" effect. By the way,
-the time cost of gamma transform is only
-<code>0.032987356185913086</code>. The result of local statistic is not
-good, its running times is <code>19.913657426834106</code> (no optimize,
-so there are 2 <code>for</code> loops).</p>
+<p>However, it dramatically turns out that gamma transform might be the best solution for this enhancement task. As seen in the following, I just casually give a factor <span class="math inline">\(\gamma=0.35\)</span> and the details hidden in the right corner appear, and there is not any "wash-out" effect. By the way, the time cost of gamma transform is only <code>0.032987356185913086</code>. The result of local statistic is not good, its running times is <code>19.913657426834106</code> (no optimize, so there are 2 <code>for</code> loops).</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164719971968113.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h3 id="task-3-1">Task 3</h3>
-<p>If I just use the global histogram equalization method, the result is
-poor, and cannot extract the details hidden in the black blocks.
-Ironically, the SAP noise is enhanced as well apparently.</p>
+<p>If I just use the global histogram equalization method, the result is poor, and cannot extract the details hidden in the black blocks. Ironically, the SAP noise is enhanced as well apparently.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/image-20220314034344199.png" srcset="/img/loading.gif" lazyload alt="image-20220314034344199" style="zoom:67%;" /></p>
-<p>Here is all the results I get for Q3_3.tif. We could see that when
-using local equalization: when the <code>m_size</code> is increased from
-3 to 7, the details (and noise) become much more clearer and we get
-better result. This could be explained: when <code>m_size</code>
-increases, it means that we use a larger neighborhood for deciding the
-value of center pixels, that is, more information are used. However, the
-trade-off is that the time cost increases, from
-<code>4.724057197570801</code> to <code>9.002043008804321</code> for
-<code>m_size = 3, 7</code>.</p>
+<p>Here is all the results I get for Q3_3.tif. We could see that when using local equalization: when the <code>m_size</code> is increased from 3 to 7, the details (and noise) become much more clearer and we get better result. This could be explained: when <code>m_size</code> increases, it means that we use a larger neighborhood for deciding the value of center pixels, that is, more information are used. However, the trade-off is that the time cost increases, from <code>4.724057197570801</code> to <code>9.002043008804321</code> for <code>m_size = 3, 7</code>.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164722309058217.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164722312382318.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h3 id="task-4-1">Task 4</h3>
-<p>All the results are plotted here. The running time of order filter is
-a little higher because it uses two <code>for</code> loops to iterate
-the image height and width, and time for <code>n_size = 3, 7</code> are
-<code>3.73285174369812</code> and <code>3.608351707458496</code>
-seconds. The box filter method time cost are
-<code>0.29807138442993164</code> and <code>0.4164392948150635</code>,
-for <code>n_size = 3, 7</code> as well. The corresponding time costs for
-gaussian filter are <code>0.4878067970275879</code> and
-<code>0.813880443572998</code>, which are higher than box filter,
-because it generally has larger kernel size.</p>
-<p>The order filter (Median Filter) has the best denoising result. This
-is as our expectation, because it is suitable to deal with SAP noise.
-The other linear filtering methods all cause different level of blur
-effect. Besides, if I use <em>Zero Padding</em> for kernels that are
-large, it would cause black margins like the figure below using <span
-class="math inline">\(\sigma=3.5\)</span> for gaussian filter. Using the
-<em>Reflected</em> padding strategy would avoid this.</p>
+<p>All the results are plotted here. The running time of order filter is a little higher because it uses two <code>for</code> loops to iterate the image height and width, and time for <code>n_size = 3, 7</code> are <code>3.73285174369812</code> and <code>3.608351707458496</code> seconds. The box filter method time cost are <code>0.29807138442993164</code> and <code>0.4164392948150635</code>, for <code>n_size = 3, 7</code> as well. The corresponding time costs for gaussian filter are <code>0.4878067970275879</code> and <code>0.813880443572998</code>, which are higher than box filter, because it generally has larger kernel size.</p>
+<p>The order filter (Median Filter) has the best denoising result. This is as our expectation, because it is suitable to deal with SAP noise. The other linear filtering methods all cause different level of blur effect. Besides, if I use <em>Zero Padding</em> for kernels that are large, it would cause black margins like the figure below using <span class="math inline">\(\sigma=3.5\)</span> for gaussian filter. Using the <em>Reflected</em> padding strategy would avoid this.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/output-164722624560219.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:65%;" /></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion for the <em>Enhancement</em> tasks:</p>
@@ -850,29 +617,15 @@ class="math inline">\(\sigma=3.5\)</span> for gaussian filter. Using the
 <tbody>
 <tr class="odd">
 <td>Intensity Transformation (like gamma transform)</td>
-<td>The principle of these kinds of methods are really simple, and all
-we need to do is to design <span class="math inline">\(s=T(r)\)</span>
-for single pixels. It turns out that gamma transform performs very well
-for the task 2 &amp;3. Another advantage of Intensity transformation
-methods is that they could run fast.</td>
+<td>The principle of these kinds of methods are really simple, and all we need to do is to design <span class="math inline">\(s=T(r)\)</span> for single pixels. It turns out that gamma transform performs very well for the task 2 &amp;3. Another advantage of Intensity transformation methods is that they could run fast.</td>
 </tr>
 <tr class="even">
 <td>Global Histogram Methods</td>
-<td>Its core concept is to remap the different gray scales to larger
-distance with each other. The biggest advantage of Histogram
-equalization is that it works automatically. However, "wash-out" might
-occurs if most of the pixels are at the very dark gray scales, using a
-specification method with a designed histogram could relieve this
-effect.</td>
+<td>Its core concept is to remap the different gray scales to larger distance with each other. The biggest advantage of Histogram equalization is that it works automatically. However, "wash-out" might occurs if most of the pixels are at the very dark gray scales, using a specification method with a designed histogram could relieve this effect.</td>
 </tr>
 <tr class="odd">
 <td>Local Histogram Methods</td>
-<td>Local histogram equalization could extract details hidden in an
-image magically, but it is usually very time-consuming. Besides, all of
-the histogram methods might inflate the noise somehow, they could not
-differ noise from details. The histogram statistic methods are very
-flexible, I only implement one usage of it, but this always associate
-with heavy tuning works.</td>
+<td>Local histogram equalization could extract details hidden in an image magically, but it is usually very time-consuming. Besides, all of the histogram methods might inflate the noise somehow, they could not differ noise from details. The histogram statistic methods are very flexible, I only implement one usage of it, but this always associate with heavy tuning works.</td>
 </tr>
 </tbody>
 </table>
@@ -891,18 +644,11 @@ with heavy tuning works.</td>
 <tbody>
 <tr class="odd">
 <td>Linear Filtering</td>
-<td>Linear filtering methods like box filter and weighted mean filters
-(gaussian filter) could weaken the SAP noise, but they also cause edge
-blur. This is because of their low-pass property. In my opinion, they
-might show their ability deal with some kinds of continuous noise, like
-gaussian noise.</td>
+<td>Linear filtering methods like box filter and weighted mean filters (gaussian filter) could weaken the SAP noise, but they also cause edge blur. This is because of their low-pass property. In my opinion, they might show their ability deal with some kinds of continuous noise, like gaussian noise.</td>
 </tr>
 <tr class="even">
 <td>Nonlinear Filtering (Median Filter)</td>
-<td>The advantage of Median Filter for dealing with SAP noise shows the
-advantage of spatial filtering than frequency filtering. Using the
-statistic property of neighborhood, like median, might avoid filtering
-the edge information and cause blur.</td>
+<td>The advantage of Median Filter for dealing with SAP noise shows the advantage of spatial filtering than frequency filtering. Using the statistic property of neighborhood, like median, might avoid filtering the edge information and cause blur.</td>
 </tr>
 </tbody>
 </table>

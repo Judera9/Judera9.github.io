@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/index_banner7.jpg">
 <meta property="article:published_time" content="2022-02-12T12:43:55.000Z">
-<meta property="article:modified_time" content="2022-02-15T02:02:57.637Z">
+<meta property="article:modified_time" content="2022-02-15T02:02:57.000Z">
 <meta property="article:author" content="Jude">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="Iterator">
@@ -247,10 +247,7 @@
             
             <div class="markdown-body">
               <h2 id="stl六大组件">STL六大组件</h2>
-<p>  因为于老师没讲STL，所以补一下课。STL的六大部件是下面这些：容器（Container）、算法（Algorithm）、迭代器（Iterator）、仿函数（Function
-object）、适配器（Adaptor）、空间配置器（allocator）。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://www.cnblogs.com/welen/articles/3533008.html
+<p>  因为于老师没讲STL，所以补一下课。STL的六大部件是下面这些：容器（Container）、算法（Algorithm）、迭代器（Iterator）、仿函数（Function object）、适配器（Adaptor）、空间配置器（allocator）。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.cnblogs.com/welen/articles/3533008.html
 ">[1]</span></a></sup>下面分别简单介绍一下：</p>
 <h3 id="容器-container">容器 Container</h3>
 
@@ -372,18 +369,10 @@ aria-label="https://www.cnblogs.com/welen/articles/3533008.html
 
 
 <h3 id="算法-algorithm">算法 Algorithm</h3>
-<p>  由头文件<code>&lt;algorithm&gt;</code>，<code>&lt;numeric&gt;</code>和<code>&lt;functional&gt;</code>组成，<code>&lt;algorithm&gt;</code>是STL头文件中最大的一个，由一大堆模板函数组成，其中常用到的功能范
-围涉及到比较、交换、查找、遍历操作、复制、修改、移除、反转、排序、合并等。。<code>&lt;numeric&gt;</code>体积很小，只包括几个在序列上面进行简单数学运算的模板函数，包括加法和乘法在序列上的一些操作。<code>&lt;functional&gt;</code>中则定义了一些模板类，用以声明函数对象。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://www.cnblogs.com/welen/articles/3533008.html
+<p>  由头文件<code>&lt;algorithm&gt;</code>，<code>&lt;numeric&gt;</code>和<code>&lt;functional&gt;</code>组成，<code>&lt;algorithm&gt;</code>是STL头文件中最大的一个，由一大堆模板函数组成，其中常用到的功能范 围涉及到比较、交换、查找、遍历操作、复制、修改、移除、反转、排序、合并等。。<code>&lt;numeric&gt;</code>体积很小，只包括几个在序列上面进行简单数学运算的模板函数，包括加法和乘法在序列上的一些操作。<code>&lt;functional&gt;</code>中则定义了一些模板类，用以声明函数对象。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.cnblogs.com/welen/articles/3533008.html
 ">[1]</span></a></sup></p>
 <h3 id="迭代器-iterator">迭代器 Iterator</h3>
-<p>  实现位于<code>&lt;itertator&gt;</code>中，在某种程度上，可以理解为指针来使用。容器适配器
-stack 和 queue
-没有迭代器，它们包含有一些成员函数，可以用来对元素进行访问。另外，有的Iterator能够使用<code>++p</code>，<code>p++</code>，<code>*p</code>操作，还可以被复制或赋值，以及用<code>==</code>和<code>!=</code>等比较运算符。具体的每种Iterator的用法是不一样的，需要查手册。一般迭代器都会有对应的常量迭代器，能够避免用户修改指向的内容（类似const
-void*的指针）。<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="http://c.biancheng.net/view/6675.html
+<p>  实现位于<code>&lt;itertator&gt;</code>中，在某种程度上，可以理解为指针来使用。容器适配器 stack 和 queue 没有迭代器，它们包含有一些成员函数，可以用来对元素进行访问。另外，有的Iterator能够使用<code>++p</code>，<code>p++</code>，<code>*p</code>操作，还可以被复制或赋值，以及用<code>==</code>和<code>!=</code>等比较运算符。具体的每种Iterator的用法是不一样的，需要查手册。一般迭代器都会有对应的常量迭代器，能够避免用户修改指向的内容（类似const void*的指针）。<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://c.biancheng.net/view/6675.html
 ">[3]</span></a></sup></p>
 <table border="0" cellspacing="0" cellpadding="0">
 <tbody>
@@ -504,71 +493,48 @@ vector, deque, array, string
 </table>
 <figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 举个例子，如何使用Iterator</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; v&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>&#125;;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; v.<span class="hljs-built_in">size</span>(); ++i) <span class="hljs-comment">// use for loop to iterate</span><br>        cout &lt;&lt; v[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    cout &lt;&lt; endl;<br><br>    vector&lt;<span class="hljs-keyword">int</span>&gt;::iterator i; <span class="hljs-comment">// declare iterator</span><br>    <span class="hljs-keyword">for</span> (i = v.<span class="hljs-built_in">begin</span>(); i != v.<span class="hljs-built_in">end</span>(); ++i) <span class="hljs-comment">// use `i &lt; v.end()` is also fine</span><br>        cout &lt;&lt; *i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    cout &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="仿函数-functor">仿函数 Functor</h3>
-<p>  仿函数(functor)又称之为函数对象（function
-object），其实就是重载了()操作符的struct或者class，使一个类的使用看上去象一个函数。这些仿函数可以用关联，聚合，依赖的类之间的关系，与用到他们的类组合在一起，这样有利于资源的管理。C语言使用函数指针和回调函数来实现仿函数；在C++里，我们通过在一个类中重载括号运算符的方法使用一个函数对象，而不是一个普通函数。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://blog.csdn.net/K346K346/article/details/82818801
+<p>  仿函数(functor)又称之为函数对象（function object），其实就是重载了()操作符的struct或者class，使一个类的使用看上去象一个函数。这些仿函数可以用关联，聚合，依赖的类之间的关系，与用到他们的类组合在一起，这样有利于资源的管理。C语言使用函数指针和回调函数来实现仿函数；在C++里，我们通过在一个类中重载括号运算符的方法使用一个函数对象，而不是一个普通函数。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://blog.csdn.net/K346K346/article/details/82818801
 ">[2]</span></a></sup></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 在C语言中，例如一个用来排序的函数可以这样使用仿函数</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-comment">/* Callback function */</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare_ints_function</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* A, <span class="hljs-keyword">void</span>* B)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> *((<span class="hljs-keyword">int</span>*)(A)) &lt; *((<span class="hljs-keyword">int</span>*)(B));<br>&#125;<br><br><span class="hljs-comment">/* Declaration of C sorting function */</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* first_item, <span class="hljs-keyword">size_t</span> item_size, <span class="hljs-keyword">void</span>* last_item, <span class="hljs-keyword">int</span>(*cmpfunc)(<span class="hljs-keyword">void</span>*, <span class="hljs-keyword">void</span>*))</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> items[]=&#123;<span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;;<br>    sort((<span class="hljs-keyword">void</span>*)(items), <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>), (<span class="hljs-keyword">void</span>*)(items +<span class="hljs-number">3</span>), compare_ints_function);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 在C++中，重载括号运算符实现仿函数</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IsGreaterThanThresholdFunctor</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">IsGreaterThanThresholdFunctor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> t)</span> : threshold(t) &#123;</span>&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span> <span class="hljs-keyword">const</span> </span>&#123; <span class="hljs-comment">// 可以用户design这一部分</span><br>        <span class="hljs-keyword">return</span> num &gt; threshold;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> threshold; <span class="hljs-comment">// 利用成员变量的特性，避免全局变量</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">RecallFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *start, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> *end, IsGreaterThanThresholdFunctor myFunctor)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> *i = start; i != end + <span class="hljs-number">1</span>; i++) &#123;<br>        count = <span class="hljs-built_in">myFunctor</span>(*i) ? count + <span class="hljs-number">1</span> : count; <span class="hljs-comment">// 传参给operator()函数</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> count;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> a[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">11</span>, <span class="hljs-number">5</span>, <span class="hljs-number">19</span>&#125;;<br>    <span class="hljs-keyword">int</span> result = <span class="hljs-built_in">RecallFunc</span>(a, a + <span class="hljs-number">4</span>, <span class="hljs-built_in">IsGreaterThanThresholdFunctor</span>(<span class="hljs-number">10</span>));<br>    cout &lt;&lt; result &lt;&lt; endl; <span class="hljs-comment">// 3</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="适配器-adaptor-空间配置器-allocator">适配器 Adaptor &amp;
-空间配置器 Allocator</h3>
+<h3 id="适配器-adaptor-空间配置器-allocator">适配器 Adaptor &amp; 空间配置器 Allocator</h3>
 <p>  适配器是用来修改其他组件接口的STL组件，是带有一个参数的类模板（这个参数是操作的值的数据类型）。STL定义了3种形式的适配器：容器适配器，迭代器适配器，函数适配器。</p>
 <ul>
 <li><p><strong>容器适配器</strong>：包括栈（stack）、队列(queue)、优先(priority_queue)。使用容器适配器，stack就可以被实现为基本容器类型（vector,dequeue,list）的适配。可以把stack看作是某种特殊的vctor,deque或者list容器，只是其操作仍然受到stack本身属性的限制。queue和priority_queue与之类似。容器适配器的接口更为简单，只是受限比一般容器要多。</p></li>
 <li><p><strong>迭代器适配器</strong>：修改为某些基本容器定义的迭代器的接口的一种STL组件。反向迭代器和插入迭代器都属于迭代器适配器，迭代器适配器扩展了迭代器的功能。</p></li>
 <li><p><strong>函数适配器</strong>：通过转换或者修改其他函数对象使其功能得到扩展。这一类适配器有否定器（相当于"非"操作）、绑定器、函数指针适配器。函数对象适配器的作用就是使函数转化为函数对象，或是将多参数的函数对象转化为少参数的函数对象。</p></li>
 </ul>
-<p>  STL内存配置器为容器分配并管理内存，统一的内存管理使得STL库的可用性、可移植行、以及效率都有了很大的提升。SGI-STL的空间配置器有2种，一种仅仅对c语言的malloc和free进行了简单的封装，而另一个设计到小块内存的管理等，运用了内存池技术等。在SGI-STL中默认的空间配置器是第二级的配置器。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://www.cnblogs.com/welen/articles/3533008.html
+<p>  STL内存配置器为容器分配并管理内存，统一的内存管理使得STL库的可用性、可移植行、以及效率都有了很大的提升。SGI-STL的空间配置器有2种，一种仅仅对c语言的malloc和free进行了简单的封装，而另一个设计到小块内存的管理等，运用了内存池技术等。在SGI-STL中默认的空间配置器是第二级的配置器。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.cnblogs.com/welen/articles/3533008.html
 ">[1]</span></a></sup></p>
 <h2 id="具体学习iterator">具体学习Iterator</h2>
 <h3 id="自增操作">自增操作</h3>
 <p>  注意<code>A(i++);</code>是先执行<code>A(i)</code>，再执行<code>i++;</code>，后者相反。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;<br>    cout &lt;&lt; i++ &lt;&lt; endl; <span class="hljs-comment">// 1</span><br>    cout &lt;&lt; ++i &lt;&lt; endl; <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
 <h3 id="迭代器失效">迭代器失效</h3>
-<p>可以参考<a
-target="_blank" rel="noopener" href="https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2">第四个Reference</a>，讲的很细致。关键的点基本都在下面：<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2
+<p>可以参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2">第四个Reference</a>，讲的很细致。关键的点基本都在下面：<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2
 ">[4]</span></a></sup></p>
 <ul>
 <li>C++标准中，<strong>顺序容器的erase函数会返回iterator，但关联容器的erase函数不返回iterator</strong>；</li>
 <li>对于顺序容器vector、deque，删除当前的iterator会使后面所有元素的iterator都失效。这是因为vector、deque使用了连续分配的内存，删除一个元素导致后面所有的元素会向前移动一个位置。erase方法可以返回下一个有效的iterator；</li>
 <li>对于关联容器map、set、multimap、multiset，删除当前的iterator，仅仅会使当前的iterator失效，只要在erase时，递增当前iterator即可。这是因为map之类的容器，使用了红黑树来实现，插入、删除一个结点不会对其他结点造成影响；</li>
-<li>对于顺序容器list，erase方法可以返回下一个有效的iterator。由于list是一个链表，删除当前的iterator，仅仅会使当前的iterator失效，所以也
-可以在erase时，递增当前的iterator。</li>
-<li>erase函数返回被删除元素的下一个元素的迭代器。<strong>在STL中，不能以指针来看待迭代器，指针是与内存绑定的，而
-迭代器是与容器里的元素绑定的</strong>。</li>
+<li>对于顺序容器list，erase方法可以返回下一个有效的iterator。由于list是一个链表，删除当前的iterator，仅仅会使当前的iterator失效，所以也 可以在erase时，递增当前的iterator。</li>
+<li>erase函数返回被删除元素的下一个元素的迭代器。<strong>在STL中，不能以指针来看待迭代器，指针是与内存绑定的，而 迭代器是与容器里的元素绑定的</strong>。</li>
 </ul>
 <h2 id="reference">Reference</h2>
 <section class="footnotes">
 <div class="footnote-list">
 <ol>
 <li>
-<span id="fn:1"
-class="footnote-text"><span>https://www.cnblogs.com/welen/articles/3533008.html
-<a href="#fnref:1" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
+<span id="fn:1" class="footnote-text"><span>https://www.cnblogs.com/welen/articles/3533008.html <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
 </li>
 <li>
-<span id="fn:2"
-class="footnote-text"><span>https://blog.csdn.net/K346K346/article/details/82818801
-<a href="#fnref:2" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
+<span id="fn:2" class="footnote-text"><span>https://blog.csdn.net/K346K346/article/details/82818801 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
 </li>
 <li>
-<span id="fn:3"
-class="footnote-text"><span>http://c.biancheng.net/view/6675.html
-<a href="#fnref:3" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
+<span id="fn:3" class="footnote-text"><span>http://c.biancheng.net/view/6675.html <a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
 </li>
 <li>
-<span id="fn:4"
-class="footnote-text"><span>https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2
-<a href="#fnref:4" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
+<span id="fn:4" class="footnote-text"><span>https://blog.csdn.net/u010318270/article/details/78575371?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=2 <a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
 </li>
 </ol>
 </div>

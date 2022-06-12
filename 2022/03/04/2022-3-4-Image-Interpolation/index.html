@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_11910206_14_0.png">
 <meta property="article:published_time" content="2022-03-04T11:51:57.000Z">
-<meta property="article:modified_time" content="2022-03-16T03:25:33.934Z">
+<meta property="article:modified_time" content="2022-03-16T03:25:33.000Z">
 <meta property="article:author" content="Jude">
 <meta property="article:tag" content="DIP">
 <meta property="article:tag" content="NumPy">
@@ -246,8 +246,7 @@
             <h1 style="display: none">Image Interpolation</h1>
             
             <div class="markdown-body">
-              <p>Support <code>.ipynb</code> and images could be found <a
-target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/DIP%20support%20files/interpolation">here</a></p>
+              <p>Support <code>.ipynb</code> and images could be found <a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/DIP%20support%20files/interpolation">here</a></p>
 <span id="more"></span>
 <h1 id="image-interpolation">Image Interpolation</h1>
 <ul>
@@ -256,10 +255,8 @@ target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blo
 <li><a href="#objectives">Objectives</a></li>
 <li><a href="#principle">Principle</a>
 <ul>
-<li><a href="#geometric-center-alignment">Geometric Center
-Alignment</a></li>
-<li><a href="#nearest-neighbor-interpolation">Nearest Neighbor
-Interpolation</a>
+<li><a href="#geometric-center-alignment">Geometric Center Alignment</a></li>
+<li><a href="#nearest-neighbor-interpolation">Nearest Neighbor Interpolation</a>
 <ul>
 <li><a href="#derivation">Derivation</a></li>
 <li><a href="#pseudo-code">Pseudo Code</a></li>
@@ -278,8 +275,7 @@ Interpolation</a>
 <li><a href="#analysis">Analysis</a>
 <ul>
 <li><a href="#brief-results">Brief Results</a></li>
-<li><a href="#nearest-neighbor-interpolation-1">Nearest Neighbor
-Interpolation</a></li>
+<li><a href="#nearest-neighbor-interpolation-1">Nearest Neighbor Interpolation</a></li>
 <li><a href="#bilinear-interpolation-1">Bilinear Interpolation</a></li>
 <li><a href="#time-complexity-analysis">Time Complexity Analysis</a>
 <ul>
@@ -291,33 +287,15 @@ Interpolation</a></li>
 </ul></li>
 </ul>
 <h2 id="objectives">Objectives</h2>
-<p>The task of this lab homework is to understand and accomplish codes
-design for <em>nearest neighbor interpolation, bilinear interpolation
-and bicubic interpolation</em> in python. The specific implementation of
-these algorithms is packed in corresponding <code>.py</code> files, the
-report and test codes are embedded in the <code>.ipynb</code> file. The
-report contains the derivations, principles and Pseudo codes of the
-algorithms mentioned above, and then given some optimization, extension
-and analysis of the results.</p>
-<p>Image Interpolation is a significant issue in DIP, we need it when
-resizing or distorting images from one pixel grid to another. Therefore,
-the effect and time consumed by varied interpolation algorithms are
-extraordinarily important. <strong>However, There is always trade-off
-between efficiency and effect</strong>.</p>
+<p>The task of this lab homework is to understand and accomplish codes design for <em>nearest neighbor interpolation, bilinear interpolation and bicubic interpolation</em> in python. The specific implementation of these algorithms is packed in corresponding <code>.py</code> files, the report and test codes are embedded in the <code>.ipynb</code> file. The report contains the derivations, principles and Pseudo codes of the algorithms mentioned above, and then given some optimization, extension and analysis of the results.</p>
+<p>Image Interpolation is a significant issue in DIP, we need it when resizing or distorting images from one pixel grid to another. Therefore, the effect and time consumed by varied interpolation algorithms are extraordinarily important. <strong>However, There is always trade-off between efficiency and effect</strong>.</p>
 <h2 id="principle">Principle</h2>
 <h3 id="geometric-center-alignment">Geometric Center Alignment</h3>
-<p>Actually, during interpolation we view pixel positions not as
-integer, but as float values, this understanding helps when implementing
-those interpolation algorithms. The meaning of geometric center
-alignment is that the original figure and the new figure should be
-aligned based on the image center, not the left side. To achieve this, a
-coordinate transform is essential, here is an example as the figure
-shows (sampling from 4 to 5):</p>
+<p>Actually, during interpolation we view pixel positions not as integer, but as float values, this understanding helps when implementing those interpolation algorithms. The meaning of geometric center alignment is that the original figure and the new figure should be aligned based on the image center, not the left side. To achieve this, a coordinate transform is essential, here is an example as the figure shows (sampling from 4 to 5):</p>
 <p><span class="math display">\[
 transform factor \ \alpha=\frac{src size}{dst size} \\
 src=(dst+0.5)\times\alpha-0.5
-\]</span> If I want to find the position of A' in float, or find the
-index of its neighbors. Here is the calculation:</p>
+\]</span> If I want to find the position of A' in float, or find the index of its neighbors. Here is the calculation:</p>
 <p><span class="math display">\[
 \alpha=\frac{5}{4} \\
 A=(dst+0.5)\times\alpha \\
@@ -330,25 +308,10 @@ idx_{right}=ceil(A-0.5)
 <center>
 fig-1 example of center alignment
 </center>
-<h3 id="nearest-neighbor-interpolation">Nearest Neighbor
-Interpolation</h3>
+<h3 id="nearest-neighbor-interpolation">Nearest Neighbor Interpolation</h3>
 <h4 id="derivation">Derivation</h4>
-<p>Nearest interpolation is a very simple interpolation method. For a
-new point of the resized figure, its value is the same with the nearest
-point of the original figure. The approach we find this nearest point is
-by using <code>round</code> operation after calculate the position of
-the new point in the original coordinate(multiply a factor of <span
-class="math inline">\(\frac{original dimension}{new
-dimension}\)</span>). Note that before all these operations, we need to
-transform the indices for center alignment.</p>
-<p>For example, the following <em>fig-2</em> shows an original figure of
-size 2 x 2, we want to enlarge it to size 3 x 3. Assume <span
-class="math inline">\((x, y)\)</span> is a point of the resized figure,
-then its position in the original frame is <span
-class="math inline">\((2x/3, 2x/3)\)</span>. The result often is a float
-vector, then round it to integer, e.g., <span class="math inline">\((1,
-2) \to (0.67, 1.33) \to (1, 1)\)</span>. Shrunk is similar with
-enlarging.</p>
+<p>Nearest interpolation is a very simple interpolation method. For a new point of the resized figure, its value is the same with the nearest point of the original figure. The approach we find this nearest point is by using <code>round</code> operation after calculate the position of the new point in the original coordinate(multiply a factor of <span class="math inline">\(\frac{original dimension}{new dimension}\)</span>). Note that before all these operations, we need to transform the indices for center alignment.</p>
+<p>For example, the following <em>fig-2</em> shows an original figure of size 2 x 2, we want to enlarge it to size 3 x 3. Assume <span class="math inline">\((x, y)\)</span> is a point of the resized figure, then its position in the original frame is <span class="math inline">\((2x/3, 2x/3)\)</span>. The result often is a float vector, then round it to integer, e.g., <span class="math inline">\((1, 2) \to (0.67, 1.33) \to (1, 1)\)</span>. Shrunk is similar with enlarging.</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_figure2.jpeg" srcset="/img/loading.gif" lazyload height="300">
 </center>
@@ -359,55 +322,31 @@ fig-2 example of nearest neighbor
 <figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><pre><code class="hljs pseudocode">// nearest_11910206<br>begin with parameters input_file, [h_new, w_new]<br><br>    // get input array from filename or just array<br>    error handling<br>    array input_raw<br><br>    // get resize factor, the \alpha mentioned above<br>    float h_fac, w_fac<br>    compute h_fac = h_raw / h_new<br>    compute w_fac = w_raw / w_new<br><br>    // get bias values for center alignment<br>    array interpolated<br>    bias float h_bias, w_bias<br>    compute h_bias = 0.5 * h_fac - 0.5<br>    compute w_bias = 0.5 * w_fac - 0.5<br><br>    // two `for` loops to iterate all items in array interpolated<br>    for index i<br>        for index j<br><br>            // get the nearest neighbor&#x27;s index [h_idx, w_idx]<br>            integer h_idx, w_idx<br>            compute h_idx = round(h_bias + h_fac * i)<br>            compute w_idx = round(w_bias + w_fac * j)<br>            update interpolated[i, j]<br><br>    return interpolated<br>end<br></code></pre></td></tr></table></figure>
 <h3 id="bilinear-interpolation">Bilinear Interpolation</h3>
 <h4 id="derivation-1">Derivation</h4>
-<p><strong>Using repeated linear
-interpolation:</strong><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded" aria-label="Bilinear_interpolation.
-https://en.wikipedia.org/wiki/Bilinear_interpolation.
+<p><strong>Using repeated linear interpolation:</strong><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="Bilinear_interpolation. https://en.wikipedia.org/wiki/Bilinear_interpolation.
 ">[1]</span></a></sup></p>
-<p>First consider a linear interpolation example in 1-D, like the
-following figure. The value of f(x) can be expressed by the two neighbor
-points: <span
-class="math inline">\(f(x)=\frac{x_2-x}{x_2-x_1}f(x_1)+\frac{x-x_1}{x_2-x_1}f(x_2)\)</span>.
-Therefore, f(x) can be seen as a weighted average of f(x_1) and f(x_2).
-<strong>Significantly, the border condition of bilinear interpolation
-can be regarded as linear condition during implementation</strong>.
-Besides, <span class="math inline">\(x_2-x_1\)</span> normally equal to
-one in image interpolation because the operation is down pixel by
-pixel.</p>
+<p>First consider a linear interpolation example in 1-D, like the following figure. The value of f(x) can be expressed by the two neighbor points: <span class="math inline">\(f(x)=\frac{x_2-x}{x_2-x_1}f(x_1)+\frac{x-x_1}{x_2-x_1}f(x_2)\)</span>. Therefore, f(x) can be seen as a weighted average of f(x_1) and f(x_2). <strong>Significantly, the border condition of bilinear interpolation can be regarded as linear condition during implementation</strong>. Besides, <span class="math inline">\(x_2-x_1\)</span> normally equal to one in image interpolation because the operation is down pixel by pixel.</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_figure4.jpeg" srcset="/img/loading.gif" lazyload height="150">
 </center>
 <center>
 fig-3 linear interpolation
 </center>
-<p>Then, extend the conclusion to 2-D. Actually, bilinear interpolation
-is not linear in the whole process but quadratic in the sample location
-<em>P</em>, it could be expressed in a bilinear polynomial form: <span
-class="math inline">\(f(x,y)=a_{00}+a_{10}x+a_{01}y+a_{11}xy\)</span>.
-The basic derivation is by repeat linear interpolation twice. As shown
-in the figure below, first sample along x-axis:</p>
+<p>Then, extend the conclusion to 2-D. Actually, bilinear interpolation is not linear in the whole process but quadratic in the sample location <em>P</em>, it could be expressed in a bilinear polynomial form: <span class="math inline">\(f(x,y)=a_{00}+a_{10}x+a_{01}y+a_{11}xy\)</span>. The basic derivation is by repeat linear interpolation twice. As shown in the figure below, first sample along x-axis:</p>
 <p><span class="math display">\[
 \begin{equation}
 \begin{aligned}
-f(x,y_1) &amp; =\frac{x_2-x}{x_2-x_1}f(Q_1)+\frac{x-x_1}{x_2-x_1}f(Q_2)
-\\
+f(x,y_1) &amp; =\frac{x_2-x}{x_2-x_1}f(Q_1)+\frac{x-x_1}{x_2-x_1}f(Q_2) \\
          &amp; =(x_2-x)f(Q_1)+(x-x_1)f(Q_2) \\
-f(x,y_2) &amp; =\frac{x_2-x}{x_2-x_1}f(Q_3)+\frac{x-x_1}{x_2-x_1}f(Q_4)
-\\
+f(x,y_2) &amp; =\frac{x_2-x}{x_2-x_1}f(Q_3)+\frac{x-x_1}{x_2-x_1}f(Q_4) \\
          &amp; =(x_2-x)f(Q_3)+(x-x_1)f(Q_4)
 \end{aligned}
 \end{equation}
-\]</span> Then sample along y-axis (the sequence of sampling along x and
-y axes can exchange), writing the equation of f(x, y) in matrix
-form:</p>
+\]</span> Then sample along y-axis (the sequence of sampling along x and y axes can exchange), writing the equation of f(x, y) in matrix form:</p>
 <p><span class="math display">\[
 \begin{equation}
 \begin{aligned}
-f(x,y) &amp;
-=\frac{y_2-y}{y_2-y_1}f(x,y_1)+\frac{y-y_1}{y_2-y_1}f(x,y_2) \\
-       &amp;
-=\frac{y_2-y}{y_2-y_1}[(x_2-x)f(Q_1)+(x-x_1)f(Q_2)]+\frac{y-y_1}{y_2-y_1}[(x_2-x)f(Q_3)+(x-x_1)f(Q_4)]
-\\
+f(x,y) &amp; =\frac{y_2-y}{y_2-y_1}f(x,y_1)+\frac{y-y_1}{y_2-y_1}f(x,y_2) \\
+       &amp; =\frac{y_2-y}{y_2-y_1}[(x_2-x)f(Q_1)+(x-x_1)f(Q_2)]+\frac{y-y_1}{y_2-y_1}[(x_2-x)f(Q_3)+(x-x_1)f(Q_4)] \\
        &amp; =\begin{bmatrix}
           x_2-x &amp; x-x_1
           \end{bmatrix}
@@ -419,10 +358,7 @@ f(x,y) &amp;
           \end{bmatrix}
 \end{aligned}
 \end{equation}
-\]</span> The points lie in the margin of the <strong>enlarged</strong>
-figure can be dealt with separately, because it only has 3 or 1 (in the
-corner) neighbors. Therefore, I do linear interpolation for the points
-in the margin.</p>
+\]</span> The points lie in the margin of the <strong>enlarged</strong> figure can be dealt with separately, because it only has 3 or 1 (in the corner) neighbors. Therefore, I do linear interpolation for the points in the margin.</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_figure5.jpeg" srcset="/img/loading.gif" lazyload height="225">
 </center>
@@ -430,15 +366,13 @@ in the margin.</p>
 fig-4 bilinear interpolation
 </center>
 <p><strong>Using Polynomial to fit:</strong></p>
-<p>As mentioned above, f(x, y) could be written as a multilinear
-polynomial, therefore using the values of the 4 neighbor points, we can
-get: $$ <span class="math display">\[\begin{align}
+<p>As mentioned above, f(x, y) could be written as a multilinear polynomial, therefore using the values of the 4 neighbor points, we can get: $$ <span class="math display">\[\begin{align}
 f(x, y) &amp; \approx a_{00}+a_{10}x+a_{01}y+a_{11}xy \\
         &amp; \Rightarrow [f(Q_3) \ f(Q_1) \ f(Q_4) \ f(Q_2)]^T \\
         \\
 \begin{pmatrix}
 f(Q_3) \\ f(Q_1) \\ f(Q_4) \\ f(Q_2)
-\end{pmatrix} &amp; =
+\end{pmatrix} &amp; = 
 \begin{pmatrix}
 1 &amp; x_1 &amp; y_1 &amp; x_1y_1 \\
 1 &amp; x_1 &amp; y_2 &amp; x_1y_2 \\
@@ -473,7 +407,7 @@ x_2y_2 &amp; -x_2y_1 &amp; -x_1y_2 &amp; x_1y_1 \\
 f(Q_3) \\ f(Q_1) \\ f(Q_4) \\ f(Q_2)
 \end{pmatrix} \\
 \\
-f(x,y) &amp; =
+f(x,y) &amp; = 
 \begin{pmatrix}
 1 &amp; x &amp; y &amp; xy
 \end{pmatrix}
@@ -488,13 +422,9 @@ f(Q_3) \\ f(Q_1) \\ f(Q_4) \\ f(Q_2)
 \end{pmatrix} \\
 
 \end{align}\]</span> $$ <strong>Using Weighted Mean</strong></p>
-<p>In another view, as mentioned we can see the interpolation as
-weighted average over the 4 neighbor values, therefore we can a vector
-<span class="math inline">\(w\)</span> to denote the weights. <span
-class="math display">\[
+<p>In another view, as mentioned we can see the interpolation as weighted average over the 4 neighbor values, therefore we can a vector <span class="math inline">\(w\)</span> to denote the weights. <span class="math display">\[
 \begin{align}
-f(x, y) &amp; \approx
-w_{1}f(Q_{1})+w_{2}f(Q_{2})+w_{3}f(Q_{3})+w_{4}f(Q_{4}) \\
+f(x, y) &amp; \approx w_{1}f(Q_{1})+w_{2}f(Q_{2})+w_{3}f(Q_{3})+w_{4}f(Q_{4}) \\
         &amp; =
 \begin{pmatrix}
 f(Q_3) &amp; f(Q_1) &amp; f(Q_4) &amp; f(Q_2)
@@ -503,16 +433,12 @@ f(Q_3) &amp; f(Q_1) &amp; f(Q_4) &amp; f(Q_2)
 w_3 \\ w_1 \\ w_4 \\ w_2
 \end{pmatrix}
 \end{align}
-\]</span> Substitute the knowledge of the former polynomial principle,
-we can get the following result. The weights must add up to 1 for
-different order of terms. Then extract the weights by do inversing, we
-get a new matrix form for bilinear interpolation. <span
-class="math display">\[
+\]</span> Substitute the knowledge of the former polynomial principle, we can get the following result. The weights must add up to 1 for different order of terms. Then extract the weights by do inversing, we get a new matrix form for bilinear interpolation. <span class="math display">\[
 \begin{align}
 \begin{pmatrix}
 1 \\ x \\ y \\ xy
 \end{pmatrix}
-&amp; =
+ &amp; =
 \begin{pmatrix}
 1 &amp; 1 &amp; 1 &amp; 1 \\
 x_1 &amp; x_1 &amp; x_2 &amp; x_2 \\
@@ -529,7 +455,7 @@ f(Q_3) &amp; f(Q_1) &amp; f(Q_4) &amp; f(Q_2)
 \end{pmatrix}
 \begin{pmatrix}
 w_3 \\ w_1 \\ w_4 \\ w_2
-\end{pmatrix} \\
+\end{pmatrix} \\ 
 &amp; = \frac{1}{(x_2-x_1)(y_2-y_1)}
 \begin{pmatrix}
 f(Q_3) &amp; f(Q_1) &amp; f(Q_4) &amp; f(Q_2)
@@ -557,46 +483,26 @@ x_1y_1 &amp; -y_1 &amp; -x_1 &amp; 1
 1 \\ x \\ y \\ xy
 \end{pmatrix}
 \end{align}
-\]</span> However, it is easy to discover that this matrix form has
-strong similarity with the one derived from polynomial fitting. In my
-intuition this methods have the same time complexity with the last one,
-therefore I do not implement this method to codes.</p>
+\]</span> However, it is easy to discover that this matrix form has strong similarity with the one derived from polynomial fitting. In my intuition this methods have the same time complexity with the last one, therefore I do not implement this method to codes.</p>
 <h4 id="pseudo-code-1">Pseudo Code</h4>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs pseudocode">// bilinear_11910206<br>begin with parameters input_file, [h_new, w_new]<br><br>    // get input array from filename or just array<br>    error handling<br>    array input_raw<br><br>    // get resize factor, the \alpha mentioned above<br>    float h_fac, w_fac<br>    compute h_fac = h_raw / h_new<br>    compute w_fac = w_raw / w_new<br><br>    // get bias values for center alignment<br>    array interpolated<br>    bias float h_bias, w_bias<br>    compute h_bias = 0.5 * h_fac - 0.5<br>    compute w_bias = 0.5 * w_fac - 0.5<br><br>    // get the indexes that represent margins<br>    integer h_max, w_max, h_margin, w_margin<br>    compute h_max = h_raw - 1<br>    compute w_raw = w_raw - 1<br>    compute h_margin = floor(0.5 / h_fac + 0.5)<br>    compute h_margin = floor(0.5 / w_fac + 0.5)<br><br>    // assign values for the 4 corners<br>    interpolated[left-top] = input_raw[0, 0]<br>    interpolated[right-top] = input_raw[0, w_raw]<br>    interpolated[left-down] = input_raw[h_max, 0]<br>    interpolated[right-down] = input_raw[h_max, w_raw]<br><br>    // assign values for the 4 borderline margins<br>    for index j<br><br>        // handle 2 horizontal borderline margins<br>        float y<br>        integer y1, y2<br>        compute y = w_bias + w_fac * j<br>        compute y1 = floor(y)<br>        compute y2 = ceil(y)<br><br>        // do linear intepolation in y direction<br>        interpolated[left-border] = (y2 - y) * input_raw[0, y1] + (y - y1) * input_raw[0, y2]<br>        interpolated[right-border] = (y2 - y) * input_raw[h_max, y1] + (y - y1) * input_raw[h_max, y2]<br><br>    for index i<br><br>        // handle 2 vertical borderline margins<br>        float x<br>        integer x1, x2<br>        compute x = h_bias + h_fac * i<br>        compute x1 = floor(x)<br>        compute x2 = ceil(x)<br><br>        // do linear intepolation in x direction<br>        interpolated[up-border] = (x2 - x) * input_raw[x1, 0] + (x - x1) * input_raw[x2, 0]<br>        interpolated[down-border] = (x2 - x) * input_raw[x1, w_max] + (x - x1) * input_raw[x2, x_max]<br><br>    // embedded 2 `for` loops to iterate all items in the center part<br>    for index i exclude margin<br>        for index j exclude margin<br>            float x, y<br>            integer x1, y1, x2, y2<br>            compute x = h_bias + h_fac * i<br>            compute y = w_bias + w_fac * j<br>            compute x1 = floor(x)<br>            compute y1 = floor(y)<br>            compute x2 = ceil(x)<br>            compute y2 = ceil(y)<br><br>            update interpolated[i, j]<br>            compute f(x, y) // equations are given above for different methods<br><br>    return interpolated<br>end<br></code></pre></td></tr></table></figure>
 <h3 id="bicubic-interpolation">Bicubic Interpolation</h3>
 <h4 id="derivation-2">Derivation</h4>
-<p>According to the paper in IEEE, I learn this convolution method for
-bicubic interpolation (there are other
-approaches).<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="Cubic convolution interpolation for digital image processing
-">[3]</span></a></sup> The strategy is like the polynomial and weight
-method of bilinear interpolation, but this time we have 16 coefficients
-rather than 4. The general function is: <span class="math display">\[
+<p>According to the paper in IEEE, I learn this convolution method for bicubic interpolation (there are other approaches).<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="Cubic convolution interpolation for digital image processing
+">[3]</span></a></sup> The strategy is like the polynomial and weight method of bilinear interpolation, but this time we have 16 coefficients rather than 4. The general function is: <span class="math display">\[
 \sum^{3}_{i=0}\sum^{3}_{j=0}a_{ij}x^iy^j
-\]</span> The crucial objective is to solve the <span
-class="math inline">\(a_{ij}\)</span> coefficients. The paper introduces
-a BiCubic function: <span class="math display">\[
+\]</span> The crucial objective is to solve the <span class="math inline">\(a_{ij}\)</span> coefficients. The paper introduces a BiCubic function: <span class="math display">\[
 \begin{align}
 W(x) &amp; =\left\{
 \begin{aligned}
 &amp; (a+2)|x|^3-(a+3)|x|^2 +1 &amp;     &amp; {for \ |x|\leqslant1} \\
 &amp; a|x|^3-5a|x|^2+8a|x|-4a &amp;     &amp; {for \ 1&lt;|x|&lt;2} \\
-&amp; 0 &amp;     &amp; {otherwise}
+&amp; 0 &amp;     &amp; {otherwise} 
 \end{aligned}
 \right. \\
 a &amp; = -0.5 \ or \ -0.75
 \end{align}
-\]</span> Let <span class="math inline">\(0&lt;x&lt;1\)</span>,
-therefore <span class="math inline">\(1&lt;x+1&lt;2\)</span>, <span
-class="math inline">\(-1&lt;x-1&lt;0\)</span>, <span
-class="math inline">\(-2&lt;x-2&lt;-1\)</span>, then we substitute to
-the 4 conditions to <span class="math inline">\(W(x)\)</span>, we could
-get corresponding equations. Substitute to the <span
-class="math inline">\(x_1\to x_4\)</span>, and <span
-class="math inline">\(y_1\to y_4\)</span> we get two 1 x 4 vectors <span
-class="math inline">\(\{w_x, w_y\}\)</span>. The final result could be:
-<span class="math display">\[
+\]</span> Let <span class="math inline">\(0&lt;x&lt;1\)</span>, therefore <span class="math inline">\(1&lt;x+1&lt;2\)</span>, <span class="math inline">\(-1&lt;x-1&lt;0\)</span>, <span class="math inline">\(-2&lt;x-2&lt;-1\)</span>, then we substitute to the 4 conditions to <span class="math inline">\(W(x)\)</span>, we could get corresponding equations. Substitute to the <span class="math inline">\(x_1\to x_4\)</span>, and <span class="math inline">\(y_1\to y_4\)</span> we get two 1 x 4 vectors <span class="math inline">\(\{w_x, w_y\}\)</span>. The final result could be: <span class="math display">\[
 \begin{align}
 f(x,y)=
 \begin{pmatrix}
@@ -612,42 +518,23 @@ Q_{41} &amp; Q_{42} &amp; Q_{43} &amp; Q_{44} \\
 w_{y1} \\ w_{y2} \\ w_{y3} \\ w_{y4}
 \end{pmatrix}
 \end{align}
-\]</span> Because of time limit, I am still debugging this algorithm...,
-therefore I use <code>scipy</code> to accomplish it.</p>
+\]</span> Because of time limit, I am still debugging this algorithm..., therefore I use <code>scipy</code> to accomplish it.</p>
 <h4 id="pseudo-code-2">Pseudo Code</h4>
-<p>I implement this by using <code>scipy</code>, according to the
-reference.<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
-class="hint--top hint--rounded" aria-label="scipy.interpolate.interp2d.
-https://bbs.huaweicloud.com/blogs/329665.
+<p>I implement this by using <code>scipy</code>, according to the reference.<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="scipy.interpolate.interp2d. https://bbs.huaweicloud.com/blogs/329665.
 ">[2]</span></a></sup></p>
 <h2 id="analysis">Analysis</h2>
-<p>Here I import some 3rd-party libraries permitted by teacher, and the
-<code>xxx_11910206</code> files are solutions of this homework:</p>
+<p>Here I import some 3rd-party libraries permitted by teacher, and the <code>xxx_11910206</code> files are solutions of this homework:</p>
 <ol type="1">
-<li><code>cv2</code>: the python-OpenCV package, used for reading images
-and comparison</li>
-<li><code>numpy</code>: high efficiency calculating tool, written by
-C/C++ (using CPU)</li>
-<li><code>matplotlib</code>: built-in image processing package, used for
-showing visualization of results</li>
+<li><code>cv2</code>: the python-OpenCV package, used for reading images and comparison</li>
+<li><code>numpy</code>: high efficiency calculating tool, written by C/C++ (using CPU)</li>
+<li><code>matplotlib</code>: built-in image processing package, used for showing visualization of results</li>
 <li><code>xxx_11910206</code>: self implemented algorithms</li>
-<li><code>scipy</code>: contains many scientific math algorithms, like
-interpolation</li>
+<li><code>scipy</code>: contains many scientific math algorithms, like interpolation</li>
 </ol>
-<p>I use two other <code>ndarray test</code> and <code>ndarray
-test_3</code> for testing my algorithms, the reasons are listed below.
-Then I set <code>np.random.seed(0)</code> in order to control the result
-of random generated tests. The "seed" would help to make the results of
-my <code>ipynb</code> file repeatable:</p>
+<p>I use two other <code>ndarray test</code> and <code>ndarray test_3</code> for testing my algorithms, the reasons are listed below. Then I set <code>np.random.seed(0)</code> in order to control the result of random generated tests. The "seed" would help to make the results of my <code>ipynb</code> file repeatable:</p>
 <ol type="1">
-<li>The size of the given image is a square, but my codes support
-rectangular input, therefore I would like to use a new test for showing
-the generalization capability. Besides, I want to show that my
-algorithms can handle RGB images as well.</li>
-<li>The pixel image could better depict the difference of different
-algorithms, it could be helpful for analyzing. The change in
-visualization is much more obvious. However, I will still use the given
-figure for time complexity testing.</li>
+<li>The size of the given image is a square, but my codes support rectangular input, therefore I would like to use a new test for showing the generalization capability. Besides, I want to show that my algorithms can handle RGB images as well.</li>
+<li>The pixel image could better depict the difference of different algorithms, it could be helpful for analyzing. The change in visualization is much more obvious. However, I will still use the given figure for time complexity testing.</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-keyword">from</span> nearest_11910206 <span class="hljs-keyword">import</span> nearest_11910206<br><span class="hljs-keyword">from</span> bilinear_11910206 <span class="hljs-keyword">import</span> bilinear_11910206<br><span class="hljs-keyword">from</span> bicubic_11910206 <span class="hljs-keyword">import</span> bicubic_11910206<br><br>%matplotlib inline<br><br>np.random.seed(<span class="hljs-number">0</span>)  <span class="hljs-comment"># repeatable</span><br>test = np.uint8(np.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, size=(<span class="hljs-number">5</span>, <span class="hljs-number">7</span>)))<br>test_3 = np.uint8(np.random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>,size=(<span class="hljs-number">5</span>,<span class="hljs-number">5</span>,<span class="hljs-number">3</span>)))<br>raw_gray = cv2.cvtColor(cv2.imread(<span class="hljs-string">&#x27;rice.tif&#x27;</span>), cv2.COLOR_BGR2GRAY)<br></code></pre></td></tr></table></figure>
 <center>
@@ -656,87 +543,40 @@ figure for time complexity testing.</li>
 <p>​</p>
 <h3 id="brief-results">Brief Results</h3>
 <p>Here is all the results that required of this homework.</p>
-<p><strong>Nearest Neighbor Interpolation</strong>: According to
-analysis and the efficiency test in the last part, this is the fastest
-algorithms. The pay-off is that it would occur discontinuity and obvious
-serration.</p>
-<p><strong>Bilinear Interpolation</strong>: It is more complex than
-Nearest Neighbor, but it do not have serration for the result gray
-image. Basically, the result is smooth and continuous, but this method
-would filter some high-frequency component, thus the image might be a
-little faintness.</p>
-<p><strong>Bicubic Interpolation</strong>: The time complexity is the
-greatest, but the interpolation effect is the best. It is important to
-choose a proper weight policy, exactly choosing an appropriate kernel.
-The kernel value is usually set to -0.5 or -0.75 (OpenCV set as
--0.75).</p>
+<p><strong>Nearest Neighbor Interpolation</strong>: According to analysis and the efficiency test in the last part, this is the fastest algorithms. The pay-off is that it would occur discontinuity and obvious serration.</p>
+<p><strong>Bilinear Interpolation</strong>: It is more complex than Nearest Neighbor, but it do not have serration for the result gray image. Basically, the result is smooth and continuous, but this method would filter some high-frequency component, thus the image might be a little faintness.</p>
+<p><strong>Bicubic Interpolation</strong>: The time complexity is the greatest, but the interpolation effect is the best. It is important to choose a proper weight policy, exactly choosing an appropriate kernel. The kernel value is usually set to -0.5 or -0.75 (OpenCV set as -0.75).</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_11910206_6_0.png" srcset="/img/loading.gif" lazyload alt="png" style="zoom:80%;" />
 </center>
-<h3 id="nearest-neighbor-interpolation-1">Nearest Neighbor
-Interpolation</h3>
-<p>Comparing the result of OpenCV with self-implemented, they are the
-same when enlarging. Besides, the result shows that I can apply
-different resized factors in x and y axes.</p>
-<p>During enlarging the figure, nearest neighbor algorithm cannot
-interpolate smoothly among the original pixels, the boundaries of color
-blocks is significantly clear.</p>
+<h3 id="nearest-neighbor-interpolation-1">Nearest Neighbor Interpolation</h3>
+<p>Comparing the result of OpenCV with self-implemented, they are the same when enlarging. Besides, the result shows that I can apply different resized factors in x and y axes.</p>
+<p>During enlarging the figure, nearest neighbor algorithm cannot interpolate smoothly among the original pixels, the boundaries of color blocks is significantly clear.</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_11910206_8_0.png" srcset="/img/loading.gif" lazyload alt="png"  />
 </center>
-<p>The results of OpenCV and self-implemented algorithms differ when
-operating shrunk, I look through the code of OpenCV and find that it
-uses <code>cvFloor</code> , which cutoff the integer part of a float
-number while I use <code>round</code> to get the neighbors, thus the
-down-sample result of OpenCV would lean to the left and top sides while
-mine is center aligned. The comparison of pixel values are also provided
-below:</p>
+<p>The results of OpenCV and self-implemented algorithms differ when operating shrunk, I look through the code of OpenCV and find that it uses <code>cvFloor</code> , which cutoff the integer part of a float number while I use <code>round</code> to get the neighbors, thus the down-sample result of OpenCV would lean to the left and top sides while mine is center aligned. The comparison of pixel values are also provided below:</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_11910206_9_0.png" srcset="/img/loading.gif" lazyload alt="png"  />
 </center>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">Raw:</span><br> [[<span class="hljs-number">172</span>  <span class="hljs-number">47</span> <span class="hljs-number">117</span> <span class="hljs-number">192</span>  <span class="hljs-number">67</span> <span class="hljs-number">251</span> <span class="hljs-number">195</span>]<br> [<span class="hljs-number">103</span>   <span class="hljs-number">9</span> <span class="hljs-number">211</span>  <span class="hljs-number">21</span> <span class="hljs-number">242</span>  <span class="hljs-number">36</span>  <span class="hljs-number">87</span>]<br> [ <span class="hljs-number">70</span> <span class="hljs-number">216</span>  <span class="hljs-number">88</span> <span class="hljs-number">140</span>  <span class="hljs-number">58</span> <span class="hljs-number">193</span> <span class="hljs-number">230</span>]<br> [ <span class="hljs-number">39</span>  <span class="hljs-number">87</span> <span class="hljs-number">174</span>  <span class="hljs-number">88</span>  <span class="hljs-number">81</span> <span class="hljs-number">165</span>  <span class="hljs-number">25</span>]<br> [ <span class="hljs-number">77</span>  <span class="hljs-number">72</span>   <span class="hljs-number">9</span> <span class="hljs-number">148</span> <span class="hljs-number">115</span> <span class="hljs-number">208</span> <span class="hljs-number">243</span>]]<br><span class="hljs-attr">OpenCV:</span><br> [[<span class="hljs-number">172</span> <span class="hljs-number">117</span>  <span class="hljs-number">67</span>]<br> [ <span class="hljs-number">70</span>  <span class="hljs-number">88</span>  <span class="hljs-number">58</span>]]<br><span class="hljs-attr">Mine:</span><br> [[  <span class="hljs-number">9</span>  <span class="hljs-number">21</span>  <span class="hljs-number">36</span>]<br> [ <span class="hljs-number">87</span>  <span class="hljs-number">88</span> <span class="hljs-number">165</span>]]<br></code></pre></td></tr></table></figure>
-<p>I extend my codes for RGB images, actually, this is nearly the same
-as operating gray images, what's new is to do interpolation separately
-in 3 color channels. I use the following code to judge what shape of
-array should be returned: <code>interpolated = np.zeros(dim, dtype=int)
-if input_raw.ndim == 2 else np.zeros((dim[0], dim[1], 3),
-dtype=int)</code>. When updating the returned array
-<code>interpolated</code>, use the convenient numpy operator
-<code>:</code> (numpy is much more efficient than raw python codes), the
-RGB channels could be calculated within one line of code:</p>
+<p>I extend my codes for RGB images, actually, this is nearly the same as operating gray images, what's new is to do interpolation separately in 3 color channels. I use the following code to judge what shape of array should be returned: <code>interpolated = np.zeros(dim, dtype=int) if input_raw.ndim == 2 else np.zeros((dim[0], dim[1], 3), dtype=int)</code>. When updating the returned array <code>interpolated</code>, use the convenient numpy operator <code>:</code> (numpy is much more efficient than raw python codes), the RGB channels could be calculated within one line of code:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> input_raw.ndim == <span class="hljs-number">2</span>:<br>    interpolated[i, j] = input_raw[r_idx, c_idx] <span class="hljs-comment"># calculate gray figure</span><br><span class="hljs-keyword">else</span>:<br>    interpolated[i, j, :] = input_raw[r_idx, c_idx, :] <span class="hljs-comment"># calculate RGB figure</span><br></code></pre></td></tr></table></figure>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_11910206_11_0.png" srcset="/img/loading.gif" lazyload alt="png"  />
 </center>
 <h3 id="bilinear-interpolation-1">Bilinear Interpolation</h3>
-<p>Below is to sample the "Random Raw" to 100 x 100, the result is
-similar with OpenCV. The figure with title "Self-linear2" uses repeated
-linear interpolation, and the one with "Self-polyfit" uses polynomial
-fit.</p>
-<p>It also supports RGB figures just like <code>nearest_11910206</code>
-does. From the results, we could see that bilinear interpolation has
-better effect than nearest neighbor, it could compensate some
-transitional values between the original color blocks.</p>
+<p>Below is to sample the "Random Raw" to 100 x 100, the result is similar with OpenCV. The figure with title "Self-linear2" uses repeated linear interpolation, and the one with "Self-polyfit" uses polynomial fit.</p>
+<p>It also supports RGB figures just like <code>nearest_11910206</code> does. From the results, we could see that bilinear interpolation has better effect than nearest neighbor, it could compensate some transitional values between the original color blocks.</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_11910206_13_0.png" srcset="/img/loading.gif" lazyload alt="png"  />
 </center>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/interpolation_11910206_14_0.png" srcset="/img/loading.gif" lazyload alt="png" style="zoom:100%;" />
 </center>
-<p>From the figure above with title "Inverse-Shrunk", it is down-sampled
-back to 5 x 5 from the image up-sampled to 100 x 100. It reveal that the
-bilinear process dramatically could be inverse! From wiki, I get the
-following proof for Inverse computation under special condition (if the
-point is inside any convex quadrilateral, which means 4-border-polygons
-that are convex, the "unit square coordinates" could be
-found).<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded" aria-label="Bilinear_interpolation.
-https://en.wikipedia.org/wiki/Bilinear_interpolation.
+<p>From the figure above with title "Inverse-Shrunk", it is down-sampled back to 5 x 5 from the image up-sampled to 100 x 100. It reveal that the bilinear process dramatically could be inverse! From wiki, I get the following proof for Inverse computation under special condition (if the point is inside any convex quadrilateral, which means 4-border-polygons that are convex, the "unit square coordinates" could be found).<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="Bilinear_interpolation. https://en.wikipedia.org/wiki/Bilinear_interpolation.
 ">[1]</span></a></sup></p>
-<p>The <span class="math inline">\(\{a, b, c, d\}\)</span> could be seen
-as weights of current interpolation, the unit square are parameterized
-by <span class="math inline">\(\{\lambda,\mu\}\in[0, 1]\)</span> . The
-target is to solve these two parameters. <span class="math display">\[
+<p>The <span class="math inline">\(\{a, b, c, d\}\)</span> could be seen as weights of current interpolation, the unit square are parameterized by <span class="math inline">\(\{\lambda,\mu\}\in[0, 1]\)</span> . The target is to solve these two parameters. <span class="math display">\[
 \begin{align}
 &amp; a + b\lambda+c\mu+d\lambda\mu=0 \\
 \\
@@ -745,8 +585,7 @@ target is to solve these two parameters. <span class="math display">\[
 &amp; c = x_{01} - x_{00} \\
 &amp; d = x_{11} - x_{01} - x_{10} + x_{00} \\
 \end{align}
-\]</span> Take 2-d cross product of the system, reveals that: <span
-class="math display">\[
+\]</span> Take 2-d cross product of the system, reveals that: <span class="math display">\[
 \begin{align}
 &amp; (a+b\lambda+c\mu)\times d &amp; = 0 \\
 &amp; (a+b\lambda)\times (c+d\mu) &amp; = 0 \\
@@ -760,43 +599,21 @@ class="math display">\[
 &amp; A=a\times b \quad B=a\times c \quad C=a\times d \\
 &amp; D=b\times c \quad E=b\times d \quad F=c\times d
 \end{align}
-\]</span> Use quadratic formula to solve the equations, we get: <span
-class="math display">\[
+\]</span> Use quadratic formula to solve the equations, we get: <span class="math display">\[
 \mathbb{D}=(C+D)^2-4EB=(C-D)^2-4FA \\
-\Rightarrow \quad \lambda=\frac{-C-D\pm \sqrt{\mathbb{D}}}{2E} \quad
-\mu=\frac{-C+D\pm \sqrt{\mathbb{D}}}{2F}
-\]</span> This might explain the dramatic inverse property I found,
-actually I not sure I totally understand it...</p>
+\Rightarrow \quad \lambda=\frac{-C-D\pm \sqrt{\mathbb{D}}}{2E} \quad \mu=\frac{-C+D\pm \sqrt{\mathbb{D}}}{2F}
+\]</span> This might explain the dramatic inverse property I found, actually I not sure I totally understand it...</p>
 <h3 id="time-complexity-analysis">Time Complexity Analysis</h3>
 <h4 id="enlarge">Enlarge</h4>
-<p>I use the built-in <code>time</code> package in python to record
-running time in float seconds, and then use <code>matplotlib</code> to
-plot them, here shows the results. The time complexity of bilinear
-interpolation and nearest neighbor interpolation are both <span
-class="math inline">\(O(N^2)\)</span>, due to the embedded two for
-loops. Apparently, bilinear cost more time than nearest neighbor,
-because it does more calculation in the for loops, which also means that
-bilinear interpolation has larger coefficient for the 2nd-order
-term.</p>
-<p>Compare the two bilinear methods, it turns out that when interpolated
-size is under 800 they hardly have difference. Therefore, it is
-reasonable to guess that using repeated linear interpolation and
-polynomial fitting occupy similar calculation.</p>
-<p>OpenCV test is weird, I guess it might have down different
-optimization strategies for these 3 methods. By the way, when
-interpolated size is larger than 3000, the time cost of nearest neighbor
-method would increase horribly.</p>
+<p>I use the built-in <code>time</code> package in python to record running time in float seconds, and then use <code>matplotlib</code> to plot them, here shows the results. The time complexity of bilinear interpolation and nearest neighbor interpolation are both <span class="math inline">\(O(N^2)\)</span>, due to the embedded two for loops. Apparently, bilinear cost more time than nearest neighbor, because it does more calculation in the for loops, which also means that bilinear interpolation has larger coefficient for the 2nd-order term.</p>
+<p>Compare the two bilinear methods, it turns out that when interpolated size is under 800 they hardly have difference. Therefore, it is reasonable to guess that using repeated linear interpolation and polynomial fitting occupy similar calculation.</p>
+<p>OpenCV test is weird, I guess it might have down different optimization strategies for these 3 methods. By the way, when interpolated size is larger than 3000, the time cost of nearest neighbor method would increase horribly.</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/buffer_time_result_2.png" srcset="/img/loading.gif" lazyload alt="png" style="zoom:100%;" />
 </center>
 <h4 id="shrunk">Shrunk</h4>
-<p>The shrunk result is similar with enlarge, a interesting fact is that
-shrunk cost much less time than enlarge. This means that the limitation
-and challenge of interpolation problem is up-sample rather than
-down-sample. For example, recovering image and super-resolution task
-might be relevant to this, I guess.</p>
-<p>The OpenCV result is still strange, might relate to its bottom
-optimization or it use other methods instead.</p>
+<p>The shrunk result is similar with enlarge, a interesting fact is that shrunk cost much less time than enlarge. This means that the limitation and challenge of interpolation problem is up-sample rather than down-sample. For example, recovering image and super-resolution task might be relevant to this, I guess.</p>
+<p>The OpenCV result is still strange, might relate to its bottom optimization or it use other methods instead.</p>
 <center>
 <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/DIP/buffer_time_result_3.png" srcset="/img/loading.gif" lazyload alt="png" style="zoom:100%;" />
 </center>
@@ -805,22 +622,13 @@ optimization or it use other methods instead.</p>
 <div class="footnote-list">
 <ol>
 <li>
-<span id="fn:1" class="footnote-text"><span>Bilinear_interpolation.
-https://en.wikipedia.org/wiki/Bilinear_interpolation.
-<a href="#fnref:1" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
+<span id="fn:1" class="footnote-text"><span>Bilinear_interpolation. https://en.wikipedia.org/wiki/Bilinear_interpolation. <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
 </li>
 <li>
-<span id="fn:2" class="footnote-text"><span>scipy.interpolate.interp2d.
-https://bbs.huaweicloud.com/blogs/329665.
-<a href="#fnref:2" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
+<span id="fn:2" class="footnote-text"><span>scipy.interpolate.interp2d. https://bbs.huaweicloud.com/blogs/329665. <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
 </li>
 <li>
-<span id="fn:3" class="footnote-text"><span>Cubic convolution
-interpolation for digital image processing
-<a href="#fnref:3" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
+<span id="fn:3" class="footnote-text"><span>Cubic convolution interpolation for digital image processing <a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
 </li>
 </ol>
 </div>
