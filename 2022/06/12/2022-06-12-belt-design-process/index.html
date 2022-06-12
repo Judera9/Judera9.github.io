@@ -1,0 +1,694 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jude">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="参考机械设计课程视频，对应课本143-164">
+<meta property="og:type" content="article">
+<meta property="og:title" content="带传动选型笔记-机械设计课程">
+<meta property="og:url" content="https://judera9.github.io/2022/06/12/2022-06-12-belt-design-process/index.html">
+<meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="参考机械设计课程视频，对应课本143-164">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220401160508902.png">
+<meta property="article:published_time" content="2022-06-12T13:14:27.000Z">
+<meta property="article:modified_time" content="2022-06-12T13:19:34.891Z">
+<meta property="article:author" content="Jude">
+<meta property="article:tag" content="机械设计">
+<meta property="article:tag" content="带传动">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220401160508902.png">
+  
+  
+  <title>带传动选型笔记-机械设计课程 - Jude&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jude&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home Page
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About Me
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default3.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="带传动选型笔记-机械设计课程">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-12 21:14" pubdate>
+        2022年6月12日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">带传动选型笔记-机械设计课程</h1>
+            
+            <div class="markdown-body">
+              <p>参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FW41127QB?p=34">机械设计课程视频</a>，对应<a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/blob/main/file/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1%E5%B8%A6%E4%BC%A0%E5%8A%A8.pdf">课本143-164</a></p>
+<span id="more"></span>
+<h2 id="带传动类型">带传动类型</h2>
+<h3 id="摩擦型带传动">摩擦型带传动</h3>
+<p>  该带传动的工作原理是<strong>摩擦力</strong>， 为了产生摩擦需要将同步带与轮子之间有正压力。但<strong>“只要靠摩擦力工作都不可靠”</strong>，所以通过V带传动能够增加带的侧面和轮槽侧面的正压力，如下图1右侧。下面是带传动的一些特点：</p>
+<ol type="1">
+<li><strong>传动平稳</strong>：在主动轴上的运动不平稳不会传动到从动轴上，与齿轮不同，弹性的同步带能够抵消运动的不平稳</li>
+<li><strong>过载打滑</strong>：类比车在泥泞路上打滑，过载打滑有好有坏。好处是有过载保护的效果，能够保护从动轴后续零件的；坏处是传动失效了，属于“丧失了正常工作条件”的失效形式</li>
+<li><strong>传动中心距大</strong>：优点是相对齿轮而言，主动轮和从动轮之间的距离能够相当大；缺点是距离太远，传动过程缓慢（呈波浪形传动）</li>
+<li><strong>结构简单</strong>：所以成本低，安装维护简单</li>
+<li><strong>传动比不准确</strong>：因为是靠摩擦工作的，所以瞬时传动比不准确</li>
+<li><strong>需要张紧</strong>：需要拉紧来提供正压力</li>
+<li><strong>轴上受力大</strong>：由于主动轮与从动轮拉紧，两轮之间的连轴承受较大的力。对轮上的轴承的要求较高，并且轴可能会弯曲</li>
+<li><strong>安装精度不高</strong>：安装时一般通过将中心距拉大来张紧，安装精度不高，因此对制造要求不高</li>
+<li><strong>急速、反向转动性能差，不适合在高转速下使用</strong></li>
+</ol>
+<h3 id="同步带传动">同步带传动</h3>
+<p>  靠如下图2所示的齿啮合传动，不再靠摩擦力，因此可靠性更好。部分特点与摩擦性带传动一致，下面是相对于摩擦型带传动，同步带的优点：<strong>承载能力高、传动比准确、效率高</strong></p>
+<h3 id="v带的类型与结构">V带的类型与结构</h3>
+<p>  带是标准件，可以直接买到特定型号的带。V带的类型可以根据结构类型区分，有帘布结构和绳芯结构，如下图3。虽然V带形状上宽下窄，但是在拉紧之后，上侧实际上收到较大的拉力而宽度减小，下侧受到挤压宽度变大，因此V带侧面不再平齐的直线。据谭老师说，日本有一种在V带基础上将下侧做成弧线的窄V带，能够在拉紧后侧面呈直线，如图3右侧。<strong>普通V带型号为：Y、Z、A、B、C、D、E，对应的宽度（截面积）依次递增</strong>，如下图4所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220401160508902.png" srcset="/img/loading.gif" lazyload alt="image-20220401160508902" style="zoom: 33%;" /></p>
+<h2 id="带传动受力分析">带传动受力分析</h2>
+<p>  如下图1，假设带的初始拉力为<span class="math inline">\(F_0\)</span>，现在让带顺时针转动。<strong>下侧带扩张的量等比于<span class="math inline">\(F_1-F_0\)</span>，同理上侧缩紧带的量等比于<span class="math inline">\(F_0-F_2\)</span>，因此得到<span class="math inline">\(2F_0=F_1 - F_2\)</span></strong>。分别将小带轮和小带轮上的带单独分析，得到下面两个平衡方程， 其中<strong><span class="math inline">\(F_e=F_1-F_2\)</span>称有效拉力</strong>。当<span class="math inline">\(\frac{2T}{d}&gt;F_f\)</span>时带会打滑： <span class="math display">\[
+\begin{aligned}
+F_1 -F_2 &amp;= \frac{2T}{d} \\
+F_1 - F_2 &amp;= F_f
+\end{aligned}
+\]</span>   另外，带传动有两个固有的缺点，如图2：</p>
+<ol type="1">
+<li><p>由于上下两侧的拉力不等，因此在轮子处会产生力的过渡，发生弹性滑动，导致传动比不准确</p></li>
+<li><p>在小带轮处带收缩，在大带轮处带扩展，因此带与轮间产生滑动摩擦力，会损坏带表面</p></li>
+</ol>
+<p>  带传动功率的公式为： <span class="math display">\[
+P=\frac{F_ev}{1000}kW
+\]</span>   由图3中的推导得到<strong>柔韧体的欧拉公式</strong>，反应极限状态（即将打滑）下<span class="math inline">\(F_1, F_2\)</span>的比值。这个公式非常有用，对于类似的机构都能使用。将该公式带入有效拉力的公式和<span class="math inline">\(F_0\)</span>的公式，得到最大有效圆周力<span class="math inline">\(F_{ec}\)</span>的公式，该公式的影响因素是：</p>
+<ol type="1">
+<li>初拉力<span class="math inline">\(F_0\)</span></li>
+<li>包角<span class="math inline">\(\alpha (&gt;120°)\)</span></li>
+<li>摩擦系数<span class="math inline">\(f_v\)</span>，在图4推导了<span class="math inline">\(f_v\)</span>与原始摩擦系数<span class="math inline">\(f\)</span>的关系</li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+F_1 &amp;=F_2e^{f_v\alpha}\\
+&amp;\mbox{substitute back into:} \\
+&amp;\left\{
+\begin{aligned}
+F_e &amp;= F_1-F_2 \\
+2F_0 &amp;= F_1 + F_2
+\end{aligned}
+\right.
+\Rightarrow F_{ec}=2F_0\frac{e^{f_va}-1}{e^{f_va}+1}
+\end{aligned}
+\]</span></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220401184146954.png" srcset="/img/loading.gif" lazyload alt="image-20220401184146954" style="zoom: 33%;" /></p>
+<h2 id="带的应力分析">带的应力分析</h2>
+<h3 id="拉应力与弯曲应力">拉应力与弯曲应力</h3>
+<p>  分析带在初始拉力、紧边松边拉力、高速旋转的离心力等力的作用下，对带的疲劳强度的影响，即分析受到的应力。拉应力较好理解，弯曲应力可以直接从材料力学弯曲的公式近似推导得到。<strong>从公式看出，小带轮直径小<span class="math inline">\(D_1&lt;D_2\)</span>，因此小带轮上的弯曲应力大<span class="math inline">\(\sigma_{b1}&gt;\sigma_{b2}\)</span>。为了避免弯曲应力过大，应该限定<span class="math inline">\(D_1 \geq D_{min}\)</span></strong>： <span class="math display">\[
+\begin{aligned}
+\mbox{拉应力: }&amp;\\
+\sigma_1&amp;=\frac{F_1}{A}\\
+\sigma_2&amp;=\frac{F_2}{A}\\
+\mbox{弯曲应力: }&amp;\\
+\sigma_b&amp;=E\frac{h}{D}\\
+\end{aligned}
+\]</span>   在选型中，V带轮的最小基准直径<span class="math inline">\(D_{min}\)</span>是重要的指标之一，对于不同型号的V带该指标是不同的，如下表所示。出现该现象的原因是：<strong>随着截面尺寸增大，如果不增大小带轮的直径，那么由于过大的弯曲应力会自身消耗掉传动的力，传动能力无法提升</strong>。</p>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>槽型</th>
+<th>Z (SPZ)</th>
+<th>A (SPA)</th>
+<th>B (SPB)</th>
+<th>C (SPC)</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(D_{min}\)</span></td>
+<td>63 (<span class="math inline">\(\geq\)</span> 50)</td>
+<td>90 (<span class="math inline">\(\geq\)</span> 75)</td>
+<td>140 (<span class="math inline">\(\geq\)</span> 125)</td>
+<td>224 (<span class="math inline">\(\geq\)</span> 200)</td>
+<td><span class="math inline">\(\geq\)</span> 355</td>
+<td><span class="math inline">\(\geq\)</span> 500</td>
+</tr>
+</tbody>
+</table>
+<h3 id="离心应力">离心应力</h3>
+<p>  离心应力<span class="math inline">\(F_c\)</span>的产生原因是为了阻止轮上的一段带因离心力作用而飞出去，如下图。<strong>为了避免离心应力过大，需要限制带的传动速度</strong>。但是速度也不能太低，由前面带传动的功率公式，速度过低会导致传动效率很差。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220401194725038.png" srcset="/img/loading.gif" lazyload alt="image-20220401194725038" style="zoom: 20%;" /></p>
+<h3 id="综合应力分析">综合应力分析</h3>
+<p>  由下图所示，<strong>应力之和的最大值在紧边与小带轮相切位置发生</strong>，符合我们的直观认知。带传动过程中，应力是在不断变化的，因此长期使用的带断裂通常是由于疲劳导致的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220401194318222.png" srcset="/img/loading.gif" lazyload alt="image-20220401194318222" style="zoom:25%;" /></p>
+<h2 id="带传动的失效形式">带传动的失效形式</h2>
+<h3 id="弹性滑动与打滑">弹性滑动与打滑</h3>
+<p>  如下图1所示，以小带轮为例：弹性滑动是由于受拉力不均匀导致带发生延红色箭头方向的收缩，<strong>当所有与小带轮接触的部分均发生弹性滑动时，即发生打滑现象</strong>。发生打滑后，上下两侧的速度不等，<span class="math inline">\(v_2&lt;v_1\)</span>，因此用速度表征滑动率<span class="math inline">\(\varepsilon\)</span>。带传动的准确传动比<span class="math inline">\(i\)</span>与<span class="math inline">\(\varepsilon\)</span>有关，不是常数： <span class="math display">\[
+\begin{aligned}
+\varepsilon&amp;=\frac{v_1-v_2}{v_1}\\
+v&amp;=\frac{\pi Dn}{60\times 1000} (?)\\
+i&amp;=\frac{n_1}{n_2}=\frac{D_2}{D_1(1-\varepsilon)}\neq C
+\end{aligned}
+\]</span>   从传动比公式可以看出，实际的传动比与上下 侧速度差值有关，而后者又与带上拉力的差值有关，拉力差值与负载有关，因此得出：<strong>打滑的根本原因是负载太大</strong>。图2为弹性滑动曲线，可以看到，<strong>当发生打滑时，滑动率迅速上升，传动效率迅速下降，此时发生失效</strong>。对于弹性滑动区，传动比可以近似为<span class="math inline">\(i=\frac{n_1}{n_2}\approx \frac{D_2}{D_1}\)</span>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220401210947700.png" srcset="/img/loading.gif" lazyload alt="image-20220401210947700" style="zoom:33%;" /></p>
+<h2 id="带传动的设计">带传动的设计</h2>
+<h3 id="设计依据">设计依据</h3>
+<blockquote>
+<p>在机械设计中，有一个不变的条件就是在设计任何机械零件时都是遵循一个固定的模式。首先分析失效形式，然后分析失效的原因，根据失效原因制定设计准则，根据准则来设计零件。</p>
+</blockquote>
+<p>  <strong>对于带传动，失效形式主要是疲劳和打滑</strong>，因此设计准则为：<strong>保证带传动不打滑，并使胶带有一定的疲劳强度和寿命</strong>。如何使该准则有可操作性？首先回顾最大有效圆周力的公式，然后于疲劳强度的公式结合，得到额定功率<span class="math inline">\(P_0\)</span>的公式： <span class="math display">\[
+\begin{aligned}
+\mbox{保证不打滑条件: }&amp; F_{ec}=2F_0\frac{e^{f_va}-1}{e^{f_va}+1}\to \sigma_1A(1-\frac{1}{e^{f_va}})\\
+\mbox{保证V带有一定疲劳强度条件: }&amp; \sigma_1\leq[\sigma]-\sigma_{b1}-\sigma_c\\
+\Rightarrow P_0&amp;=\frac{F_{ec}v}{1000}=\frac{([\sigma]-\sigma_{b1}-\sigma_c)(1-\frac{1}{e^{f_va}})Av}{1000}
+\end{aligned}
+\]</span>   但是注意到，该公式与小带轮的弯曲应力<span class="math inline">\(\sigma_{b1}\)</span>、离心应力<span class="math inline">\(\sigma_c\)</span>、包角<span class="math inline">\(\alpha\)</span>有关，这些量与实际设计的指标有关，因此我们先以一个主从动轮等大的特例开始进行计算，该特例的<span class="math inline">\(P_0\)</span>为基本额定功率。<strong>简而言之，因为该公式中，包角<span class="math inline">\(\alpha\)</span>与两轮直径和中心距有关，较为复杂，因此我们通过计算该特例的结果作为参考来进行设计，后续可以进行修正。</strong></p>
+<p>  参数选择和设计计算：</p>
+<ol type="1">
+<li><strong>已知条件</strong>：转递功率P、转速（传动比）<span class="math inline">\(n_1,n_2\)</span>、传动位置要求、工作条件等</li>
+<li><strong>设计内容</strong>：确定带的型号、长度、根数、传动中心距、带轮直径、结构尺寸等</li>
+</ol>
+<h3 id="设计步骤">设计步骤</h3>
+<ol type="1">
+<li><strong>确定设计功率（工况系数）</strong>，<span class="math inline">\(P_d=K_AP\)</span></li>
+<li><strong>选择带的型号</strong>，按<span class="math inline">\(P_d,n_1\)</span>由选型图选择合适的型号，参考下图</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220403164735436.png" srcset="/img/loading.gif" lazyload alt="image-20220403164735436" style="zoom:50%;" /></p>
+<ol start="3" type="1">
+<li><p><strong>选定带轮的基准直径<span class="math inline">\(D_1, D_2\)</span></strong>，为避免弯曲应力过大，应使<span class="math inline">\(D_1\geq D_{min}\)</span>。为避免离心应力过大，应使<span class="math inline">\(v=\frac{\pi D_1 n_1}{60\times 1000} \leq v_{max}\)</span>，一般应使<span class="math inline">\(v=5-25m/s\)</span></p></li>
+<li><p><strong>确定中心距<span class="math inline">\(a\)</span>和带长<span class="math inline">\(L_d\)</span></strong>，<span class="math inline">\(0.7(D_1+D_2)\leq a_0\leq 2(D_1+D_2)\)</span>；如果<span class="math inline">\(a\)</span>过小，则包角<span class="math inline">\(\alpha_1\)</span>小，如果<span class="math inline">\(a\)</span>过大，则产生颤动；然后计算带长，<span class="math inline">\(L&#39;_d=2a_0+\frac{\pi}{2}(d_1+d_2)+\frac{(d_2-d_1)^2}{4a_0}\)</span></p></li>
+<li><p><strong>验算小带轮包角<span class="math inline">\(\alpha_1\)</span></strong>，要求<span class="math inline">\(\alpha_1= 180-\frac{D_2-D_1}{a}\times 57.3° \geq 120°\)</span>，如果不满足，可加大中心距或加张紧轮</p></li>
+<li><p><strong>确定带的根数<span class="math inline">\(Z\)</span></strong>，<span class="math inline">\(z=\frac{P_d}{(P_0+\Delta P_0)K_{\alpha}K_L}\)</span>，其中<span class="math inline">\(P_0\)</span>是之前计算的基本额定功率，我们在这里需要考虑实际情况与特殊情况（两轮直径等大）的区别，然后进行补偿</p></li>
+<li><p><strong>确定初拉力<span class="math inline">\(F_0\)</span></strong>，<span class="math inline">\(F_0=500\frac{P_d}{zv}(\frac{2.5}{K_{\alpha}}-1)+qv^2\)</span></p></li>
+<li><p><strong>确定压轴力<span class="math inline">\(F_Q\)</span></strong>，<span class="math inline">\(F_Q=2zF_0sin(\alpha_1/2)\)</span>，这个力很大，因此需要防止轴弯曲；可以参考一下卸载带轮，是一种能够解决这个问题的结构，将力传到机体上</p></li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80/">机械设计基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/">机械设计</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B8%A6%E4%BC%A0%E5%8A%A8/">带传动</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/12/2022-06-12-walking-robot-kinematics/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">行走机器人课程-运动学复习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/12/2022-06-12-hanakaba-mitaina-koi-o-shita/">
+                        <span class="hidden-mobile">花束般的恋爱观后感</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
