@@ -1,0 +1,708 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar2.png">
+  <link rel="icon" href="/img/avatar2.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jude">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="这是大三下学期在数字图像处理（DIP）课程最后几周做的项目（其实最后就只花了一两天肝的）。项目是一个400多行代码手捏的使用光流估计的目标追踪，主要部分包括Harris角点检测和LK光流估计。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="光流估计目标追踪-简单的KLT Feature Tracker">
+<meta property="og:url" content="https://judera9.github.io/2022/06/13/2022-06-13-KLT-naive-version/index.html">
+<meta property="og:site_name" content="Jude&#39;s Blog">
+<meta property="og:description" content="这是大三下学期在数字图像处理（DIP）课程最后几周做的项目（其实最后就只花了一两天肝的）。项目是一个400多行代码手捏的使用光流估计的目标追踪，主要部分包括Harris角点检测和LK光流估计。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491320186081.png">
+<meta property="article:published_time" content="2022-06-13T15:36:22.000Z">
+<meta property="article:modified_time" content="2022-06-13T16:47:43.403Z">
+<meta property="article:author" content="Jude">
+<meta property="article:tag" content="DIP">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="光流">
+<meta property="article:tag" content="目标追踪">
+<meta property="article:tag" content="特征点提取">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIPoutput-16491320186081.png">
+  
+  
+  <title>光流估计目标追踪-简单的KLT Feature Tracker - Jude&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jude&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home Page
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About Me
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default3.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="光流估计目标追踪-简单的KLT Feature Tracker">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-13 23:36" pubdate>
+        2022年6月13日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      18k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      150 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">光流估计目标追踪-简单的KLT Feature Tracker</h1>
+            
+            <div class="markdown-body">
+              <p>  这是大三下学期在数字图像处理（DIP）课程最后几周做的项目（其实最后就只花了一两天肝的）。项目是一个400多行代码手捏的使用光流估计的目标追踪，主要部分包括Harris角点检测和LK光流估计。</p>
+<span id="more"></span>
+<p>  下面是最后一天做的一个小视频，看起来效果还不错。不过我在最后写报告的时候发现有几个比较大的bug，很神奇。这让我认识到，即使是充满bug的代码，也能跑的不错嘛（大雾。后续的改进方案是通过卡尔曼滤波和图像金字塔，不过我目前没打算去实现，以后再说吧。以后想用这个光流的方法做一下SLAM试试，感觉还挺可能的呢。暑假打算继续在CV和DIP的坑里摸爬滚打一下，啃几本书和大项目代码，到时会继续更新博客。</p>
+
+
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+    <iframe src="//player.bilibili.com/player.html?aid=299480056&bvid=BV1WF41157CX&cid=729840410&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe>
+
+
+<h2 id="introduction">Introduction</h2>
+<p>Object tracking is an interesting and effective technology in Digital Image Processing (DIP) and Computer Vision (CV). It should be noted that object tracking is different from object detection, though they might share some similarities. In short, object detection uses a static image and globally searches the objects that we are interested in, while object tracking handles the motion information in a video stream to track the moving objects. The latter is much more efficient than the first one, so in an industrial visual task we often first detect the objects and then use certain methods to track them rather than constantly detect them.</p>
+<p>Lucas-Kanade (LK) method is a widely used differential method for optical flow estimation. It is based on the least square estimation (LSE) strategy on a local neighborhood of pixels. The classical Kanade Lucas Tomasi (KLT) feature tracker algorism which I implemented in this project is based on the LK optical flow estimation, utilizing the feature points extracted by the Harris Corner method.</p>
+<p>The result could be seen in <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WF41157CX/?vd_source=45dbbabddf51fc5827a0fed713c90afd">this video link</a> (recommend to watch it!), which is made and uploaded by myself. I do not compare the result with other mature algorisms in strict norms, because I do not implement it in C++ or other high-efficiency languages. But I could give some intuitive and elemental conclusions.</p>
+<p>First, the KLT algorism I implemented is fast. Compared with the algorisms listed in Table 1 below, my method is over the average for the FPS index. I use Numba to compile python functions into C++ execution function variables, and I could handle a video stream of 30 fps with my simple 400 lines of codes. Second, the tracking effect is desirable when the motions of target objects are small, though still, we need a re-detection when all the feature points are lost. Third, some of the methods listed in Table 1 more or less refer to the basics of the KLT algorism. For example, the TLD method adds a classifier beyond the KLT feature tracker to stabilize the tracking result. In a nutshell, the KLT feature tracker I implemented is very simple and there are many improved ways, but it has already shown a promising effect.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIP/image-20220613003037779.png" srcset="/img/loading.gif" lazyload alt="Table 1" style="zoom: 67%;" /></p>
+<center>
+Table 1: Other traditional object tracking algorisms
+</center>
+<h2 id="summary">Summary</h2>
+<p>The object tracking methods would be concluded in two classes:</p>
+<ol type="1">
+<li>Traditional ways: These methods are usually based on feature extraction and filtering searching algorisms. For the feature extraction task, there are global and local features, histogram, PCA, template, binary pattern, Sparse representation, generative model, and so on. For searching strategies, there are particle filter, Markov chain Monte Carlo method, local optimum search, and so on. The KLT filter could be concluded in this class, but I utilize the motion information between frames to track corner point features, without using a complicated searching strategy.</li>
+<li>Deep Learning ways: Mostly are some tracking-by-detection methods, like the famous YOLO, SSD, and so on. Besides, some methods combine the traditional filtering algorisms with Neural networks. There are also some generative methods like Siamese Networks, which are also based on feature matching.</li>
+</ol>
+<p>Because we are prohibited from using some Deep Learning methods, I try a traditional one. The reason I want to implement KLT is that I am very interested in optical flow technology, so I want to try one related to it. Besides, after reading some papers and blogs about the methods listed in Table 1, I could only find the KLT feature tracker practicable to implement all by myself in these few weeks, and it looks good enough for displaying a final exhibition.</p>
+<h2 id="methods">Methods</h2>
+<p>I do not use any other third-party libraries for the main body of my codes. I only use OpenCV to read the video stream and convert them to grayscale images. The other algorisms are all implemented by myself in python, accelerated by Numba. The whole process and the methods I use could be seen in the following Fig 1.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIP/KLT pre ver4.jpg" srcset="/img/loading.gif" lazyload alt="KLT pre ver4" style="zoom:33%;" /></p>
+<center>
+Fig 1: the process of the KLT feature tracker I implemented
+</center>
+<h3 id="image-registration-problem1">Image Registration Problem<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="Bruce D. Lucas and Takeo Kanade. An Iterative Image Registration Technique with an Application to Stereo Vision. International Joint Conference on Artificial Intelligence, pages 674–679, 1981.
+">[1]</span></a></sup></h3>
+<p>The image registration problem could be presented below. Given functions <span class="math inline">\(F(x,y)\)</span> and <span class="math inline">\(G(x,y)\)</span>, which represent the pixel values of two images, we wish to find the disparity vector <span class="math inline">\((h_x,h_y)\)</span> that minimizes the difference between <span class="math inline">\(F(x+h_x, y+h_y)\)</span> and <span class="math inline">\(G(x,y)\)</span>, for <span class="math inline">\((x,y)\)</span> in some region of interest (ROI) <span class="math inline">\(R\)</span>. The way to judge the registration effect has many methods, like using L1 norm, L2 norm and negative of normalized correlation. For example: <span class="math display">\[
+\begin{aligned}
+\mbox{L1 norm: }&amp; \sum_{x \in R}{|F(x+h_x, y+h_y)-G(x,y)|}\\
+\mbox{L2 norm: }&amp; \sqrt{\sum_{x \in R}{[F(x+h_x, y+h_y)-G(x,y)]^2}}\\
+\end{aligned}
+\]</span></p>
+<h3 id="harris-corner-detector2">Harris Corner Detector<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="Jianbo Shi and Carlo Tomasi. Good Features to Track. IEEE Conference on Computer Vision and Pattern Recognition, pages 593–600, 1994.
+">[2]</span></a></sup></h3>
+<p>Intuitively, we want to track some features that could be constantly detected and identified, thus how to find these kinds of points of interest is tricky. There are many feature detection strategies in Computer Vision, like the Sobel edge detection method we learned in class. In the KLT algorithm, we apply the Harris corner detection method to extract features from an image. Corners are important features in an image, they are generally termed as interest points that are invariant to translation, rotation, and illumination.</p>
+<p>Assume the pixel values of a grayscale 2-D image is given as <span class="math inline">\(I\)</span>. Consider shifting an image patch <span class="math inline">\(R\)</span> with <span class="math inline">\((h_x,h_y)\)</span>. The weighted <em>sum of squared differences (SSD)</em>, denoted as <span class="math inline">\(S\)</span>, is given by the below equation (<span class="math inline">\(S\)</span> is the square of the difference). <span class="math display">\[
+\begin{aligned}
+S(x,y)&amp;=\sum_{(x,y)\in R}[I(x+h_x,y+h_y)-I(u,v)]^2\\
+I(x+h_x,y+h_y)&amp;=I(x,y)+I_xh_x+I_yh_y\\
+\end{aligned}
+\]</span> Substitute the Taylor expansion approximation into <span class="math inline">\(S\)</span>, we get the matrix form. Notice that the terms <span class="math inline">\(I_x,I_y\)</span> could be the results of the Sobel operator. The tensor matrix <span class="math inline">\(M\)</span> could be seen as the partial derivative in this neighborhood. We use the properties of <span class="math inline">\(M\)</span> to judge whether this neighborhood contains corner. <span class="math display">\[
+\begin{aligned}
+S(x,y)&amp;=\sum_{(x,y)\in R}[I_xh_x+I_yh_y]^2\\
+&amp;=\begin{bmatrix}h_x &amp; h_y\end{bmatrix}
+\sum_{(x,y)\in R}\begin{bmatrix}I^2_x &amp; I_xI_y\\ I_xI_y &amp; I^2_y
+\end{bmatrix}\begin{bmatrix}h_x \\ h_y\end{bmatrix}\\
+&amp;=\begin{bmatrix}h_x &amp; h_y\end{bmatrix}
+M\begin{bmatrix}h_x \\ h_y\end{bmatrix}
+\end{aligned}
+\]</span> <span class="math inline">\(M\)</span> is a symmetric and positive definite matrix, therefore its eigenvalues <span class="math inline">\(\lambda_1, \lambda_2 &gt; 0\)</span>. The concept is similar to what we learn in Modern Control theory: after diagonalizing <span class="math inline">\(M\)</span>, we want both of the eigenvalues are large, therefore a Harris response calculation <span class="math inline">\(R\)</span> is designed to judge this (the first form is better because it would not encounter invalid calculation). <span class="math display">\[
+\begin{aligned}
+R&amp;=\lambda_1\lambda_2-k(\lambda_1+\lambda_2)^2\\
+&amp;=\det(M)-k\trace(M)\\
+&amp;k\in [0.04,0.06]\\
+\mbox{Another form is: }R&amp;=\frac{\lambda_1\lambda_2}{\lambda_1+\lambda_2}
+\end{aligned}
+\]</span> Then, we need to find the local maximum (like using a max filter with 5x5) and try to remove some redundant points that overlapping with each other. Through the above process, good tracking features have been found.</p>
+<p>Here is the pseudocode of it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><pre><code class="hljs pseudocode">before passing into the following function: convert &#x27;img&#x27; into grayscale<br><br>def harris_corner_response(Ix, Iy, k=0.0):<br>    &quot;&quot;&quot;<br>    :param arr: input 2d array with size MxN<br>    :param k: 0.0 or [0.4, 0.6]<br>    :return: the harris response matrix (MxN)<br>    &quot;&quot;&quot;<br><br>    IxIy = Ix * Iy<br>    M is the tensor of Ix and Iy<br>    M[:, 0, 0] = Ix ** 2 # left-up side<br>    M[:, 0, 1] = IxIy # right-up side<br>    M[:, 1, 0] = IxIy # left-down side<br>    M[:, 1, 1] = Iy ** 2 # right-down side<br>    M_det is the determinant of M tensor<br>    M_tr is the trace of M tensor<br>    calculate M_det / (M_tr + 0.0001) or M_det - k * M_tr ** 2 as harris response<br><br>def find_harris_corner(img, sigma, tensor_k, suppressed_size, threshold):<br>    &quot;&quot;&quot;<br>    :param img: input a gray-scale image<br>    :param sigma: gaussian filter param, usually about 1 is ok<br>    :param tensor_k: the parameter related to harris corner response, 0.0 for the division form or [0.4, 0.6] for the minus form<br>    :param suppressed_size: do something like max filter to suppress local maximum and avoid tracking the same feature, the recommend is 10-20<br>    :param threshold: the threshold for marking high response points, 0.001 is ok<br>    &quot;&quot;&quot;<br><br>    - use gaussian filter to smoothen the &#x27;img&#x27; and get &#x27;gauss_img&#x27;<br>    - get the gradients &#x27;Ix&#x27;, &#x27;Iy&#x27; by using sobel operator on &#x27;gauss_img&#x27;<br>    - calculate the harris response of &#x27;gauss_img&#x27;, use the above function `def harris_corner_response`, get &#x27;response&#x27;<br>    - do non-maximum suppression on &#x27;response&#x27;, by choosing the biggest values in a neighborhood, then set the others to 0, the neighborhood moves without overlapping, get &#x27;suppressed&#x27;<br>    - normalize the &#x27;suppressed&#x27; variable into [0, 1), get &#x27;normalized&#x27;<br>    - mark the values higher than the threshold value in &#x27;normalized&#x27;, which is calculated by giving a lower bound with proportion given by &#x27;threshold&#x27;<br></code></pre></td></tr></table></figure>
+<h3 id="lucas-kanade-method3">Lucas Kanade Method<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="Baker S, Matthews I. Lucas-kanade 20 years on: A unifying framework[J]. International journal of computer vision, 2004, 56(3): 221-255.
+">[3]</span></a></sup></h3>
+<p>Lucas-Kanade method assumes that the displacement of the image contents between two sequenced frames is small and approximately constant within a neighborhood. Thus the functions to solve the displacement (optical flow) are more than the number of variables. <span class="math display">\[
+\begin{aligned}
+\mbox{From constancy assumption:}&amp;\\
+I(x,y,t)&amp;=I(x+\delta x,y+\delta y,t+\delta t)\\
+&amp;=I(x,y,t)+\frac{\partial I}{\partial x}\delta x+\frac{\partial I}{\partial y}\delta y+\frac{\partial I}{\partial t}\delta t \\
+\Rightarrow \frac{\partial I}{\partial x}\frac{\delta x}{\delta t}+\frac{\partial I}{\partial y}\frac{\delta y}{\delta t}&amp;=-\frac{\partial I}{\partial t}\\
+I_xV_x+I_yV_y&amp;=-I_t\\
+\\
+\mbox{In a neighborhood:}&amp;\\
+Av&amp;=b\\
+\begin{bmatrix}
+I_x(q_1) &amp; I_y(q_1)\\
+I_x(q_2) &amp; I_y(q_2)\\
+... &amp; ... \\
+I_x(q_n) &amp; I_y(q_n)\\
+\end{bmatrix}\begin{bmatrix}
+V_x \\ V_y
+\end{bmatrix}&amp;=\begin{bmatrix}
+-I_t(q_1)\\
+-I_t(q_2)\\
+...\\
+-I_t(q_n)\\
+\end{bmatrix}\\
+\Rightarrow v&amp;=(A^TA)^{-1}A^Tb\\
+&amp;=\begin{bmatrix}\sum_{i=1}^nI^2_{xi} &amp; \sum_{i=1}^nI_{xi}I_{yi}\\ \sum_{i=1}^nI_{xi}I_{yi} &amp; \sum_{i=1}^nI^2_{yi}
+\end{bmatrix}^{-1}\begin{bmatrix}
+-\sum_{i=1}^nI_{xi}I_{ti} \\ -\sum_{i=1}^nI_{yi}I_{ti}
+\end{bmatrix}
+\end{aligned}
+\]</span> The vector <span class="math inline">\(v\)</span> found by the above algorithm is the corresponding optical flow, we could track the position of the feature point by multiply the sample time constant <span class="math inline">\(\Delta t=1/fps\)</span>. It need be mentioned that <span class="math inline">\((A^TA)\)</span> in the last equation is the structure tensor mentioned in the Harris Corner Detector part. The condition KLT could work is that <span class="math inline">\((A^TA)\)</span> is invertible, and it is good to track. This means that Harris corner would be a suitable feature for KLT to track.</p>
+<p>A better implementation is to use a weight for the neighborhood, because we are concerned about the central pixels rather than the margin. A gaussian template would be useful to do this.</p>
+<h3 id="klt-feature-tracker3">KLT Feature Tracker<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="Baker S, Matthews I. Lucas-kanade 20 years on: A unifying framework[J]. International journal of computer vision, 2004, 56(3): 221-255.
+">[3]</span></a></sup></h3>
+<p>Kanade-Lucas-Tomasi Feature Tracker (KLT) is an approach to feature extraction. Some traditional image registration techniques are generally costly, KLT applies the spatial intensity information to find the match faster. <span class="math display">\[
+\begin{aligned}
+F(x+h_x, y+h_y)&amp;=F(x,y)+\begin{bmatrix}h_x &amp; h_y\end{bmatrix}\begin{bmatrix}F&#39;_x \\ F&#39;_y\end{bmatrix}\\
+&amp;=F(x,y)+hF&#39;(x,y)\\
+\mbox{Use L2 norm, error is: }E&amp;=\sum_{x \in R}[F(x+h_x, y+h_y) - G(x, y)]^2\\
+&amp;=\sum_{x \in R}[F(x,y)+hF&#39;(x,y) - G(x, y)]^2\\
+\mbox{To minimize the error: }0 &amp;=\frac{\partial E}{\partial h}\\
+&amp;\approx \sum_{x \in R}2F&#39;(x,y)[F(x,y)+hF&#39;(x,y) - G(x, y)]\\
+\Rightarrow h &amp;\approx\frac{\sum_{x \in R}F&#39;(x,y)[G(x,y) - F(x, y)]}{\sum_{x \in R}F&#39;(x,y)^2}\\
+\end{aligned}
+\]</span> The procedure is applied repeatedly by Newton-Raphson iteration. The Newton-Raphson iteration is a method that solve function approximately by applying the derivatives of the function, thus it would converge the sequence of estimation into the best <span class="math inline">\(h\)</span>. <span class="math display">\[
+\begin{aligned}
+\left\{
+\begin{aligned}
+h_0&amp;=0\\
+h_{k+1}&amp;=h_k+\frac{\sum_{x \in R}w(x,y)F&#39;(x+h_x, y+h_y)[G(x,y) - F(x+h_x, y+h_y)]}{\sum_{x \in R}w(x,y)F&#39;(x+h_x, y+h_y)^2}\\
+\end{aligned}
+\right.
+\end{aligned}
+\]</span></p>
+<p>Here is the pseudocode of it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs pseudocode">def calculate_pixel_LK(start_xy, Ix, Iy, img_t, img_t2,<br>                       interp_window_size=(25, 25), iteration=20):<br>    &quot;&quot;&quot;<br>    :param start_xy: the start position of the corner point in img_t<br>    :param Ix: the gradient of img_t along x<br>    :param Iy: the gradient of img_t along y<br>    :param img_t: the img gray scale at time t<br>    :param img_t2: the img gray scale at time t+1<br>    :param interp_window_size: the window that interpolated to estimate LK optical flow, affecting the code efficiency<br>    :param iteration: Newton-Raphson iteration times<br>    &quot;&quot;&quot;<br>    get &#x27;H&#x27; and &#x27;W&#x27; as image shapes<br>    interpolate &#x27;img_t&#x27;, &#x27;Ix&#x27; and &#x27;Iy&#x27; by &#x27;interp_window_size&#x27; to get &#x27;I1_interp&#x27;, &#x27;Ix_interp&#x27; and &#x27;Iy_interp&#x27;, the window center is the position &#x27;start_xy&#x27;<br>    define a variable I whose column space is [&#x27;Ix&#x27;, &#x27;Iy&#x27;]<br>    define a matrix &#x27;A = I.T @ I&#x27;, this is similar to Least Square<br>    if the eigenvalue of the inverse matrix of &#x27;A&#x27; is too small, stop tracking this feature because it is not a good feature to track<br>    compute the inverse matrix of &#x27;A&#x27; as &#x27;invA&#x27;<br>    for &#x27;iteration&#x27; times, default is 20:<br>        interpolate &#x27;img_t2&#x27; to get &#x27;I2_interp&#x27;, similar to the above<br>        calculate &#x27;It = (I2_interp - I1_interp)&#x27; as the differential<br>        calculate &#x27;dx += -invA @ (_I.T @ _It)&#x27; to get the motions of this feature point<br></code></pre></td></tr></table></figure>
+<h2 id="result">Result</h2>
+<p>Recommend to watch the real-time result in <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WF41157CX/?vd_source=45dbbabddf51fc5827a0fed713c90afd">this video link</a>.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/DIP/output2.00_01_05_00.Still003.png" srcset="/img/loading.gif" lazyload alt="output2.00_01_05_00.Still003" style="zoom: 67%;" /></p>
+<center>
+Fig 2: a screenshot of the result video
+</center>
+<p>Compare with the former project I have done by using Yolo 4, which is an open-source tracking-by-detection method, the KLT tracker has far less complexity in the program itself. I only use 400 lines of code to reproduce the whole algorism. Besides, it has better efficiency because detection is much more resource-consuming than the tracking method. However, my program would be easy to fail in tracking some objects with large motion or the background is too complex.</p>
+<p>I try to analyze the performance of the KLT feature tracker theoretically. After doing some experiments, the number of feature points to track is the critical factor that affects the performance of the real-time test. As shown in the above part, for each feature point, we need to estimate its motion of it with 20 times of iteration of calculation in a certain neighborhood. Therefore, the Harris Corner detection should neither be too ambitious nor conservative. I use a suppression filter and a threshold to control the selection of feature points. Besides, my program would give up some feature points that have bad performance or have already lost the tracking object (out of the bounding box).</p>
+<p>After adjusting the strategy and parameters of the program, my KLT feature tracker succeeds in tracking an object with a small translation for a long time. However, when the background is too complex or the motion is too fast, feature points would still go lost quickly, and the user need to re-select the object using ROI.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In conclusion, I implemented a KLT feature tracker all in python without using third-party libraries, and then accelerated the program and run in real-time. The whole process is described in Fig 1. The main algorisms in this project are feature extraction and LK optical flow calculation. The optimized method I use focuses on choosing proper feature points and dynamically dropping off some bad feature points. The result is nice and beyond my expectation. I would use a Kalman filter or pyramid to improve the method and reduce the chance of losing feature points under complex backgrounds and large motion conditions.</p>
+<p>In my view, optical flow contains much information and we have not found a way to utilize all of them. For example, the depth of field would affect the size of the optical flow, and affine transform and another complex transform rather than simple 2D translation also have their unique optical flow distribution. Therefore, theoretically developing some DIP methods to utilize the optical flow might be meaningful in many visual tasks.</p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="harris-corner-detector-codes">Harris Corner Detector Codes</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@jit(<span class="hljs-params">nopython=<span class="hljs-literal">True</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">harris_corner_response</span>(<span class="hljs-params">arr, k=<span class="hljs-number">0.0</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    calculate the harris detection response of input array. If k=0.0, it uses the division strategy; if k!=0, the</span><br><span class="hljs-string">    recommended range for it is [0.4, 0.6]</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param arr: input 2d array with size MxN</span><br><span class="hljs-string">    :param k: 0.0 or [0.4, 0.6]</span><br><span class="hljs-string">    :return: the harris response matrix (MxN)</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    g_x, g_y = grad(arr)<br>    IxIy = g_x * g_y<br>    M = np.zeros((g_x.size, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>))<br>    M[:, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>] = g_x ** <span class="hljs-number">2</span><br>    M[:, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>] = IxIy<br>    M[:, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>] = IxIy<br>    M[:, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>] = g_y ** <span class="hljs-number">2</span><br>    M_det = M[:, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>] * M[:, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>] - M[:, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>] * M[:, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]<br>    M_tr = M[:, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>] + M[:, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> k == <span class="hljs-number">0.0</span>:<br>        <span class="hljs-keyword">return</span> M_det / (M_tr + <span class="hljs-number">0.0001</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> M_det - k * M_tr ** <span class="hljs-number">2</span><br><br><span class="hljs-meta">@jit(<span class="hljs-params">nopython=<span class="hljs-literal">True</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_harris_corner</span>(<span class="hljs-params">img, gaussian_sigma=<span class="hljs-number">1.0</span>, tensor_k=<span class="hljs-number">0.04</span>, suppressed_size=<span class="hljs-number">15</span>, threshold=<span class="hljs-number">0.05</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    could use larger `suppressed_size` and smaller `threshold` to get more corner points</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param img: input a gray-scale image</span><br><span class="hljs-string">    :param gaussian_sigma: gaussian filter param, usually about 1 is ok</span><br><span class="hljs-string">    :param tensor_k: the parameter related to harris corner response, 0.0 or [0.4, 0.6]</span><br><span class="hljs-string">    :param suppressed_size: do something like max filter for this, recommend 10-20</span><br><span class="hljs-string">    :param threshold: the threshold for marking high response points, 0.001 is ok</span><br><span class="hljs-string">    :return: the harris corners&#x27; x and y coordinates</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    _gaussian_filtered = gaussian_filter(img, gaussian_sigma, <span class="hljs-number">1</span>)<br>    _g_x, _g_y = grad(_gaussian_filtered)<br>    _tensor = harris_corner_response(_gaussian_filtered, k=tensor_k).reshape(img.shape[<span class="hljs-number">0</span>], img.shape[<span class="hljs-number">1</span>])<br>    _non_maximum_suppressed = non_maximum_suppression(_tensor, kernel_size=suppressed_size)<br>    _marked = mark_local_maximum(_non_maximum_suppressed, set_threshold=threshold)<br>    <span class="hljs-keyword">return</span> _marked<br></code></pre></td></tr></table></figure>
+<h3 id="optical-flow-calculation-codes">Optical Flow Calculation Codes</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@jit(<span class="hljs-params">nopython=<span class="hljs-literal">True</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">calculate_pixel_LK</span>(<span class="hljs-params">start_xy, Ix, Iy, img_t, img_t2,</span></span><br><span class="hljs-params"><span class="hljs-function">                       interp_window_size=(<span class="hljs-params"><span class="hljs-number">25</span>, <span class="hljs-number">25</span></span>), iteration=<span class="hljs-number">20</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    calculate the translation of a detected harris corner point</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param start_xy: the start position of the corner point in img_t</span><br><span class="hljs-string">    :param Ix: the gradient of img_t along x</span><br><span class="hljs-string">    :param Iy: the gradient of img_t along y</span><br><span class="hljs-string">    :param img_t: the img gray scale at time t</span><br><span class="hljs-string">    :param img_t2: the img gray scale at time t+1</span><br><span class="hljs-string">    :param interp_window_size: the window that interpolated to estimate LK optical flow, affecting the code efficiency</span><br><span class="hljs-string">    :param iteration: Newton-Raphson iteration times</span><br><span class="hljs-string">    :return: the translation in _dx = (dx, dy)</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    H, W = img_t.shape[<span class="hljs-number">0</span>], img_t.shape[<span class="hljs-number">1</span>]<br>    img_t = img_t.astype(np.float64)<br>    img_t2 = img_t2.astype(np.float64)<br>    I1_value = interp2d(img_t, start_xy, interp_window_size).ravel()<br>    _Ix = interp2d(Ix.reshape(H, W), start_xy, interp_window_size).ravel()<br>    _Iy = interp2d(Iy.reshape(H, W), start_xy, interp_window_size).ravel()<br>    _I = np.zeros((_Ix.size, <span class="hljs-number">2</span>))<br>    _I[:, <span class="hljs-number">0</span>] = _Ix<br>    _I[:, <span class="hljs-number">1</span>] = _Iy<br>    _A = _I.T @ _I<br>    <span class="hljs-keyword">if</span> np.<span class="hljs-built_in">any</span>(np.linalg.eig(_A)[<span class="hljs-number">0</span>] &lt; <span class="hljs-number">10e-3</span>):  <span class="hljs-comment"># handle the failure of inverse term `(A.T @ A) ** -1`</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br>    <span class="hljs-comment"># try:</span><br>    _invA = np.linalg.inv(_A)<br>    <span class="hljs-comment"># except np.linalg.LinAlgError:</span><br>    <span class="hljs-comment">#     return None</span><br>    _dx = np.zeros(<span class="hljs-number">2</span>)<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(iteration):<br>        I2_value = interp2d(img_t2, (start_xy[<span class="hljs-number">0</span>] + _dx[<span class="hljs-number">0</span>], start_xy[<span class="hljs-number">1</span>] + _dx[<span class="hljs-number">1</span>]), interp_window_size).ravel()<br>        _It = (I2_value - I1_value).ravel()<br>        _dx += -_invA @ (_I.T @ _It)<br>    <span class="hljs-keyword">return</span> _dx<br></code></pre></td></tr></table></figure>
+<h2 id="reference">Reference</h2>
+<section class="footnotes">
+<div class="footnote-list">
+<ol>
+<li>
+<span id="fn:1" class="footnote-text"><span>Bruce D. Lucas and Takeo Kanade. An Iterative Image Registration Technique with an Application to Stereo Vision. <em>International Joint Conference on Artificial Intelligence</em>, pages 674–679, 1981. <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:2" class="footnote-text"><span>Jianbo Shi and Carlo Tomasi. Good Features to Track. <em>IEEE Conference on Computer Vision and Pattern Recognition</em>, pages 593–600, 1994. <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:3" class="footnote-text"><span>Baker S, Matthews I. Lucas-kanade 20 years on: A unifying framework[J]. International journal of computer vision, 2004, 56(3): 221-255. <a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
+</li>
+</ol>
+</div>
+</section>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/DIP/">DIP</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/DIP/">DIP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Python/">Python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%85%89%E6%B5%81/">光流</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/">目标追踪</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%89%B9%E5%BE%81%E7%82%B9%E6%8F%90%E5%8F%96/">特征点提取</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/13/2022-06-13-ZMP-dynamics/">
+                        <span class="hidden-mobile">行走机器人课程-ZMP双足控制与动力学</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
