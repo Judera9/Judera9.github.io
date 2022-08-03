@@ -1,29 +1,11 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar2.png">
-  <link rel="icon" href="/img/avatar2.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Jude">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="文章使用的相关.ipynb文件在这里。其中lab3对应锐化滤波以外的部分，lab4对应锐化滤波。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>灰度变换与空间滤波 | Jude's Blog</title><meta name="keywords" content="DIP,滤波,NumPy,Histogram"><meta name="author" content="Jude"><meta name="copyright" content="Jude"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="文章使用的相关.ipynb文件在这里。其中lab3对应锐化滤波以外的部分，lab4对应锐化滤波。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="灰度变换与空间滤波">
 <meta property="og:url" content="https://judera9.github.io/2022/03/27/2022-3-27-Intensity-Transform-and-Spatial-Filtering/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
 <meta property="og:description" content="文章使用的相关.ipynb文件在这里。其中lab3对应锐化滤波以外的部分，lab4对应锐化滤波。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16466576449451.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 <meta property="article:published_time" content="2022-03-27T13:07:29.000Z">
 <meta property="article:modified_time" content="2022-03-27T13:23:58.000Z">
 <meta property="article:author" content="Jude">
@@ -31,223 +13,143 @@
 <meta property="article:tag" content="滤波">
 <meta property="article:tag" content="NumPy">
 <meta property="article:tag" content="Histogram">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16466576449451.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://judera9.github.io/2022/03/27/2022-3-27-Intensity-Transform-and-Spatial-Filtering/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '灰度变换与空间滤波',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-27 21:23:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
-  <title>灰度变换与空间滤波 - Jude&#39;s Blog</title>
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
-
-  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<!-- hexo injector head_end start -->
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Jude&#39;s Blog</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                Home Page
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                Archive
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                Category
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                Tag
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                About Me
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default3.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="灰度变换与空间滤波">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-03-27 21:07" pubdate>
-        2022年3月27日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      18k 字
-    </span>
-  
-
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      153 分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">灰度变换与空间滤波</h1>
-            
-            <div class="markdown-body">
-              <p>文章使用的相关<code>.ipynb</code>文件在<a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/DIP%20support%20files/spatial%20operation%20and%20filtering">这里</a>。其中lab3对应锐化滤波以外的部分，lab4对应锐化滤波。</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">52</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jude's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">灰度变换与空间滤波</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-27T13:07:29.000Z" title="发表于 2022-03-27 21:07:29">2022-03-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-27T13:23:58.000Z" title="更新于 2022-03-27 21:23:58">2022-03-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/DIP/">DIP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="灰度变换与空间滤波"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>文章使用的相关<code>.ipynb</code>文件在<a target="_blank" rel="noopener" href="https://github.com/Judera9/Pictures-for-Blogs/tree/main/file/DIP%20support%20files/spatial%20operation%20and%20filtering">这里</a>。其中lab3对应锐化滤波以外的部分，lab4对应锐化滤波。</p>
 <span id="more"></span>
 <ul>
 <li><a href="#%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E4%B8%8E%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2">灰度变换与空间滤波</a>
@@ -325,17 +227,17 @@ s=T(r)
 \]</span>   灰度变换和空间滤波的应用非常广泛，不过本章节以<em>图像增强</em>为例。这在机器学习中也是非常有用的方法，即<em>数据增强</em>相关的应用。</p>
 <h2 id="基本灰度变换">基本灰度变换</h2>
 <p>  下图是图像增强常用的三类基本函数：线性函数（Negative and identity transformations）、对数函数（log and inverse-log transformations）、幂律函数（nth power and nth root transformations），下面分别进行介绍：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307164910865.png" srcset="/img/loading.gif" lazyload alt="image-20220307164910865" style="zoom: 60%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307164910865.png" alt="image-20220307164910865" style="zoom: 60%;" /></p>
 <h3 id="图像反转">图像反转</h3>
 <p><span class="math display">\[
 s=L-1-r
 \]</span></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307165318001.png" srcset="/img/loading.gif" lazyload alt="image-20220307165318001" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307165318001.png" alt="image-20220307165318001" style="zoom:67%;" /></p>
 <h3 id="对数变换与指数变换">对数变换与指数变换</h3>
 <p>  以对数变换为例，改变换<strong>将输入中范围较窄的低灰度值区域，映射到输出中范围较宽的区域，即对暗色pixel做扩展操作；然后，将输入中范围较宽的高灰度值区域，映射到输出中范围较窄的区域，即对亮色pixel做压缩操作</strong>。指数变换作用则刚好相反。 <span class="math display">\[
 s=c\times log(1+r) \\
 s=c\times (e^{r}-1)
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307170326476.png" srcset="/img/loading.gif" lazyload alt="image-20220307170326476" style="zoom: 67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307170326476.png" alt="image-20220307170326476" style="zoom: 67%;" /></p>
 <h3 id="幂律伽马变换">幂律（伽马）变换</h3>
 <p><span class="math display">\[
 s=cr^{\gamma}
@@ -344,28 +246,25 @@ s=cr^{\gamma}
 <blockquote>
 <p>For example, cathode ray tube (CRT) devices have an intensity-to-voltage response that is a power function, with exponents varying from approximately 1.8 to 2.5. Such display systems would tend to produce images that are darker than intended. The following figure illustrates this effect.</p>
 </blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307170903697.png" srcset="/img/loading.gif" lazyload alt="image-20220307170903697" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307170903697.png" alt="image-20220307170903697" style="zoom:67%;" /></p>
 <h3 id="分段线性变换函数">分段线性变换函数</h3>
 <p>  用法更加灵活，很多变换形式能够用分段函数来实现。缺点是需要用户进行手动调整，在一些图像处理软件中可能会用到，例如在Photoshop中。</p>
 <h4 id="对比度拉伸">对比度拉伸</h4>
 <p>  利用两个点<span class="math inline">\((r_2,s_2), (r_1,s_1)\)</span>的位置来控制函数的形状，从而对三个不同区域的灰度值进行扩展/压缩。<strong>我们需要保证函数是单调递增的，避免在处理后的图像中产生人为错误的灰度值</strong>。下图右下是极限的情况，结果是二值化图像，该函数称为<em>Thresholding function</em>，即阈值处理函数。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307174118049.png" srcset="/img/loading.gif" lazyload alt="image-20220307174118049" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307174118049.png" alt="image-20220307174118049" style="zoom:67%;" /></p>
 <h4 id="灰度级分层">灰度级分层</h4>
 <p>  在某些功能性的图像中，我们可能对某种特定灰度值区域的特征感兴趣，因此可以通过突出该区域的pixel来实现增强效果，这在医学成像中是很有用的手段。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307175039192.png" srcset="/img/loading.gif" lazyload alt="image-20220307175039192" style="zoom:67%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307175101353.png" srcset="/img/loading.gif" lazyload alt="image-20220307175101353" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307175039192.png" alt="image-20220307175039192" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307175101353.png" alt="image-20220307175101353" style="zoom:67%;" /></p>
 <h4 id="比特平面分层">比特平面分层</h4>
-<p>  在256级灰度图像中，一个像素的大小是1个字节（byte）或8个比特（bits）。这个处理过程稍微有点tricky，如果对概念理解不到位，容易处理成参考链接<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.cnblogs.com/iwuqing/p/11297280.html
-">[3]</span></a></sup>中的这种，可以看到结果并没有书上案例的噪声。出现这样结果的原因，是该作者错误理解了根据bit阈值进行划分的方式<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://www.manongjc.com/article/29152.html
-">[2]</span></a></sup>，正确的结果如这个链接<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://blog.csdn.net/qq_42505705/article/details/86769995
-">[1]</span></a></sup>所示。实际上，对于8-bit，划分为2组，即<span class="math inline">\([0,127], [128,255]\)</span>；对于7-bit，划分为4组，即<span class="math inline">\([0,63],[64,128],[128,191],[192,255]\)</span>，以此类推；对于1-bit，划分为255组，因此才显示像噪声的结果。</p>
+<p>  在256级灰度图像中，一个像素的大小是1个字节（byte）或8个比特（bits）。这个处理过程稍微有点tricky，如果对概念理解不到位，容易处理成参考链接<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>中的这种，可以看到结果并没有书上案例的噪声。出现这样结果的原因，是该作者错误理解了根据bit阈值进行划分的方式<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，正确的结果如这个链接<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>所示。实际上，对于8-bit，划分为2组，即<span class="math inline">\([0,127], [128,255]\)</span>；对于7-bit，划分为4组，即<span class="math inline">\([0,63],[64,128],[128,191],[192,255]\)</span>，以此类推；对于1-bit，划分为255组，因此才显示像噪声的结果。</p>
 <p>  我自己代码实现了一下，可以看到：<strong>在bit级低的时候，噪声越多（实际上是更精细的灰度细节），类似高频部分；在bit级高的时候，贡献的图像数据更加重要，类似低频部分</strong>。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16466576449451.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:72%;" /></p>
-<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><pre><code class="hljs python">img = cv2.cvtColor(cv2.imread(<span class="hljs-string">&quot;./Yileina.png&quot;</span>), cv2.COLOR_BGR2GRAY)<br>h,w = img.shape[<span class="hljs-number">0</span>],img.shape[<span class="hljs-number">1</span>]<br><br>new_img = np.zeros((h,w,<span class="hljs-number">8</span>))<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(h):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(w):<br>        n = <span class="hljs-built_in">str</span>(np.binary_repr(img[i,j],<span class="hljs-number">8</span>))<br>        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">8</span>):<br>            new_img[i,j,k] = n[k]<br></code></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:72%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16466576449451.png" alt="output" style="zoom:72%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">img = cv2.cvtColor(cv2.imread(<span class="string">&quot;./Yileina.png&quot;</span>), cv2.COLOR_BGR2GRAY)</span><br><span class="line">h,w = img.shape[<span class="number">0</span>],img.shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">new_img = np.zeros((h,w,<span class="number">8</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(h):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(w):</span><br><span class="line">        n = <span class="built_in">str</span>(np.binary_repr(img[i,j],<span class="number">8</span>))</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">            new_img[i,j,k] = n[k]</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output.png" alt="output" style="zoom:72%;" /></p>
 <p>  这个技术经常用在图像压缩上，然后根据部分比特平面尝试重建图像，<strong>使用第n个平面的像素乘以常数<span class="math inline">\(2^{n-1}\)</span></strong>，将二值化的图像转变为十进制。例如下图，左侧只有4种灰度值，而右侧细节则丰富多了，重建结果有8种灰度值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">reconstruct = new_img[:, :, <span class="hljs-number">0</span>] * <span class="hljs-number">2</span> ** <span class="hljs-number">7</span> + new_img[:, :, <span class="hljs-number">1</span>] * <span class="hljs-number">2</span> ** <span class="hljs-number">6</span> <span class="hljs-comment"># 8+7 bit</span><br>reconstruct += new_img[:, :, <span class="hljs-number">2</span>] * <span class="hljs-number">2</span> ** <span class="hljs-number">5</span> <span class="hljs-comment"># 8+7+6 bit</span><br></code></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16466590580992.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:72%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reconstruct = new_img[:, :, <span class="number">0</span>] * <span class="number">2</span> ** <span class="number">7</span> + new_img[:, :, <span class="number">1</span>] * <span class="number">2</span> ** <span class="number">6</span> <span class="comment"># 8+7 bit</span></span><br><span class="line">reconstruct += new_img[:, :, <span class="number">2</span>] * <span class="number">2</span> ** <span class="number">5</span> <span class="comment"># 8+7+6 bit</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16466590580992.png" alt="output" style="zoom:72%;" /></p>
 <h2 id="直方图处理">直方图处理</h2>
 <p>  灰度级范围为<span class="math inline">\([0,L-1]\)</span>的数字图像的直方图是离散函数<span class="math inline">\(h(r_k)=n_k\)</span>，其中<span class="math inline">\(r_k\)</span>是第k级灰度值，<span class="math inline">\(n_k\)</span>是图像中灰度为<span class="math inline">\(r_k\)</span>的像素个数。实际上，一般常用的是归一化后的直方图（histograms），其中<span class="math inline">\(p(r_k)\)</span>是灰度值<span class="math inline">\(r_k\)</span>在图像中出现的概率： <span class="math display">\[
 p(r_k)=n_k/MN \quad\quad k=0,1,...,L-1 \\
@@ -378,11 +277,10 @@ p(r_k)=n_k/MN \quad\quad k=0,1,...,L-1 \\
 <li><strong>亮度</strong>：低亮度图像的直方图的分量集中在灰度级的暗端，高亮度图像则集中在亮端</li>
 <li><strong>对比度</strong>：低对比度图像的直方图分布密集集中于一块区域，高对比度则倾向于均匀分布并占据整个可能的灰度级。能够使用一种变换函数来实现灰度级均匀化，最终的效果是一幅<strong>灰度细节丰富且动态范围较大的图像</strong>。</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307223810523.png" srcset="/img/loading.gif" lazyload alt="image-20220307223810523" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220307223810523.png" alt="image-20220307223810523" style="zoom:67%;" /></p>
 <h3 id="直方图均衡">直方图均衡</h3>
 <p>  简单解释，就是<strong>通过概率分布函数将过于集中的直方图在灰度级坐标轴上铺开</strong>，同时保留原本图像的特征，即<strong>原本图像相同灰度值的部分在新图像中仍然是相同灰度值，特征保持不变</strong>。因此，图像的明暗对比度会加大，但图像的分布特点和细节特征却基本保留。</p>
-<p>  核心公式以及证明如下（变限积分求导参考该链接<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://zhuanlan.zhihu.com/p/376629429
-">[4]</span></a></sup>）： <span class="math display">\[
+<p>  核心公式以及证明如下（变限积分求导参考该链接<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>）： <span class="math display">\[
 \begin{aligned}
 s &amp; =T(r)=(L-1)\int^{r}_0p_r(w)dw \\
 prove \ how \ &amp; it \ works: \\
@@ -398,18 +296,18 @@ s &amp; =T(r)=(L-1)\int^{r}_0p_r(w)dw
 \Rightarrow p_s(s) &amp;=p_r(r)|\frac{dr}{ds}|=p_r(r)|\frac{1}{(L-1)p_r(r)}|=\frac{1}{L-1} \quad 0\leq s\leq L-1
 \end{aligned}
 \]</span>   关于<span class="math inline">\(s=T(r)\)</span>很重要的一点是单调性的讨论，在直方图均衡中没有用到反变换<span class="math inline">\(r_k=T^{-1}(s_k)\)</span>，但是在直方图匹配中有用到。如下图，如果不能保证<span class="math inline">\(T(r)\)</span>在区间<span class="math inline">\([0,L-1]\)</span>上严格单调递增，则在进行反映射从s的值获取r时可能会出现二义性，即多对一的映射。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308001824926.png" srcset="/img/loading.gif" lazyload alt="image-20220308001824926" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308001824926.png" alt="image-20220308001824926" style="zoom:67%;" /></p>
 <p>  离散时<strong>使用求和代替积分</strong>，处理是类似的。下面是课本中一个具体计算的例子：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308003017728.png" srcset="/img/loading.gif" lazyload alt="image-20220308003017728" style="zoom:67%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308003218070.png" srcset="/img/loading.gif" lazyload alt="image-20220308003218070" style="zoom:67%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308003239625.png" srcset="/img/loading.gif" lazyload alt="image-20220308003239625" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308003017728.png" alt="image-20220308003017728" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308003218070.png" alt="image-20220308003218070" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220308003239625.png" alt="image-20220308003239625" style="zoom:67%;" /></p>
 <p>  因为直方图是PDF的近似，而且在处理中不允许造成新的灰度级，所以离散的直方图均衡不会产生均匀的新直方图（后续会介绍一种解决该限制的方法）。我这里仍然用伊雷娜来进行实验，我先用gamma变换将图像整体变暗（<span class="math inline">\(\gamma=3\)</span>时），然后再使用直方图均衡调整分布，结果还不错。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># gamma transform</span><br>gamma = <span class="hljs-number">3</span><br>gamma_img = (np.power(img / <span class="hljs-number">255.0</span>, gamma) * <span class="hljs-number">255</span>).astype(<span class="hljs-built_in">int</span>)<br><br><span class="hljs-comment"># hist equalization</span><br>origin_hist = plt.hist(gamma_img.ravel(), <span class="hljs-number">256</span>, [<span class="hljs-number">0</span>, <span class="hljs-number">256</span>])<br>origin_hist_arr = np.array(origin_hist[<span class="hljs-number">0</span>])<br>r_pdf = origin_hist_arr / np.<span class="hljs-built_in">sum</span>(origin_hist_arr)<br>r_cumsum = np.<span class="hljs-built_in">round</span>(<span class="hljs-number">255</span> * np.cumsum(r_pdf)).astype(<span class="hljs-built_in">int</span>)<br>equalized = np.copy(gamma_img)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):<br>    equalized[gamma_img == i] = r_cumsum[i]<br></code></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-164681540338011.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gamma transform</span></span><br><span class="line">gamma = <span class="number">3</span></span><br><span class="line">gamma_img = (np.power(img / <span class="number">255.0</span>, gamma) * <span class="number">255</span>).astype(<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># hist equalization</span></span><br><span class="line">origin_hist = plt.hist(gamma_img.ravel(), <span class="number">256</span>, [<span class="number">0</span>, <span class="number">256</span>])</span><br><span class="line">origin_hist_arr = np.array(origin_hist[<span class="number">0</span>])</span><br><span class="line">r_pdf = origin_hist_arr / np.<span class="built_in">sum</span>(origin_hist_arr)</span><br><span class="line">r_cumsum = np.<span class="built_in">round</span>(<span class="number">255</span> * np.cumsum(r_pdf)).astype(<span class="built_in">int</span>)</span><br><span class="line">equalized = np.copy(gamma_img)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    equalized[gamma_img == i] = r_cumsum[i]</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-164681540338011.png" alt="output" style="zoom:60%;" /></p>
 <p>  由实验结果能看到有意思的是：<strong>直方图原本数值高的区域在重新分配之后变得稀疏，因此可以猜测，将灰度值分布在坐标轴上的拉伸过程，实际上以数值大小作为拉伸程度的权重</strong>。</p>
 <h3 id="直方图匹配">直方图匹配</h3>
 <p>  直方图均衡能够自动的去寻找合适的变换函数，其变换方式是依赖于输入数据的。<strong>但是直方图均衡不能产生新的数据，当有大量的点处于暗端时，均衡后的图像会产生”冲淡”的外观“</strong>。例如下图，是<span class="math inline">\(\gamma=10\)</span>进行均衡的结果，明显出现“冲淡”。因此我们希望处理后的图像能够具有规定的直方图形状，这种方法就是<em>直方图匹配</em>。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16467969282658.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16467969282658.png" alt="output" style="zoom:60%;" /></p>
 <p>  仍然先考虑连续的情况，<span class="math inline">\(p_r(r),p_z(z)\)</span>分别表示输入图像和输出（已处理）图像的连续概率密度函数，<span class="math inline">\(p_z(z)\)</span>是我们希望输出图像所具有的指定PDF。我们希望得到单一变换<span class="math inline">\(z=\hat{T}(s)\)</span>，引入一个均衡变换和一个反变换过程（得到最终变换公式后，中间过渡步骤可以合并，<strong>实际计算付出的代价与均衡操作相同</strong>），推导如下： <span class="math display">\[
 s=T(r)=(L-1)\int_0^rp_r(w)dw \\
 G(z)=(L-1)\int^r_0p_z(t)dt=s \\
@@ -421,31 +319,30 @@ G(z_q)=(L-1)\sum^q_{i=0}p_z(z_i)=s_k \\
 \Rightarrow
 z_q=G^{-1}(s_k)=G^{-1}[T(r_k)]
 \]</span>   保持<span class="math inline">\(\gamma=10\)</span>，现在做直方图匹配，将结果进行比较。下面是直方图匹配的实现代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># origin_hist_arr still use result of &#x27;gamma=10&#x27;, do equalization</span><br>s_k = np.<span class="hljs-built_in">round</span>(<span class="hljs-number">255</span> / np.<span class="hljs-built_in">sum</span>(origin_hist_arr) * np.cumsum(origin_hist_arr)).astype(<span class="hljs-built_in">int</span>)<br><br><span class="hljs-comment"># design PDF(z_q)</span><br>z_q = np.zeros_like(origin_hist_arr)<br><span class="hljs-comment"># first</span><br>z_q[:<span class="hljs-number">50</span>] = <span class="hljs-number">250</span> / <span class="hljs-number">50</span> * np.arange(<span class="hljs-number">50</span>)<br>z_q[<span class="hljs-number">50</span>:] = <span class="hljs-number">250</span> - <span class="hljs-number">250</span> / <span class="hljs-number">205</span> * np.arange(<span class="hljs-number">206</span>)<br>z_q = z_q / np.<span class="hljs-built_in">sum</span>(z_q)<br><span class="hljs-comment"># second</span><br>z_q[:<span class="hljs-number">20</span>] = <span class="hljs-number">8</span> * np.arange(<span class="hljs-number">20</span>)<br>z_q[<span class="hljs-number">20</span>:<span class="hljs-number">50</span>] = <span class="hljs-number">160</span> + <span class="hljs-number">2</span> * np.arange(<span class="hljs-number">30</span>)<br>z_q[<span class="hljs-number">50</span>:<span class="hljs-number">100</span>] = <span class="hljs-number">220</span> - <span class="hljs-number">4</span> * np.arange(<span class="hljs-number">50</span>)<br>z_q[<span class="hljs-number">100</span>:<span class="hljs-number">140</span>] = <span class="hljs-number">20</span> - <span class="hljs-number">0.5</span> * np.arange(<span class="hljs-number">40</span>)<br>z_q[<span class="hljs-number">140</span>:<span class="hljs-number">200</span>] = <span class="hljs-number">0.5</span> * np.arange(<span class="hljs-number">60</span>)<br>z_q[<span class="hljs-number">200</span>:] = <span class="hljs-number">30</span> - <span class="hljs-number">0.5</span> * np.arange(<span class="hljs-number">56</span>)<br>z_q = z_q / np.<span class="hljs-built_in">sum</span>(z_q)<br></code></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-164679744541910.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 40%;" /></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># calculate function &#x27;s_k=G(z_q)&#x27;, z_q is the left ranging col </span><br>z_q2s_k = np.<span class="hljs-built_in">round</span>(<span class="hljs-number">255</span> * np.cumsum(z_q)).astype(<span class="hljs-built_in">int</span>)<br><br><span class="hljs-comment"># matching s_k and z_q</span><br>last = <span class="hljs-number">0</span><br>matched = np.zeros_like(img)<br>r2z = np.zeros_like(s_k)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):  <span class="hljs-comment"># r -&gt; s</span><br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(last, <span class="hljs-number">256</span>):  <span class="hljs-comment"># z -&gt; s</span><br>        <span class="hljs-keyword">if</span> s_k[i] &lt; z_q2s_k[j]:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;rk:&#x27;</span>, i, <span class="hljs-string">&#x27;sk:&#x27;</span>, s_k[i], <span class="hljs-string">&#x27;zq2sk:&#x27;</span>, z_q2s_k[j - <span class="hljs-number">1</span>], <span class="hljs-string">&#x27;zq:&#x27;</span>, j - <span class="hljs-number">1</span>)<br>            matched[gamma_img == i] = j - <span class="hljs-number">1</span><br>            last = j - <span class="hljs-number">1</span><br>            <span class="hljs-keyword">break</span><br></code></pre></td></tr></table></figure>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rust">rk: <span class="hljs-number">0</span> sk: <span class="hljs-number">147</span> zq2sk: <span class="hljs-number">145</span> zq: <span class="hljs-number">57</span><br>rk: <span class="hljs-number">1</span> sk: <span class="hljs-number">155</span> zq2sk: <span class="hljs-number">155</span> zq: <span class="hljs-number">60</span><br>rk: <span class="hljs-number">2</span> sk: <span class="hljs-number">163</span> zq2sk: <span class="hljs-number">163</span> zq: <span class="hljs-number">63</span><br>rk: <span class="hljs-number">3</span> sk: <span class="hljs-number">166</span> zq2sk: <span class="hljs-number">166</span> zq: <span class="hljs-number">64</span><br>rk: <span class="hljs-number">4</span> sk: <span class="hljs-number">171</span> zq2sk: <span class="hljs-number">171</span> zq: <span class="hljs-number">66</span><br>rk: <span class="hljs-number">5</span> sk: <span class="hljs-number">175</span> zq2sk: <span class="hljs-number">173</span> zq: <span class="hljs-number">67</span><br>rk: <span class="hljs-number">6</span> sk: <span class="hljs-number">180</span> zq2sk: <span class="hljs-number">178</span> zq: <span class="hljs-number">69</span><br>rk: <span class="hljs-number">7</span> sk: <span class="hljs-number">184</span> zq2sk: <span class="hljs-number">183</span> zq: <span class="hljs-number">71</span><br>rk: <span class="hljs-number">8</span> sk: <span class="hljs-number">186</span> zq2sk: <span class="hljs-number">185</span> zq: <span class="hljs-number">72</span><br>...<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># origin_hist_arr still use result of &#x27;gamma=10&#x27;, do equalization</span></span><br><span class="line">s_k = np.<span class="built_in">round</span>(<span class="number">255</span> / np.<span class="built_in">sum</span>(origin_hist_arr) * np.cumsum(origin_hist_arr)).astype(<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># design PDF(z_q)</span></span><br><span class="line">z_q = np.zeros_like(origin_hist_arr)</span><br><span class="line"><span class="comment"># first</span></span><br><span class="line">z_q[:<span class="number">50</span>] = <span class="number">250</span> / <span class="number">50</span> * np.arange(<span class="number">50</span>)</span><br><span class="line">z_q[<span class="number">50</span>:] = <span class="number">250</span> - <span class="number">250</span> / <span class="number">205</span> * np.arange(<span class="number">206</span>)</span><br><span class="line">z_q = z_q / np.<span class="built_in">sum</span>(z_q)</span><br><span class="line"><span class="comment"># second</span></span><br><span class="line">z_q[:<span class="number">20</span>] = <span class="number">8</span> * np.arange(<span class="number">20</span>)</span><br><span class="line">z_q[<span class="number">20</span>:<span class="number">50</span>] = <span class="number">160</span> + <span class="number">2</span> * np.arange(<span class="number">30</span>)</span><br><span class="line">z_q[<span class="number">50</span>:<span class="number">100</span>] = <span class="number">220</span> - <span class="number">4</span> * np.arange(<span class="number">50</span>)</span><br><span class="line">z_q[<span class="number">100</span>:<span class="number">140</span>] = <span class="number">20</span> - <span class="number">0.5</span> * np.arange(<span class="number">40</span>)</span><br><span class="line">z_q[<span class="number">140</span>:<span class="number">200</span>] = <span class="number">0.5</span> * np.arange(<span class="number">60</span>)</span><br><span class="line">z_q[<span class="number">200</span>:] = <span class="number">30</span> - <span class="number">0.5</span> * np.arange(<span class="number">56</span>)</span><br><span class="line">z_q = z_q / np.<span class="built_in">sum</span>(z_q)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-164679744541910.png" alt="output" style="zoom: 40%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># calculate function &#x27;s_k=G(z_q)&#x27;, z_q is the left ranging col </span></span><br><span class="line">z_q2s_k = np.<span class="built_in">round</span>(<span class="number">255</span> * np.cumsum(z_q)).astype(<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># matching s_k and z_q</span></span><br><span class="line">last = <span class="number">0</span></span><br><span class="line">matched = np.zeros_like(img)</span><br><span class="line">r2z = np.zeros_like(s_k)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):  <span class="comment"># r -&gt; s</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(last, <span class="number">256</span>):  <span class="comment"># z -&gt; s</span></span><br><span class="line">        <span class="keyword">if</span> s_k[i] &lt; z_q2s_k[j]:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;rk:&#x27;</span>, i, <span class="string">&#x27;sk:&#x27;</span>, s_k[i], <span class="string">&#x27;zq2sk:&#x27;</span>, z_q2s_k[j - <span class="number">1</span>], <span class="string">&#x27;zq:&#x27;</span>, j - <span class="number">1</span>)</span><br><span class="line">            matched[gamma_img == i] = j - <span class="number">1</span></span><br><span class="line">            last = j - <span class="number">1</span></span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rk: <span class="number">0</span> sk: <span class="number">147</span> zq2sk: <span class="number">145</span> zq: <span class="number">57</span></span><br><span class="line">rk: <span class="number">1</span> sk: <span class="number">155</span> zq2sk: <span class="number">155</span> zq: <span class="number">60</span></span><br><span class="line">rk: <span class="number">2</span> sk: <span class="number">163</span> zq2sk: <span class="number">163</span> zq: <span class="number">63</span></span><br><span class="line">rk: <span class="number">3</span> sk: <span class="number">166</span> zq2sk: <span class="number">166</span> zq: <span class="number">64</span></span><br><span class="line">rk: <span class="number">4</span> sk: <span class="number">171</span> zq2sk: <span class="number">171</span> zq: <span class="number">66</span></span><br><span class="line">rk: <span class="number">5</span> sk: <span class="number">175</span> zq2sk: <span class="number">173</span> zq: <span class="number">67</span></span><br><span class="line">rk: <span class="number">6</span> sk: <span class="number">180</span> zq2sk: <span class="number">178</span> zq: <span class="number">69</span></span><br><span class="line">rk: <span class="number">7</span> sk: <span class="number">184</span> zq2sk: <span class="number">183</span> zq: <span class="number">71</span></span><br><span class="line">rk: <span class="number">8</span> sk: <span class="number">186</span> zq2sk: <span class="number">185</span> zq: <span class="number">72</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>  下面的结果分别对应设计的first和second两个<span class="math inline">\(p(z_q)\)</span>函数，可以看出结果较直接进行直方图均衡有很大改善，尤其是设计的第二个函数很好的将原本处于暗部灰度级的像素保持在暗部区域，缓解了冲淡的效果。但是匹配的不能像均衡一样自动进行调整，而需要用户设计目标函数。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16467968565887.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16467970522889.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16467968565887.png" alt="output" style="zoom:60%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16467970522889.png" alt="output" style="zoom:60%;" /></p>
 <h3 id="局部直方图处理">局部直方图处理</h3>
-<p>  直方图均衡是全局性的，所以会忽略对局部细节的增强，解决方法是<strong>可以用图像中每个像素的邻域中的灰度分布为基础设计变换函数</strong>。即，<em>定义一个邻域，并把该区域的中心按一定stride移动。在原图像每个点的位置，计算邻域中所有点的直方图，并得到局部的直方图均衡化或规定化函数，这个函数最终用于映射邻域中心像素的灰度值。</em>也就是说，通过这种方式进行的直方图均衡化充分考虑了一个点的邻域内的细节特征，虽然这会极大的增大运算量。下面是直接利用前面均衡化函数进行计算的代码<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://blog.csdn.net/qq_43309286/article/details/103036475
-">[5]</span></a></sup>：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16469207782101.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hist_equalization</span>(<span class="hljs-params">arr</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Do histogram equalization for the input array(image)</span><br><span class="hljs-string">    :param arr: input M x N sized image</span><br><span class="hljs-string">    :return: M x N sized equalized array(image)</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    hist = np.histogram(arr.ravel(), <span class="hljs-number">256</span>, [<span class="hljs-number">0</span>, <span class="hljs-number">256</span>])<br>    pdf = np.array(hist[<span class="hljs-number">0</span>]) / np.<span class="hljs-built_in">sum</span>(hist[<span class="hljs-number">0</span>])<br>    cdf = np.uint8(np.<span class="hljs-built_in">round</span>(<span class="hljs-number">255</span> * np.cumsum(pdf)))<br>    equal = np.zeros_like(arr)<br>    <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):<br>        equal[arr == idx] = cdf[idx]<br>    <span class="hljs-keyword">return</span> equal<br><br>img = cv2.cvtColor(cv2.imread(<span class="hljs-string">&#x27;Fig0326.tif&#x27;</span>), cv2.COLOR_RGB2GRAY)<br>H = img.shape[<span class="hljs-number">0</span>]<br>W = img.shape[<span class="hljs-number">1</span>]<br><br>kernel_size = <span class="hljs-number">3</span><br>stride = <span class="hljs-number">1</span><br>s_half = kernel_size // <span class="hljs-number">2</span><br>l_half = kernel_size // <span class="hljs-number">2</span> + <span class="hljs-number">1</span><br>padded_img = ndarray = np.pad(img, (s_half, s_half))<br><br>local_equalized = np.zeros_like(img)<br>_H = H + <span class="hljs-number">1</span><br>_W = W + <span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_half, _H, stride):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s_half, _W, stride):<br>        local_equalized[i - <span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>] = hist_equalization(padded_img[i - s_half:i + l_half, j - s_half:j + l_half])[s_half, s_half]<br></code></pre></td></tr></table></figure>
+<p>  直方图均衡是全局性的，所以会忽略对局部细节的增强，解决方法是<strong>可以用图像中每个像素的邻域中的灰度分布为基础设计变换函数</strong>。即，<em>定义一个邻域，并把该区域的中心按一定stride移动。在原图像每个点的位置，计算邻域中所有点的直方图，并得到局部的直方图均衡化或规定化函数，这个函数最终用于映射邻域中心像素的灰度值。</em>也就是说，通过这种方式进行的直方图均衡化充分考虑了一个点的邻域内的细节特征，虽然这会极大的增大运算量。下面是直接利用前面均衡化函数进行计算的代码<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16469207782101.png" alt="output" style="zoom:60%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hist_equalization</span>(<span class="params">arr</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Do histogram equalization for the input array(image)</span></span><br><span class="line"><span class="string">    :param arr: input M x N sized image</span></span><br><span class="line"><span class="string">    :return: M x N sized equalized array(image)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    hist = np.histogram(arr.ravel(), <span class="number">256</span>, [<span class="number">0</span>, <span class="number">256</span>])</span><br><span class="line">    pdf = np.array(hist[<span class="number">0</span>]) / np.<span class="built_in">sum</span>(hist[<span class="number">0</span>])</span><br><span class="line">    cdf = np.uint8(np.<span class="built_in">round</span>(<span class="number">255</span> * np.cumsum(pdf)))</span><br><span class="line">    equal = np.zeros_like(arr)</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">        equal[arr == idx] = cdf[idx]</span><br><span class="line">    <span class="keyword">return</span> equal</span><br><span class="line"></span><br><span class="line">img = cv2.cvtColor(cv2.imread(<span class="string">&#x27;Fig0326.tif&#x27;</span>), cv2.COLOR_RGB2GRAY)</span><br><span class="line">H = img.shape[<span class="number">0</span>]</span><br><span class="line">W = img.shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">kernel_size = <span class="number">3</span></span><br><span class="line">stride = <span class="number">1</span></span><br><span class="line">s_half = kernel_size // <span class="number">2</span></span><br><span class="line">l_half = kernel_size // <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">padded_img = ndarray = np.pad(img, (s_half, s_half))</span><br><span class="line"></span><br><span class="line">local_equalized = np.zeros_like(img)</span><br><span class="line">_H = H + <span class="number">1</span></span><br><span class="line">_W = W + <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(s_half, _H, stride):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(s_half, _W, stride):</span><br><span class="line">        local_equalized[i - <span class="number">1</span>, j - <span class="number">1</span>] = hist_equalization(padded_img[i - s_half:i + l_half, j - s_half:j + l_half])[s_half, s_half]</span><br></pre></td></tr></table></figure>
 <table>
 <tr>
 <td>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer2.png" srcset="/img/loading.gif" lazyload alt="buffer2" style="zoom:80%;" />
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer2.png" alt="buffer2" style="zoom:80%;" />
 </td>
 <td>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer_size5.png" srcset="/img/loading.gif" lazyload alt="buffer_size5" style="zoom:80%;" />
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer_size5.png" alt="buffer_size5" style="zoom:80%;" />
 </td>
 <td>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer_size7.png" srcset="/img/loading.gif" lazyload alt="buffer_size7" style="zoom:80%;" />
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer_size7.png" alt="buffer_size7" style="zoom:80%;" />
 </td>
 <td>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer3.png" srcset="/img/loading.gif" lazyload alt="buffer3" style="zoom:80%;" />
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/buffer3.png" alt="buffer3" style="zoom:80%;" />
 </td>
 </tr>
 </table>
@@ -467,8 +364,7 @@ m&amp; =\sum^{L-1}_{i=0}r_ip(r_i) \\
 \sigma^2&amp; = \frac{1}{MN}\sum^{M-1}_{x=0}\sum^{N-1}_{y=0}[f(x,y)-m]^2 \\
 m&amp; = \frac{1}{MN}\sum^{M-1}_{x=0}\sum^{N-1}_{y=0}f(x,y)
 \end{aligned}
-\]</span>   <strong>在局部增强中，局部均值和方差是根据图像中每个像素的邻域内的图像特征进行改变的基础</strong>，这种调整方式是非常灵活且简单的。下面是一种增强的思路，<span class="math inline">\(E,k_0,k_1,k_2,k_3\)</span>是需要设计的参数。现在来考虑四个参数的作用，首先明确目的：<em>我们希望暗部细节增强，也就是从一堆低灰度级中增强略高的灰度级</em>。<sup id="fnref:6" class="footnote-ref"><a href="#fn:6" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://blog.csdn.net/qq_43800752/article/details/108802520
-">[6]</span></a></sup></p>
+\]</span>   <strong>在局部增强中，局部均值和方差是根据图像中每个像素的邻域内的图像特征进行改变的基础</strong>，这种调整方式是非常灵活且简单的。下面是一种增强的思路，<span class="math inline">\(E,k_0,k_1,k_2,k_3\)</span>是需要设计的参数。现在来考虑四个参数的作用，首先明确目的：<em>我们希望暗部细节增强，也就是从一堆低灰度级中增强略高的灰度级</em>。<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <ul>
 <li>增强暗部细节，就是将暗部乘上因子<span class="math inline">\(E\)</span>，同时保证明亮区域不变</li>
 <li>设置一个较小的<span class="math inline">\(k_0\)</span>可以限制区域内至少有非0的灰度级，或者是有较亮的点</li>
@@ -489,15 +385,15 @@ g(x,y) &amp; =\left\{
 \right.
 \end{aligned}
 \]</span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># design</span><br>k0 = <span class="hljs-number">0.02</span><br>k1 = <span class="hljs-number">0.5</span><br>k2 = <span class="hljs-number">0</span><br>k3 = <span class="hljs-number">0.5</span><br>E = <span class="hljs-number">30</span><br><br><span class="hljs-comment"># factor for judgement</span><br>mG = np.average(img)<br>varG = np.var(img)<br>k0mG = k0 * mG<br>k1mG = k1 * mG<br>k2varG = k2 * varG<br>k3varG = k3 * varG<br><br>_kernel_size = <span class="hljs-number">3</span><br><span class="hljs-keyword">assert</span> _kernel_size % <span class="hljs-number">2</span> == <span class="hljs-number">1</span><br>_s_half = _kernel_size // <span class="hljs-number">2</span><br>_l_half = _kernel_size // <span class="hljs-number">2</span> + <span class="hljs-number">1</span><br>padded = np.pad(img, (_s_half, _s_half))<br><br><span class="hljs-comment"># statistic analysis</span><br>_H = H + <span class="hljs-number">1</span><br>_W = W + <span class="hljs-number">1</span><br>statistic_res = np.copy(img)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _H):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _W):<br>        Sxy = padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half]<br>        mSxy = np.average(Sxy)<br>        varSxy = np.var(Sxy)<br>        <span class="hljs-keyword">if</span> k0mG &lt;= mSxy &lt;= k1mG <span class="hljs-keyword">and</span> k2varG &lt;= varSxy &lt;= k3varG:<br>            statistic_res[i-<span class="hljs-number">1</span>, j-<span class="hljs-number">1</span>] *= E<br></code></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16470132500205.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:60%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># design</span></span><br><span class="line">k0 = <span class="number">0.02</span></span><br><span class="line">k1 = <span class="number">0.5</span></span><br><span class="line">k2 = <span class="number">0</span></span><br><span class="line">k3 = <span class="number">0.5</span></span><br><span class="line">E = <span class="number">30</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># factor for judgement</span></span><br><span class="line">mG = np.average(img)</span><br><span class="line">varG = np.var(img)</span><br><span class="line">k0mG = k0 * mG</span><br><span class="line">k1mG = k1 * mG</span><br><span class="line">k2varG = k2 * varG</span><br><span class="line">k3varG = k3 * varG</span><br><span class="line"></span><br><span class="line">_kernel_size = <span class="number">3</span></span><br><span class="line"><span class="keyword">assert</span> _kernel_size % <span class="number">2</span> == <span class="number">1</span></span><br><span class="line">_s_half = _kernel_size // <span class="number">2</span></span><br><span class="line">_l_half = _kernel_size // <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">padded = np.pad(img, (_s_half, _s_half))</span><br><span class="line"></span><br><span class="line"><span class="comment"># statistic analysis</span></span><br><span class="line">_H = H + <span class="number">1</span></span><br><span class="line">_W = W + <span class="number">1</span></span><br><span class="line">statistic_res = np.copy(img)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _H):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _W):</span><br><span class="line">        Sxy = padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half]</span><br><span class="line">        mSxy = np.average(Sxy)</span><br><span class="line">        varSxy = np.var(Sxy)</span><br><span class="line">        <span class="keyword">if</span> k0mG &lt;= mSxy &lt;= k1mG <span class="keyword">and</span> k2varG &lt;= varSxy &lt;= k3varG:</span><br><span class="line">            statistic_res[i-<span class="number">1</span>, j-<span class="number">1</span>] *= E</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16470132500205.png" alt="output" style="zoom:60%;" /></p>
 <h2 id="空间滤波">空间滤波</h2>
 <p>  空间滤波的机理就是由一个滤波器（或kernel）对图像像素进行某种预定义的操作，然后在邻域中心产生一个新的像素值。空间滤波器有线性与非线性的，非线性的空间滤波器是很强大的工具，也是频域处理所不能实现的功能。通常滤波器尺寸为奇数，这样方便计算也更加直观。例如一个线性滤波器能够写为： <span class="math display">\[
 g(x,y)=\sum^{a}_{s=-a}\sum^{b}_{s=-b}w(s,t)f(x+s,y+t)=w^Tz(vector\ form)
 \]</span>   上述也就是所谓相关操作；而卷积表示为： <span class="math display">\[
 g(x,y)=\sum^{a}_{s=-a}\sum^{b}_{s=-b}w(s,t)f(x-s,y-t)
 \]</span>   需要能够区分相关与卷积这两个概念：<strong>相关是滤波器模板通过位移计算每个位置乘积之和的处理，而卷积需要将滤波器先旋转180°</strong>。接下来用二维的离散单元冲激来说明：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220310235731977.png" srcset="/img/loading.gif" lazyload alt="image-20220310235731977" style="zoom:65%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220310235731977.png" alt="image-20220310235731977" style="zoom:65%;" /></p>
 <ol type="1">
 <li>一个函数与单位冲激相关，会在该冲激的位置产生该函数的一个翻转版本</li>
 <li><strong>卷积得到的结果和预先进行滤波器翻转得到的结果相同</strong></li>
@@ -510,7 +406,7 @@ g(x,y)=\sum^{a}_{s=-a}\sum^{b}_{s=-b}w(s,t)f(x-s,y-t)
 <p>  也称均值滤波器，从频域观点看可以归类为低通滤波器。实际上是<strong>使用邻域内像素的平均灰度值来替代图像中每个像素的值，这种处理会降低图像灰度的“尖锐”变化，例如噪声</strong>，但也会导致边缘模糊。盒状滤波器是所有系数都相等的均值滤波器，而一般更常用的是加权平均（能够通过增加离中心距离近的点的权重来减少边缘模糊效应）。两种归一化后的均值滤波器公式： <span class="math display">\[
 R=\frac{1}{9}\sum^{9}_{i=1}z_i \\
 g(x,y)=\frac{\sum^{a}_{s=-a}\sum^{b}_{s=-b}w(s,t)f(x+s,y+t)}{\sum^{a}_{s=-a}\sum^{b}_{s=-b}w(s,t)}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311083803766.png" srcset="/img/loading.gif" lazyload alt="image-20220311083803766" style="zoom:50%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311083803766.png" alt="image-20220311083803766" style="zoom:50%;" /></p>
 <p>  下面是使用<code>numpy</code>的实现，查了一圈，好像<code>numpy</code>没有提供二维的卷积或相关操作（图像点乘），所以只能用numpy的矩阵点乘叠两个for循环了。在C++里可以考虑用一个矩阵把kernel的点乘变成矩阵乘法，虽然时间复杂度并没有下降，但在程序设计上能实现内存优化，对于<code>numpy</code>不确定这种操作是否能达到优化效果（测试了有加速，应该是numpy有优化效果）。矩阵点乘优化的证明如下： <span class="math display">\[
 Image \ A ,\ \ Kernel \ K \\
 A = \begin{bmatrix}
@@ -537,23 +433,23 @@ a_{12} &amp; a_{13} &amp; a_{14} &amp; a_{22} &amp; a_{23} &amp; a_{24} &amp; a_
 k_1 &amp; k_2 &amp; k_3 &amp; k_4 &amp; k_5 &amp; k_6 &amp; k_7 &amp; k_8 &amp; k_9\end{bmatrix}^{T} \\
 Conv2d(A,K) = (Mat \cdot \hat{k}).Reshape(H, W) \\
 \]</span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#input image</span><br>img = cv2.cvtColor(cv2.imread(<span class="hljs-string">&quot;./Q3_4.tif&quot;</span>), cv2.COLOR_BGR2GRAY)<br>H = img.shape[<span class="hljs-number">0</span>]<br>W = img.shape[<span class="hljs-number">1</span>]<br>_H = H + <span class="hljs-number">1</span><br>_W = W + <span class="hljs-number">1</span><br><br><span class="hljs-comment"># kernel design</span><br>kernel = <span class="hljs-number">1</span> / <span class="hljs-number">7</span>**<span class="hljs-number">2</span> * np.ones((<span class="hljs-number">7</span>, <span class="hljs-number">7</span>)) <span class="hljs-comment"># box filter</span><br>_kernel_size = kernel.shape[<span class="hljs-number">0</span>]<br><br><span class="hljs-comment"># pad</span><br><span class="hljs-keyword">assert</span> _kernel_size % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>  <span class="hljs-comment"># only handel odd kernel</span><br>_s_half = _kernel_size // <span class="hljs-number">2</span><br>_l_half = _kernel_size // <span class="hljs-number">2</span> + <span class="hljs-number">1</span><br>padded = np.pad(img, (_s_half, _s_half))<br><br><span class="hljs-comment"># filtering</span><br>box_filtered = np.zeros_like(img)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _H):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _W):<br>        box_filtered[i - <span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>] = np.uint8(<br>            np.<span class="hljs-built_in">round</span>(np.<span class="hljs-built_in">sum</span>(kernel * padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half])))<br></code></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16469819718213.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:80%;" /></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># optimize matrix multiplication</span><br>box_filtered = np.zeros_like(img)<br>big_mat = np.zeros((H * W, _kernel_size * _kernel_size))<br>cnt = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _H):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _W):<br>        big_mat[cnt] = padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half].ravel()<br>        cnt += <span class="hljs-number">1</span><br>box_filtered = (big_mat @ kernel.ravel()).reshape(H, W)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#input image</span></span><br><span class="line">img = cv2.cvtColor(cv2.imread(<span class="string">&quot;./Q3_4.tif&quot;</span>), cv2.COLOR_BGR2GRAY)</span><br><span class="line">H = img.shape[<span class="number">0</span>]</span><br><span class="line">W = img.shape[<span class="number">1</span>]</span><br><span class="line">_H = H + <span class="number">1</span></span><br><span class="line">_W = W + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># kernel design</span></span><br><span class="line">kernel = <span class="number">1</span> / <span class="number">7</span>**<span class="number">2</span> * np.ones((<span class="number">7</span>, <span class="number">7</span>)) <span class="comment"># box filter</span></span><br><span class="line">_kernel_size = kernel.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># pad</span></span><br><span class="line"><span class="keyword">assert</span> _kernel_size % <span class="number">2</span> == <span class="number">1</span>  <span class="comment"># only handel odd kernel</span></span><br><span class="line">_s_half = _kernel_size // <span class="number">2</span></span><br><span class="line">_l_half = _kernel_size // <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">padded = np.pad(img, (_s_half, _s_half))</span><br><span class="line"></span><br><span class="line"><span class="comment"># filtering</span></span><br><span class="line">box_filtered = np.zeros_like(img)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _H):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _W):</span><br><span class="line">        box_filtered[i - <span class="number">1</span>, j - <span class="number">1</span>] = np.uint8(</span><br><span class="line">            np.<span class="built_in">round</span>(np.<span class="built_in">sum</span>(kernel * padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half])))</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16469819718213.png" alt="output" style="zoom:80%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># optimize matrix multiplication</span></span><br><span class="line">box_filtered = np.zeros_like(img)</span><br><span class="line">big_mat = np.zeros((H * W, _kernel_size * _kernel_size))</span><br><span class="line">cnt = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _H):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _W):</span><br><span class="line">        big_mat[cnt] = padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half].ravel()</span><br><span class="line">        cnt += <span class="number">1</span></span><br><span class="line">box_filtered = (big_mat @ kernel.ravel()).reshape(H, W)</span><br></pre></td></tr></table></figure>
 <h4 id="低通高斯滤波器">低通高斯滤波器</h4>
 <p>  实际上，在上面提到的加权形式的线性滤波器有一般的设计方法，也就是所谓的<em>高斯低通滤波器</em>。我们可以通过下面的公式来设计高斯核，其中<span class="math inline">\(r\)</span>是离中心的距离，符合下图分布： <span class="math display">\[
 w(s,t)=G(s,t)=Ke^{-\frac{s^2+t^2}{2\sigma^2}}=Ke^{-\frac{r^2}{2\sigma^2}}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311154055980.png" srcset="/img/loading.gif" lazyload alt="image-20220311154055980" style="zoom:67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311154055980.png" alt="image-20220311154055980" style="zoom:67%;" /></p>
 <p>  如何设计kernel的大小，可以从高斯分布的3<span class="math inline">\(\sigma\)</span>原理进行理解，即超过该大小之后的kernel并没有实际的效果。因此从isotropy和symmetry的角度考量，<strong>高斯核的大小应该是<span class="math inline">\([6\sigma,6\sigma]\)</span>（注意要取ceil到最近奇数），由标准差决定</strong>。因此，从公式中也能看出，我们设计高斯核所需要的所有参数只有两个:<span class="math inline">\(K,\sigma\)</span>，下面是通过公式sample得到的3x3高斯核：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311161554849.png" srcset="/img/loading.gif" lazyload alt="image-20220311161554849" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311161554849.png" alt="image-20220311161554849" style="zoom:67%;" /></p>
 <p>下面的code是design高斯核的过程：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># design parameter</span><br>K = <span class="hljs-number">1</span><br>sigma = <span class="hljs-number">1</span><br>_kernel_size = np.ceil(<span class="hljs-number">6</span> * sigma).astype(<span class="hljs-built_in">int</span>)<br><span class="hljs-keyword">if</span> _kernel_size % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>    _kernel_size += <span class="hljs-number">1</span><br><br><span class="hljs-comment"># get the distance matrix (might have better way)</span><br>R_gen_size = <span class="hljs-number">3</span> * sigma<br>R_gen_row = np.arange(<span class="hljs-number">1</span>, R_gen_size + <span class="hljs-number">1</span>) ** <span class="hljs-number">2</span><br>R_gen = np.zeros((R_gen_size, R_gen_size))<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, R_gen_size + <span class="hljs-number">1</span>):<br>    R_gen[i - <span class="hljs-number">1</span>] = R_gen_row + R_gen_row[i - <span class="hljs-number">1</span>]<br>R_right = np.vstack((np.flipud(R_gen), R_gen_row, R_gen))<br>R_mid = np.r_[np.flip(R_gen_row), [<span class="hljs-number">0</span>], R_gen_row]<br>R_left = np.fliplr(R_right)<br>R = np.hstack((R_left, R_mid.reshape(_kernel_size, <span class="hljs-number">1</span>), R_right))<br><br><span class="hljs-comment"># generate coefficient w</span><br>G = K * np.exp(-R / (<span class="hljs-number">2</span> * sigma ** <span class="hljs-number">2</span>))<br><br><span class="hljs-comment"># generate kernel</span><br>kernel = <span class="hljs-number">1</span> / np.<span class="hljs-built_in">sum</span>(G) * G<br><span class="hljs-keyword">assert</span> _kernel_size % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>  <span class="hljs-comment"># only handel odd kernel</span><br><br>_s_half = _kernel_size // <span class="hljs-number">2</span><br>_l_half = _kernel_size // <span class="hljs-number">2</span> + <span class="hljs-number">1</span><br>padded = np.pad(img, (_s_half, _s_half))<br><br><span class="hljs-comment"># filtering</span><br>box_filtered = np.zeros_like(img)<br>big_mat = np.zeros((H * W, _kernel_size * _kernel_size))<br>_H = H + _s_half<br>_W = W + _s_half<br>cnt = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _H):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _W):<br>        big_mat[cnt] = padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half].ravel()<br>        cnt += <span class="hljs-number">1</span><br>box_filtered = (big_mat @ kernel.ravel()).reshape(H, W)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># design parameter</span></span><br><span class="line">K = <span class="number">1</span></span><br><span class="line">sigma = <span class="number">1</span></span><br><span class="line">_kernel_size = np.ceil(<span class="number">6</span> * sigma).astype(<span class="built_in">int</span>)</span><br><span class="line"><span class="keyword">if</span> _kernel_size % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">    _kernel_size += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># get the distance matrix (might have better way)</span></span><br><span class="line">R_gen_size = <span class="number">3</span> * sigma</span><br><span class="line">R_gen_row = np.arange(<span class="number">1</span>, R_gen_size + <span class="number">1</span>) ** <span class="number">2</span></span><br><span class="line">R_gen = np.zeros((R_gen_size, R_gen_size))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, R_gen_size + <span class="number">1</span>):</span><br><span class="line">    R_gen[i - <span class="number">1</span>] = R_gen_row + R_gen_row[i - <span class="number">1</span>]</span><br><span class="line">R_right = np.vstack((np.flipud(R_gen), R_gen_row, R_gen))</span><br><span class="line">R_mid = np.r_[np.flip(R_gen_row), [<span class="number">0</span>], R_gen_row]</span><br><span class="line">R_left = np.fliplr(R_right)</span><br><span class="line">R = np.hstack((R_left, R_mid.reshape(_kernel_size, <span class="number">1</span>), R_right))</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate coefficient w</span></span><br><span class="line">G = K * np.exp(-R / (<span class="number">2</span> * sigma ** <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate kernel</span></span><br><span class="line">kernel = <span class="number">1</span> / np.<span class="built_in">sum</span>(G) * G</span><br><span class="line"><span class="keyword">assert</span> _kernel_size % <span class="number">2</span> == <span class="number">1</span>  <span class="comment"># only handel odd kernel</span></span><br><span class="line"></span><br><span class="line">_s_half = _kernel_size // <span class="number">2</span></span><br><span class="line">_l_half = _kernel_size // <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">padded = np.pad(img, (_s_half, _s_half))</span><br><span class="line"></span><br><span class="line"><span class="comment"># filtering</span></span><br><span class="line">box_filtered = np.zeros_like(img)</span><br><span class="line">big_mat = np.zeros((H * W, _kernel_size * _kernel_size))</span><br><span class="line">_H = H + _s_half</span><br><span class="line">_W = W + _s_half</span><br><span class="line">cnt = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _H):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _W):</span><br><span class="line">        big_mat[cnt] = padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half].ravel()</span><br><span class="line">        cnt += <span class="number">1</span></span><br><span class="line">box_filtered = (big_mat @ kernel.ravel()).reshape(H, W)</span><br></pre></td></tr></table></figure>
 <h4 id="统计排序滤波器">统计排序滤波器</h4>
 <p>  一种非线性空间滤波器，通过对邻域的像素进行排序来选择中心像素的值。例如，<strong>中值滤波器就是用邻域内灰度的中值来代替该像素</strong>。相比线性均值滤波，中值滤波的边缘模糊更小，并且对<em>椒盐噪声</em>这种随机噪声的效果很好。类似的，统计排序滤波还包括最大值和最小值等类型。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311084843302.png" srcset="/img/loading.gif" lazyload alt="image-20220311084843302" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220311084843302.png" alt="image-20220311084843302" style="zoom:67%;" /></p>
 <p>  实现起来和前面类似，个人感觉算法本身上也没有太多优化的余地，主要是内存和code design方面能够进行优化。下图是3x3的邻域做中值滤波的结果，效果非常好：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _H):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_s_half, _W):<br>        order_filtered[i - <span class="hljs-number">1</span>, j - <span class="hljs-number">1</span>] = np.median(padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half])<br></code></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16469931623134.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:80%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _H):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(_s_half, _W):</span><br><span class="line">        order_filtered[i - <span class="number">1</span>, j - <span class="number">1</span>] = np.median(padded[i - _s_half:i + _l_half, j - _s_half:j + _l_half])</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16469931623134.png" alt="output" style="zoom:80%;" /></p>
 <h3 id="锐化空间滤波器">锐化空间滤波器</h3>
 <p>  锐化的本质就是强化边缘的特征，因此直觉上我们会通过微分来处理。本部分和平滑处理对应，主要介绍了各种锐化算子的设计原理。首先回顾一阶和二阶微分在数字图像中的基本知识： <span class="math display">\[
 \begin{aligned}
@@ -561,7 +457,7 @@ w(s,t)=G(s,t)=Ke^{-\frac{s^2+t^2}{2\sigma^2}}=Ke^{-\frac{r^2}{2\sigma^2}}
 \mbox{2st order:} \quad&amp;\frac{\partial^2 f}{\partial x^2}=f(x+1)+f(x-1)-2f(x) \\
 \end{aligned}
 \]</span>   下图很好的验证了上面我们对微分的定义。从结果中，我们认为<strong>二阶微分比一阶在增强细节方面更加合适</strong>，因为一阶在坡度变化处的数值非零，因此会产生较粗的边缘。另外，二阶微分会在台阶的过渡部分产生零交叉，这对边缘定位是非常有用的。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220319222255347.png" srcset="/img/loading.gif" lazyload alt="image-20220319222255347" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220319222255347.png" alt="image-20220319222255347" style="zoom:67%;" /></p>
 <h4 id="拉普拉斯算子">拉普拉斯算子</h4>
 <p>  本质上就是和之前讨论的线性滤波器类似的3 x 3核，特点是符合isotropic的特性： <span class="math display">\[
 \begin{aligned}
@@ -569,25 +465,25 @@ w(s,t)=G(s,t)=Ke^{-\frac{s^2+t^2}{2\sigma^2}}=Ke^{-\frac{r^2}{2\sigma^2}}
 &amp;=f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1)-4f(x,y) \\
 \end{aligned}
 \]</span>   提取系数得到下图中的第一个滤波器，第二个滤波器加上了对角线方向的边缘信息。注意到，中心值是负值意味着我们需要用原图减去滤波的结果，即<span class="math inline">\(g(x,y)=f(x.y)+c[\nabla^2f(x,y)]\)</span>。使用下图后面两种滤波器做加法（乘上因子<code>c=1</code>），在实际中更加常用。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220319230402954.png" srcset="/img/loading.gif" lazyload alt="image-20220319230402954" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220319230402954.png" alt="image-20220319230402954" style="zoom:67%;" /></p>
 <p>  下面是对一副模糊图像使用lapace算子进行锐化的结果，最后一幅是做了标定之后的结果。可以看到对角线lapace算子对边缘高频的提取确实效果要更好，但是标定感觉会导致图片变灰，可能是标定的方式需要改进。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477501692221.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 33%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477501692221.png" alt="output" style="zoom: 33%;" /></p>
 <p>  下面是对一副带噪声的图像进行处理，感觉像是高斯噪声。从结果看出，laplace算子对噪声的放大还是比较明显的（尤其是对角线Laplace算子），因此我后面使用高斯滤波对得到的边缘信息进行一次滤波，再加上原图像，噪声就没有那么明显了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477504470072.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 33%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477506645383.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:33%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477504470072.png" alt="output" style="zoom: 33%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477506645383.png" alt="output" style="zoom:33%;" /></p>
 <p>  这是对边缘提取结果做了<span class="math inline">\(sigma=2\)</span>的高斯滤波之后，加上原图像的结果，其实看起来还不错，但肉眼可见的还是有噪声增强。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477507140864.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom: 40%;" /></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">laplace_sharpen</span>(<span class="hljs-params">arr, method=<span class="hljs-string">&#x27;diag_laplace&#x27;</span>, calibrate=<span class="hljs-literal">False</span>, return_enhanced=<span class="hljs-literal">False</span></span>):</span><br>    kernel = np.array([[-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>], [-<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, -<span class="hljs-number">1</span>], [-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>]])<br>    <span class="hljs-keyword">if</span> method == <span class="hljs-string">&#x27;laplace&#x27;</span>:<br>        kernel = np.array([[<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">0</span>], [-<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, -<span class="hljs-number">1</span>], [<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">0</span>]])<br><br>    _H = arr.shape[<span class="hljs-number">0</span>]<br>    _W = arr.shape[<span class="hljs-number">1</span>]<br>    _kernel_size = kernel.shape[<span class="hljs-number">0</span>]<br>    _half = _kernel_size // <span class="hljs-number">2</span><br>    _l_half = _half + <span class="hljs-number">1</span><br>    _, arr_big = img2big_mat(arr, _kernel_size) <span class="hljs-comment"># 这个优化方法详见上次空域滤波的lab</span><br>    enhanced = (arr_big @ kernel.ravel()).reshape(_H, _W)<br>    sharpened = arr + enhanced<br>    sharpened[sharpened &gt; <span class="hljs-number">255</span>] = <span class="hljs-number">255</span><br>    <span class="hljs-keyword">if</span> calibrate:<br>        sharpened = (<span class="hljs-number">255</span> * (sharpened - np.<span class="hljs-built_in">min</span>(sharpened)) / np.<span class="hljs-built_in">max</span>(sharpened)).astype(<span class="hljs-built_in">int</span>)<br>    <span class="hljs-keyword">return</span> sharpened <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> return_enhanced <span class="hljs-keyword">else</span> enhanced<br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477507140864.png" alt="output" style="zoom: 40%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">laplace_sharpen</span>(<span class="params">arr, method=<span class="string">&#x27;diag_laplace&#x27;</span>, calibrate=<span class="literal">False</span>, return_enhanced=<span class="literal">False</span></span>):</span></span><br><span class="line">    kernel = np.array([[-<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>], [-<span class="number">1</span>, <span class="number">8</span>, -<span class="number">1</span>], [-<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>]])</span><br><span class="line">    <span class="keyword">if</span> method == <span class="string">&#x27;laplace&#x27;</span>:</span><br><span class="line">        kernel = np.array([[<span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>], [-<span class="number">1</span>, <span class="number">4</span>, -<span class="number">1</span>], [<span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>]])</span><br><span class="line"></span><br><span class="line">    _H = arr.shape[<span class="number">0</span>]</span><br><span class="line">    _W = arr.shape[<span class="number">1</span>]</span><br><span class="line">    _kernel_size = kernel.shape[<span class="number">0</span>]</span><br><span class="line">    _half = _kernel_size // <span class="number">2</span></span><br><span class="line">    _l_half = _half + <span class="number">1</span></span><br><span class="line">    _, arr_big = img2big_mat(arr, _kernel_size) <span class="comment"># 这个优化方法详见上次空域滤波的lab</span></span><br><span class="line">    enhanced = (arr_big @ kernel.ravel()).reshape(_H, _W)</span><br><span class="line">    sharpened = arr + enhanced</span><br><span class="line">    sharpened[sharpened &gt; <span class="number">255</span>] = <span class="number">255</span></span><br><span class="line">    <span class="keyword">if</span> calibrate:</span><br><span class="line">        sharpened = (<span class="number">255</span> * (sharpened - np.<span class="built_in">min</span>(sharpened)) / np.<span class="built_in">max</span>(sharpened)).astype(<span class="built_in">int</span>)</span><br><span class="line">    <span class="keyword">return</span> sharpened <span class="keyword">if</span> <span class="keyword">not</span> return_enhanced <span class="keyword">else</span> enhanced</span><br></pre></td></tr></table></figure>
 <h4 id="提升滤波">提升滤波</h4>
 <p>  使用unsharp masking的方式，即用原图减去模糊处理后的图像得到mask，再将结果加上原图。下图从频域上解释了非锐化掩蔽的工作原理，使用<span class="math inline">\(k&gt;1\)</span>的权重系数强调了mask的贡献，称为highboost filtering。 <span class="math display">\[
 \begin{aligned}
 g_{mask}(x,y)&amp;=f(x,y)-\overline{f}(x,y) \\
 g(x,y)&amp;=f(x,y)+k*g_{mask}(x,y)
 \end{aligned}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220320133158266.png" srcset="/img/loading.gif" lazyload alt="image-20220320133158266" style="zoom: 50%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220320133158266.png" alt="image-20220320133158266" style="zoom: 50%;" /></p>
 <p>  使用k值较大时，会出现下图中部分边缘的pixel超过255，因此边缘对比度明显增强的情况，所以我们要调参k值，保证边缘灰度值的权重刚好合适。总体来说，这种方式效果还是不错的，尤其是对噪声的增强并不明显。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477531722366.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:33%;" /></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">high_boost</span>(<span class="hljs-params">arr, k=<span class="hljs-number">1</span>, sigma=<span class="hljs-number">3</span>, return_mask=<span class="hljs-literal">False</span></span>):</span><br>    unsharp_mask = arr - gaussian_filter(arr, sigma, <span class="hljs-number">1</span>)<br>    sharpened = (arr + k * unsharp_mask).astype(<span class="hljs-built_in">int</span>)<br>    sharpened[sharpened &gt; <span class="hljs-number">255</span>] = <span class="hljs-number">255</span><br>    <span class="hljs-keyword">return</span> sharpened <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> return_mask <span class="hljs-keyword">else</span> unsharp_mask<br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477531722366.png" alt="output" style="zoom:33%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_boost</span>(<span class="params">arr, k=<span class="number">1</span>, sigma=<span class="number">3</span>, return_mask=<span class="literal">False</span></span>):</span></span><br><span class="line">    unsharp_mask = arr - gaussian_filter(arr, sigma, <span class="number">1</span>)</span><br><span class="line">    sharpened = (arr + k * unsharp_mask).astype(<span class="built_in">int</span>)</span><br><span class="line">    sharpened[sharpened &gt; <span class="number">255</span>] = <span class="number">255</span></span><br><span class="line">    <span class="keyword">return</span> sharpened <span class="keyword">if</span> <span class="keyword">not</span> return_mask <span class="keyword">else</span> unsharp_mask</span><br></pre></td></tr></table></figure>
 <h4 id="一阶微分锐化">一阶微分锐化</h4>
 <p>  图像中的一阶微分是用梯度幅值实现的。<strong>对于函数<span class="math inline">\(f(x,y)\)</span>，梯度指出了函数<span class="math inline">\(f\)</span>在该处的最大变化率方向，而梯度幅值<span class="math inline">\(M(x,y)\)</span>表示了梯度变化量的值，绘制可得梯度图像</strong>。微分操作不是isotropic的，而使用平方根的方式得到幅值是isotropic的。很多情况下，我们使用L1范数来获取norm，而不是L2，即使L1不是isotropic的。 <span class="math display">\[
 \begin{aligned}
@@ -608,337 +504,19 @@ g_x&amp;=\frac{\partial f}{\partial x}=(z_7+2z_8+z_9)-(z_1+2z_2+z_3) \\
 g_y&amp;=\frac{\partial f}{\partial y}=(z_3+2z_6+z_9)-(z_1+2z_4+z_7) \\
 M(x,y)&amp;\approx |(z_7+2z_8+z_9)-(z_1+2z_2+z_3)|+|(z_3+2z_6+z_9)-(z_1+2z_4+z_7)|
 \end{aligned}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220320140820035.png" srcset="/img/loading.gif" lazyload alt="image-20220320140820035" style="zoom: 67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/image-20220320140820035.png" alt="image-20220320140820035" style="zoom: 67%;" /></p>
 <p>  从结果来看，和之前讨论一阶和二阶的区别相符合，一阶微分会导致较粗的边缘，不过相对而言对噪声的敏感都更低。该结果对<span class="math inline">\(M(x,y)\)</span>乘上了一个因子<code>stretch_k</code>，调整了边缘亮度。使用下图是带噪声的图像使用sobel算子进行锐化的结果：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477654522518.png" srcset="/img/loading.gif" lazyload alt="output" style="zoom:33%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main//img/2022/others/output-16477654522518.png" alt="output" style="zoom:33%;" /></p>
 <h2 id="参考">参考</h2>
-<section class="footnotes">
-<div class="footnote-list">
+<section class="footnotes" role="doc-endnotes">
+<hr />
 <ol>
-<li>
-<span id="fn:1" class="footnote-text"><span>https://blog.csdn.net/qq_42505705/article/details/86769995 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:2" class="footnote-text"><span>http://www.manongjc.com/article/29152.html <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:3" class="footnote-text"><span>https://www.cnblogs.com/iwuqing/p/11297280.html <a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:4" class="footnote-text"><span>https://zhuanlan.zhihu.com/p/376629429 <a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:5" class="footnote-text"><span>https://blog.csdn.net/qq_43309286/article/details/103036475 <a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:6" class="footnote-text"><span>https://blog.csdn.net/qq_43800752/article/details/108802520 <a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
+<li id="fn1" role="doc-endnote"><p>https://www.cnblogs.com/iwuqing/p/11297280.html<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>http://www.manongjc.com/article/29152.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>https://blog.csdn.net/qq_42505705/article/details/86769995<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>https://zhuanlan.zhihu.com/p/376629429<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>https://blog.csdn.net/qq_43309286/article/details/103036475<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>https://blog.csdn.net/qq_43800752/article/details/108802520<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</div>
 </section>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/DIP/">DIP</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/DIP/">DIP</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%BB%A4%E6%B3%A2/">滤波</a>
-                    
-                      <a class="hover-with-bg" href="/tags/NumPy/">NumPy</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Histogram/">Histogram</a>
-                    
-                  </div>
-                
-              </div>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/03/27/2022-3-27-markdown-signs-collection/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Markdown Tex符号速查</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/03/27/2022-3-27-git-workspace-and-stage/">
-                        <span class="hidden-mobile">git workspace and stage</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
-  <div id="valine"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#valine', function() {
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
-        var options = Object.assign(
-          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
-          {
-            el: "#valine",
-            path: window.location.pathname
-          }
-        )
-        new Valine(options);
-        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
-          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-              </article>
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-
-    
-  </main>
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
-  
-
-  
-</footer>
-
-
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-<!-- Plugins -->
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-        typing(title);
-      
-    })(window, document);
-  </script>
-
-
-
-
-
-  
-
-  
-    <!-- MathJax -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        loader: {
-          load: ['ui/lazy']
-        },
-        options: {
-          renderActions: {
-            findScript: [10, doc => {
-              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-                const display = !!node.type.match(/; *mode=display/);
-                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-                const text = document.createTextNode('');
-                node.parentNode.replaceChild(text, node);
-                math.start = { node: text, delim: '', n: 0 };
-                math.end = { node: text, delim: '', n: 0 };
-                doc.math.push(math);
-              });
-            }, '', false],
-            insertedScript: [200, () => {
-              document.querySelectorAll('mjx-container').forEach(node => {
-                let target = node.parentNode;
-                if (target.nodeName.toLowerCase() === 'li') {
-                  target.parentNode.classList.add('has-jax');
-                }
-              });
-            }, '', false]
-          }
-        }
-      };
-    </script>
-
-    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
-
-  
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-</body>
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://judera9.github.io">Jude</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://judera9.github.io/2022/03/27/2022-3-27-Intensity-Transform-and-Spatial-Filtering/">https://judera9.github.io/2022/03/27/2022-3-27-Intensity-Transform-and-Spatial-Filtering/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://judera9.github.io" target="_blank">Jude's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DIP/">DIP</a><a class="post-meta__tags" href="/tags/%E6%BB%A4%E6%B3%A2/">滤波</a><a class="post-meta__tags" href="/tags/NumPy/">NumPy</a><a class="post-meta__tags" href="/tags/Histogram/">Histogram</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/27/2022-3-27-markdown-signs-collection/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Markdown Tex符号速查</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/27/2022-3-27-git-workspace-and-stage/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">git workspace and stage</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/16/2022-3-16-Image-Spatial-Operations-and-Filtering/" title="Image Spatial Operations and Filtering"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-16</div><div class="title">Image Spatial Operations and Filtering</div></div></a></div><div><a href="/2022/06/12/2022-06-12-Frequency-Domain-Filtering/" title="频率域滤波"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-12</div><div class="title">频率域滤波</div></div></a></div><div><a href="/2022/06/13/2022-06-13-KLT-naive-version/" title="光流估计目标追踪-简单的KLT Feature Tracker"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-13</div><div class="title">光流估计目标追踪-简单的KLT Feature Tracker</div></div></a></div><div><a href="/2022/03/04/2022-3-4-Image-Interpolation/" title="Image Interpolation"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-04</div><div class="title">Image Interpolation</div></div></a></div><div><a href="/2022/06/12/2022-06-12-Lena-the-CV-girl/" title="CV和DIP处理常见的那个女孩到底是谁"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-12</div><div class="title">CV和DIP处理常见的那个女孩到底是谁</div></div></a></div><div><a href="/2022/06/12/2022-06-12-FFT-description-and-code/" title="一维快速傅里叶变换"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-12</div><div class="title">一维快速傅里叶变换</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jude</div><div class="author-info__description">Record anything interesting!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">52</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E4%B8%8E%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2"><span class="toc-number">1.</span> <span class="toc-text">灰度变换与空间滤波</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="toc-number">1.1.</span> <span class="toc-text">背景知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2"><span class="toc-number">1.2.</span> <span class="toc-text">基本灰度变换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E5%8F%8D%E8%BD%AC"><span class="toc-number">1.2.1.</span> <span class="toc-text">图像反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0%E5%8F%98%E6%8D%A2%E4%B8%8E%E6%8C%87%E6%95%B0%E5%8F%98%E6%8D%A2"><span class="toc-number">1.2.2.</span> <span class="toc-text">对数变换与指数变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%82%E5%BE%8B%E4%BC%BD%E9%A9%AC%E5%8F%98%E6%8D%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text">幂律（伽马）变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.4.</span> <span class="toc-text">分段线性变换函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E5%BA%A6%E6%8B%89%E4%BC%B8"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">对比度拉伸</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%81%B0%E5%BA%A6%E7%BA%A7%E5%88%86%E5%B1%82"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">灰度级分层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%B9%B3%E9%9D%A2%E5%88%86%E5%B1%82"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">比特平面分层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">直方图处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%9D%87%E8%A1%A1"><span class="toc-number">1.3.1.</span> <span class="toc-text">直方图均衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%8C%B9%E9%85%8D"><span class="toc-number">1.3.2.</span> <span class="toc-text">直方图匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%A4%84%E7%90%86"><span class="toc-number">1.3.3.</span> <span class="toc-text">局部直方图处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA%E4%B8%AD%E7%9A%84%E7%9B%B4%E6%96%B9%E5%9B%BE%E7%BB%9F%E8%AE%A1"><span class="toc-number">1.3.4.</span> <span class="toc-text">图像增强中的直方图统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2"><span class="toc-number">1.4.</span> <span class="toc-text">空间滤波</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E6%BB%91%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">1.4.1.</span> <span class="toc-text">平滑空间滤波器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B3%E6%BB%91%E7%BA%BF%E6%80%A7%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">平滑线性滤波器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8E%E9%80%9A%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">低通高斯滤波器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%8E%92%E5%BA%8F%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">统计排序滤波器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%90%E5%8C%96%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-number">1.4.2.</span> <span class="toc-text">锐化空间滤波器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E7%AE%97%E5%AD%90"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">拉普拉斯算子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E5%8D%87%E6%BB%A4%E6%B3%A2"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">提升滤波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E9%98%B6%E5%BE%AE%E5%88%86%E9%94%90%E5%8C%96"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">一阶微分锐化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/07/21/Review-of-fourier-transform/" title="Review of fourier transform"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Review of fourier transform"/></a><div class="content"><a class="title" href="/2022/07/21/Review-of-fourier-transform/" title="Review of fourier transform">Review of fourier transform</a><time datetime="2022-07-21T14:28:37.000Z" title="发表于 2022-07-21 22:28:37">2022-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/20/Introduction-to-Hexo-pdf-and-music-plugins/" title="Introduction to Hexo pdf and music plugins"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to Hexo pdf and music plugins"/></a><div class="content"><a class="title" href="/2022/07/20/Introduction-to-Hexo-pdf-and-music-plugins/" title="Introduction to Hexo pdf and music plugins">Introduction to Hexo pdf and music plugins</a><time datetime="2022-07-19T17:04:21.000Z" title="发表于 2022-07-20 01:04:21">2022-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/20/2022-07-20-Introduction-to-chrono/" title="Introduction to chrono"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to chrono"/></a><div class="content"><a class="title" href="/2022/07/20/2022-07-20-Introduction-to-chrono/" title="Introduction to chrono">Introduction to chrono</a><time datetime="2022-07-19T16:30:08.000Z" title="发表于 2022-07-20 00:30:08">2022-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/19/2022-07-19-The-usage-of-round-in-design/" title="The usage of round in design"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="The usage of round in design"/></a><div class="content"><a class="title" href="/2022/07/19/2022-07-19-The-usage-of-round-in-design/" title="The usage of round in design">The usage of round in design</a><time datetime="2022-07-19T15:49:21.000Z" title="发表于 2022-07-19 23:49:21">2022-07-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/13/2022-06-13-KLT-naive-version/" title="光流估计目标追踪-简单的KLT Feature Tracker"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="光流估计目标追踪-简单的KLT Feature Tracker"/></a><div class="content"><a class="title" href="/2022/06/13/2022-06-13-KLT-naive-version/" title="光流估计目标追踪-简单的KLT Feature Tracker">光流估计目标追踪-简单的KLT Feature Tracker</a><time datetime="2022-06-13T15:36:22.000Z" title="发表于 2022-06-13 23:36:22">2022-06-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Jude</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

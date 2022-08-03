@@ -1,269 +1,171 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar2.png">
-  <link rel="icon" href="/img/avatar2.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Jude">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="Introduction ZMP (Zero moment point) is used for legged locomotion control, specifying the point with respect to which dynamic reaction force at the contact of the foot with the ground does not produ">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>行走机器人课程-ZMP双足控制与动力学 | Jude's Blog</title><meta name="keywords" content="ZMP,Dynamics"><meta name="author" content="Jude"><meta name="copyright" content="Jude"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Introduction ZMP (Zero moment point) is used for legged locomotion control, specifying the point with respect to which dynamic reaction force at the contact of the foot with the ground does not produ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="行走机器人课程-ZMP双足控制与动力学">
 <meta property="og:url" content="https://judera9.github.io/2022/06/13/2022-06-13-ZMP-dynamics/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
 <meta property="og:description" content="Introduction ZMP (Zero moment point) is used for legged locomotion control, specifying the point with respect to which dynamic reaction force at the contact of the foot with the ground does not produ">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317142420502.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 <meta property="article:published_time" content="2022-06-13T15:24:22.000Z">
 <meta property="article:modified_time" content="2022-06-13T15:32:57.381Z">
 <meta property="article:author" content="Jude">
 <meta property="article:tag" content="ZMP">
 <meta property="article:tag" content="Dynamics">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317142420502.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://judera9.github.io/2022/06/13/2022-06-13-ZMP-dynamics/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '行走机器人课程-ZMP双足控制与动力学',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-13 23:32:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
-  <title>行走机器人课程-ZMP双足控制与动力学 - Jude&#39;s Blog</title>
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
-
-  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<!-- hexo injector head_end start -->
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Jude&#39;s Blog</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                Home Page
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                Archive
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                Category
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                Tag
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                About Me
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default7.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="行走机器人课程-ZMP双足控制与动力学">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-06-13 23:24" pubdate>
-        2022年6月13日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      12k 字
-    </span>
-  
-
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      103 分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">行走机器人课程-ZMP双足控制与动力学</h1>
-            
-            <div class="markdown-body">
-              <h2 id="introduction">Introduction</h2>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">52</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jude's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">行走机器人课程-ZMP双足控制与动力学</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-06-13T15:24:22.000Z" title="发表于 2022-06-13 23:24:22">2022-06-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-13T15:32:57.381Z" title="更新于 2022-06-13 23:32:57">2022-06-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/Walking-Robot/">Walking Robot</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="行走机器人课程-ZMP双足控制与动力学"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="introduction">Introduction</h2>
 <p>ZMP (Zero moment point) is used for legged locomotion control, specifying <strong>the point with respect to which dynamic reaction force at the contact of the foot with the ground does not produce any moment in the horizontal direction</strong>. The concept assumes the contact area is planar and has sufficiently high friction to keep the feet from sliding.</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317142420502.png" srcset="/img/loading.gif" lazyload alt="image-20220317142420502" style="zoom:50%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317142420502.png" alt="image-20220317142420502" style="zoom:50%;" /></p>
 <p>The following figure demonstrates how ZMP works for discussing robot's motion and the ground reaction force. The left figure using <strong>inertia force</strong>, which learned in high school, for expressing the effect of acceleration. The right figure is simply doing force balancing.</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220319102806761.png" srcset="/img/loading.gif" lazyload alt="image-20220319102806761" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220319102806761.png" alt="image-20220319102806761" style="zoom:67%;" /></p>
 <h2 id="zmp-analysis">ZMP Analysis</h2>
 <h3 id="convex-set-and-convex-hull">Convex Set and Convex Hull</h3>
 <p>These two concepts are sued to introduce the support polygon concept, which depicts the region of the ZMP. <strong>If a segment by connecting any arbitrary two points included in the set <span class="math inline">\(S\)</span> is also included in <span class="math inline">\(S\)</span>, the set is defined to be the convex set</strong>. In equation, A subset <span class="math inline">\(S\)</span> of <span class="math inline">\(R^n\)</span> is defined to be the convex set if (<span class="math inline">\(\alpha\)</span> depicts positions between <span class="math inline">\(p_1,p_2\)</span>): <span class="math display">\[
 \alpha p_1 + (1 -\alpha)p_2 \in S
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317151756410.png" srcset="/img/loading.gif" lazyload alt="image-20220317151756410" style="zoom:67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317151756410.png" alt="image-20220317151756410" style="zoom:67%;" /></p>
 <p>The minimum convex set including <span class="math inline">\(S\)</span> is defined to be the convex hull <span class="math inline">\(coS\)</span>, that is, <strong>the minimum polygon area containing all the vector of edges <span class="math inline">\(p_j \quad (j=1,...,N)\)</span> of a subset <span class="math inline">\(S\)</span> of <span class="math inline">\(R^n\)</span> corresponds to the convex hull</strong>: <span class="math display">\[
 coS=\left\{\sum^{N}_{j=1}\alpha_jp_j | \alpha_j \geq 0, \sum^{N}_{j=1}\alpha_j=1,p_j \in S \quad (j=1,...,N)\right\}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317154131122.png" srcset="/img/loading.gif" lazyload alt="image-20220317154131122" style="zoom:67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317154131122.png" alt="image-20220317154131122" style="zoom:67%;" /></p>
 <h3 id="zmp-and-com">ZMP and CoM</h3>
 <p><strong>Zero momentum always exists inside of the support polygon</strong>, while CoM may lays on the outside when body moves dynamically, like the following figure. When the ground projection of CoM coincides with ZMP, the body can keep balance.</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317154709012.png" srcset="/img/loading.gif" lazyload alt="image-20220317154709012" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317154709012.png" alt="image-20220317154709012" style="zoom:67%;" /></p>
 <h3 id="d-analysis">2D Analysis</h3>
 <p>From the knowledge of mechanics, we know that the ground reaction force can be analyzed separately as vertical component <span class="math inline">\(\rho(\xi)\)</span> and horizontal component <span class="math inline">\(\sigma(\xi)\)</span>. Then equivalent them to the ZMP, we got the following relationships:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317172212767.png" srcset="/img/loading.gif" lazyload alt="image-20220317172212767" style="zoom:67%;" /> <span class="math display">\[
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317172212767.png" alt="image-20220317172212767" style="zoom:67%;" /> <span class="math display">\[
 \begin{aligned}
 f_x&amp;=\int_{x_1}^{x_2}\sigma(\xi)d\xi \\
 f_z&amp;=\int_{x_1}^{x_2}\rho(\xi)d\xi \\
@@ -277,10 +179,10 @@ f_z&amp;=\int_{x_1}^{x_2}\rho(\xi)d\xi \\
 <li>By <span class="math inline">\(\rho(\xi) \geq 0\)</span> we can obtain that <span class="math inline">\(x_1 \leq p_x \leq x_2\)</span>, that is, the ZMP always lay inside the polygon region</li>
 <li>The Shear force has no contribution to the position of ZMP</li>
 </ol>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317212843187.png" srcset="/img/loading.gif" lazyload alt="image-20220317212843187" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317212843187.png" alt="image-20220317212843187" style="zoom:67%;" /></p>
 <h3 id="extend-to-3d">Extend to 3D</h3>
 <p>It is the same with the 2D condition, just replacing integral over length with area. Since <span class="math inline">\(\rho(\xi,\eta)\)</span> is equivalent to the pressure over the surface of the sole, the point <span class="math inline">\((p_x, p_y)\)</span> is the center of pressure or in other word, ZMP.</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317214934414.png" srcset="/img/loading.gif" lazyload alt="image-20220317214934414" style="zoom:67%;" /> <span class="math display">\[
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317214934414.png" alt="image-20220317214934414" style="zoom:67%;" /> <span class="math display">\[
 \begin{aligned}
 f_z&amp;=\int_S\rho(\xi,\eta)dS \\
 \tau_n(p) &amp;\equiv[\tau_{nx} \ \tau_{ny} \ \tau_{nz}]^T \\
@@ -306,7 +208,7 @@ p_y=\frac{\int_S\eta\rho(\xi,\eta)dS}{\int_S\rho(\xi,\eta)dS}
 <h3 id="measurement-of-zmp">Measurement of ZMP</h3>
 <p>When the robot moves and the foot is forced on the ground, the output of the force/torque sensor at the foot is generated. By using this sensor information, the position of the ZMP is measured.</p>
 <p>The sensor used here is the 6 Axis Force/Torque Sensor, which could measure <span class="math inline">\([f_x,f_y,f_z,\tau_x,\tau_y,\tau_z]\)</span> data on a single foot. However, using multiple one dimensional force sensors or 3 axis force sensors can work as well. The general measure metric is described below:</p>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317233835889.png" srcset="/img/loading.gif" lazyload alt="image-20220317233835889" style="zoom: 67%;" /> $$
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220317233835889.png" alt="image-20220317233835889" style="zoom: 67%;" /> $$
 <span class="math display">\[\begin{aligned}
 &amp;\mbox{&#39;j&#39; corresponds to the jth sensor measurement:} \\
 \tau(p)&amp;=\sum^{N}_{j=1}(p_j-p)\times f_j+\tau_j \\
@@ -344,7 +246,7 @@ p_y=\frac{\int_S\eta\rho(\xi,\eta)dS}{\int_S\rho(\xi,\eta)dS}
 p_x=\frac{p_{Rx}f_{Rz}+p_{Lx}f_{Lz}}{f_{Rz}+f_{Lz}} \\
 p_y=\frac{p_{Ry}f_{Rz}+p_{Ly}f_{Lz}}{f_{Rz}+f_{Lz}}
 \end{aligned}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220318103239720.png" srcset="/img/loading.gif" lazyload alt="image-20220318103239720" style="zoom:67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220318103239720.png" alt="image-20220318103239720" style="zoom:67%;" /></p>
 <h3 id="limitation-of-zmp">Limitation of ZMP</h3>
 <p>ZMP only contains 2D constriction information, but the ground reaction force is 6 dimensional information with force/moment.</p>
 <ol type="1">
@@ -352,7 +254,7 @@ p_y=\frac{p_{Ry}f_{Rz}+p_{Ly}f_{Lz}}{f_{Rz}+f_{Lz}}
 <li>If the ground surface is not flat, the friction is uncertain, so ZMP cannot work.</li>
 <li>If the arms or the hands of a humanoid robot contact the environment, ZMP need to be extended.</li>
 </ol>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/R.189ad494ff5812a6034397a3f47f5ce8rik=MT9araNcXOvGeA&riu=http%3a%2f%2fi.stack.imgur.com%2f65EKz.png&ehk=bSDL3CiJcolTGpJpClPnetLzgtf65cZ%2fMILbGlcd2Ns%3d&risl=&pid=ImgRaw&r=0" srcset="/img/loading.gif" lazyload alt="See the source image" style="zoom: 50%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/R.189ad494ff5812a6034397a3f47f5ce8rik=MT9araNcXOvGeA&riu=http%3a%2f%2fi.stack.imgur.com%2f65EKz.png&ehk=bSDL3CiJcolTGpJpClPnetLzgtf65cZ%2fMILbGlcd2Ns%3d&risl=&pid=ImgRaw&r=0" alt="See the source image" style="zoom: 50%;" /></p>
 <h2 id="dynamics-of-humanoid-robots">Dynamics of Humanoid Robots</h2>
 <h3 id="physics-review">Physics Review</h3>
 <p>Let's review the knowledge of physics:</p>
@@ -387,14 +289,14 @@ L&amp;=\sum_im_ip_i\times (\omega\times p_i) \\
 &amp;=\sum_im_i[(p_i\cdot p_i)\cdot \omega-(p_i\cdot \omega)p_i]
 \end{aligned}
 \]</span> If <span class="math inline">\(\omega \cdot p_i=0\)</span>, then the direction of <span class="math inline">\(L\)</span> and <span class="math inline">\(\omega\)</span> are the same, that is, the rotation is vertical to the surface of the rigid body.</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220319122030857.png" srcset="/img/loading.gif" lazyload alt="image-20220319122030857" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220319122030857.png" alt="image-20220319122030857" style="zoom:67%;" /></p>
 <p>The inertia of some uniform shape are listed in the following table, for example, the <span class="math inline">\(I\)</span> of a cuboid is below. <span class="math display">\[
 I=\begin{bmatrix}
 \frac{m}{12}(l_y^2+l_z^2) &amp;0&amp;0\\
 0&amp;\frac{m}{12}(l_x^2+l_z^2)&amp; 0\\
 0&amp;0&amp; \frac{m}{12}(l_x^2+l_y^2)
 \end{bmatrix}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/momi_table.png" srcset="/img/loading.gif" lazyload alt="img" style="zoom: 55%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/momi_table.png" alt="img" style="zoom: 55%;" /></p>
 <p>The rotation frame transform for a rigid body can be done with a rotation matrix, as we discussed before. If we consider that the object is rotated due to the change of view point, we can easily understand that <strong>the relative position of both the angular velocity vector and the angular momentum vector with respect to the rigid body do not change</strong>. <span class="math display">\[
 \begin{aligned}
 \omega&#39; &amp;=R\omega \\
@@ -403,14 +305,14 @@ L&#39; &amp;=RL\\
 \end{aligned}
 \]</span></p>
 <h2 id="code-calculation">Code Calculation</h2>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328172704672.png" srcset="/img/loading.gif" lazyload alt="image-20220328172704672" style="zoom: 80%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328172704672.png" alt="image-20220328172704672" style="zoom: 80%;" /></p>
 <h3 id="center-of-mass">Center of Mass</h3>
 <ul>
 <li>Calculate CoM for the j-th link as <span class="math inline">\(\overline{c}_j\)</span> in local coordinate</li>
 <li>The CoM of each link in world coordinate is <span class="math inline">\(c_j=p_j+R_j\overline{c}_j\)</span></li>
 <li>Divide the sum of moment by the total mass, got <span class="math inline">\(c=\sum^{N}_{j=1}m_jc_j/M\)</span></li>
 </ul>
-<figure class="highlight matlab"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mc</span> = <span class="hljs-title">calcMC</span><span class="hljs-params">(j)</span> % <span class="hljs-title">recursive</span></span><br><span class="hljs-keyword">global</span> uLINK<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">j</span> == <span class="hljs-number">0</span> <span class="hljs-comment">% already traverse all the links (of this branch)</span><br>    mc = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">else</span><br>    mc = uLINK(<span class="hljs-built_in">j</span>).m * (uLINK(<span class="hljs-built_in">j</span>).p + uLINK(<span class="hljs-built_in">j</span>).R * uLINK(<span class="hljs-built_in">j</span>).c );<br>    mc = mc + calcMC(uLINK(<span class="hljs-built_in">j</span>).sister) + calcMC(uLINK(<span class="hljs-built_in">j</span>).child);<br><span class="hljs-keyword">end</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">com</span> = <span class="hljs-title">calcCoM</span><span class="hljs-params">()</span></span><br><span class="hljs-keyword">global</span> uLINK<br><br>M = TotalMass(<span class="hljs-number">1</span>); <span class="hljs-comment">% add up all the mass, start from the 1st link</span><br>MC = calcMC(<span class="hljs-number">1</span>);<br>com = MC / M;<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mc</span> = <span class="title">calcMC</span><span class="params">(j)</span> % <span class="title">recursive</span></span></span><br><span class="line"><span class="keyword">global</span> uLINK</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">j</span> == <span class="number">0</span> <span class="comment">% already traverse all the links (of this branch)</span></span><br><span class="line">    mc = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    mc = uLINK(<span class="built_in">j</span>).m * (uLINK(<span class="built_in">j</span>).p + uLINK(<span class="built_in">j</span>).R * uLINK(<span class="built_in">j</span>).c );</span><br><span class="line">    mc = mc + calcMC(uLINK(<span class="built_in">j</span>).sister) + calcMC(uLINK(<span class="built_in">j</span>).child);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">com</span> = <span class="title">calcCoM</span><span class="params">()</span></span></span><br><span class="line"><span class="keyword">global</span> uLINK</span><br><span class="line"></span><br><span class="line">M = TotalMass(<span class="number">1</span>); <span class="comment">% add up all the mass, start from the 1st link</span></span><br><span class="line">MC = calcMC(<span class="number">1</span>);</span><br><span class="line">com = MC / M;</span><br></pre></td></tr></table></figure>
 <h3 id="link-speed-and-angular-velocity">Link Speed and Angular Velocity</h3>
 <p><span class="math display">\[
 \begin{aligned}
@@ -418,7 +320,7 @@ v_j&amp;=v_i+\omega_i\times R_ib_j \\
 \omega_j&amp;=\omega_i+R_ia_j\dot{q_j} \\
 \end{aligned}
 \]</span></p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ForwardVelocity</span><span class="hljs-params">(j)</span></span><br><span class="hljs-keyword">global</span> uLINK<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">j</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">return</span>; <span class="hljs-keyword">end</span><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">j</span> ~= <span class="hljs-number">1</span><br>    <span class="hljs-built_in">i</span> = uLINK(<span class="hljs-built_in">j</span>).mother;<br>    uLINK(<span class="hljs-built_in">j</span>).v = uLINK(<span class="hljs-built_in">i</span>).v + <span class="hljs-built_in">cross</span>(uLINK(<span class="hljs-built_in">i</span>).w, uLINK(<span class="hljs-built_in">i</span>).R * uLINK(<span class="hljs-built_in">j</span>).b);<br>    <span class="hljs-comment">% w = a * dq, dq is the amplitude of omega and a is the direction</span><br>    uLINK(<span class="hljs-built_in">j</span>).w = uLINK(<span class="hljs-built_in">i</span>).w + uLINK(<span class="hljs-built_in">i</span>).R * (uLINK(<span class="hljs-built_in">j</span>).a * uLINK(<span class="hljs-built_in">j</span>).dq);<br><span class="hljs-keyword">end</span><br>ForwardVelocity(uLINK(<span class="hljs-built_in">j</span>).sister);<br>ForwardVelocity(uLINK(<span class="hljs-built_in">j</span>).child);<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ForwardVelocity</span><span class="params">(j)</span></span></span><br><span class="line"><span class="keyword">global</span> uLINK</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">j</span> == <span class="number">0</span> <span class="keyword">return</span>; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">j</span> ~= <span class="number">1</span></span><br><span class="line">    <span class="built_in">i</span> = uLINK(<span class="built_in">j</span>).mother;</span><br><span class="line">    uLINK(<span class="built_in">j</span>).v = uLINK(<span class="built_in">i</span>).v + <span class="built_in">cross</span>(uLINK(<span class="built_in">i</span>).w, uLINK(<span class="built_in">i</span>).R * uLINK(<span class="built_in">j</span>).b);</span><br><span class="line">    <span class="comment">% w = a * dq, dq is the amplitude of omega and a is the direction</span></span><br><span class="line">    uLINK(<span class="built_in">j</span>).w = uLINK(<span class="built_in">i</span>).w + uLINK(<span class="built_in">i</span>).R * (uLINK(<span class="built_in">j</span>).a * uLINK(<span class="built_in">j</span>).dq);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">ForwardVelocity(uLINK(<span class="built_in">j</span>).sister);</span><br><span class="line">ForwardVelocity(uLINK(<span class="built_in">j</span>).child);</span><br></pre></td></tr></table></figure>
 <h3 id="momentum">Momentum</h3>
 <p><span class="math display">\[
 \begin{aligned}
@@ -426,8 +328,8 @@ P &amp;= \sum^{N}_{j=1}m_j\dot{c_j} \\
 \dot{c_j} &amp;=v_j+\omega_j\times(R_j\overline{c}_j)
 \end{aligned}
 \]</span></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328180716548.png" srcset="/img/loading.gif" lazyload alt="image-20220328180716548" style="zoom: 25%;" /></p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">P</span> = <span class="hljs-title">calcP</span><span class="hljs-params">(j)</span> % <span class="hljs-title">calculate</span> <span class="hljs-title">the</span> <span class="hljs-title">overall</span> <span class="hljs-title">momentum</span> <span class="hljs-title">recursively</span></span><br><span class="hljs-keyword">global</span> uLINK<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">j</span> == <span class="hljs-number">0</span><br>    P = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">else</span><br>    c1 = uLINK(<span class="hljs-built_in">j</span>).R * uLINK(<span class="hljs-built_in">j</span>).c;<br>    P = uLINK(<span class="hljs-built_in">j</span>).m * (uLINK(<span class="hljs-built_in">j</span>).v + <span class="hljs-built_in">cross</span>(uLINK(<span class="hljs-built_in">j</span>).w , c1));<br>    P = P + calcP(uLINK(<span class="hljs-built_in">j</span>).sister) + calcP(uLINK(<span class="hljs-built_in">j</span>).child);<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328180716548.png" alt="image-20220328180716548" style="zoom: 25%;" /></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">P</span> = <span class="title">calcP</span><span class="params">(j)</span> % <span class="title">calculate</span> <span class="title">the</span> <span class="title">overall</span> <span class="title">momentum</span> <span class="title">recursively</span></span></span><br><span class="line"><span class="keyword">global</span> uLINK</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">j</span> == <span class="number">0</span></span><br><span class="line">    P = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    c1 = uLINK(<span class="built_in">j</span>).R * uLINK(<span class="built_in">j</span>).c;</span><br><span class="line">    P = uLINK(<span class="built_in">j</span>).m * (uLINK(<span class="built_in">j</span>).v + <span class="built_in">cross</span>(uLINK(<span class="built_in">j</span>).w , c1));</span><br><span class="line">    P = P + calcP(uLINK(<span class="built_in">j</span>).sister) + calcP(uLINK(<span class="built_in">j</span>).child);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <h3 id="angular-momentum">Angular Momentum</h3>
 <p><span class="math display">\[
 \begin{aligned}
@@ -436,11 +338,11 @@ L_j &amp;= L_{joint}+L_{local} \\
 &amp;= c_j\times P_j+R_j\overline{I}_jR^T_j\omega_j
 \end{aligned}
 \]</span></p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">L</span> = <span class="hljs-title">calcL</span><span class="hljs-params">(j)</span></span><br><span class="hljs-keyword">global</span> uLINK<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">j</span> == <span class="hljs-number">0</span><br>    L = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">else</span><br>    c1 = uLINK(<span class="hljs-built_in">j</span>).R * uLINK(<span class="hljs-built_in">j</span>).c;<br>    c = uLINK(<span class="hljs-built_in">j</span>).p + c1; <span class="hljs-comment">% j-th link CoM in world coordinate</span><br>    P = uLINK(<span class="hljs-built_in">j</span>).m * (uLINK(<span class="hljs-built_in">j</span>).v + <span class="hljs-built_in">cross</span>(uLINK(<span class="hljs-built_in">j</span>).w , c1));<br>    L = <span class="hljs-built_in">cross</span>(c, P) + uLINK(<span class="hljs-built_in">j</span>).R * uLINK(<span class="hljs-built_in">j</span>).I * uLINK(<span class="hljs-built_in">j</span>).R’ * uLINK(<span class="hljs-built_in">j</span>).w;<br>    L = L + calcL(uLINK(<span class="hljs-built_in">j</span>).sister) + calcL(uLINK(<span class="hljs-built_in">j</span>).child);<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">L</span> = <span class="title">calcL</span><span class="params">(j)</span></span></span><br><span class="line"><span class="keyword">global</span> uLINK</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">j</span> == <span class="number">0</span></span><br><span class="line">    L = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    c1 = uLINK(<span class="built_in">j</span>).R * uLINK(<span class="built_in">j</span>).c;</span><br><span class="line">    c = uLINK(<span class="built_in">j</span>).p + c1; <span class="comment">% j-th link CoM in world coordinate</span></span><br><span class="line">    P = uLINK(<span class="built_in">j</span>).m * (uLINK(<span class="built_in">j</span>).v + <span class="built_in">cross</span>(uLINK(<span class="built_in">j</span>).w , c1));</span><br><span class="line">    L = <span class="built_in">cross</span>(c, P) + uLINK(<span class="built_in">j</span>).R * uLINK(<span class="built_in">j</span>).I * uLINK(<span class="built_in">j</span>).R’ * uLINK(<span class="built_in">j</span>).w;</span><br><span class="line">    L = L + calcL(uLINK(<span class="built_in">j</span>).sister) + calcL(uLINK(<span class="built_in">j</span>).child);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <h3 id="zmp-from-robots-motion">ZMP from Robot's Motion</h3>
 <p>We should know that the reason we use ZMP is to simplify the analysis of ground reaction force. The GRF can be expressed by ZMP(<span class="math inline">\(p\)</span>), the force (<span class="math inline">\(f\)</span>) and the moment (<span class="math inline">\(\tau_p\)</span>) about the vertical line including the ZMP. <span class="math display">\[
 \tau=p\times f+\tau_p
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328191437208.png" srcset="/img/loading.gif" lazyload alt="image-20220328191437208" style="zoom:67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328191437208.png" alt="image-20220328191437208" style="zoom:67%;" /></p>
 <p>In the above section, a method to measure ZMP by sensors is introduced, now we want to calculate ZMP by given motion of the robot. Through the result of below, we can observe that <strong>a special condition is when <span class="math inline">\(\dot{P}=\dot{L}=0\)</span>, the ZMP coincides with the CoM</strong>. <span class="math display">\[
 \begin{aligned}
 \dot{P} &amp;=Mg+f \\
@@ -471,7 +373,7 @@ g &amp;= [0 \ 0 \ -g]^T \\
 \right.
 \end{aligned}
 \]</span></p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">[px,py]</span> = <span class="hljs-title">calcZMP</span><span class="hljs-params">(c,dP,dL,pz)</span></span><br><span class="hljs-keyword">global</span> M G<br><br><span class="hljs-comment">% dP and dL are numerical differentiation of the momentum and angular momentum</span><br><span class="hljs-comment">% P and L are sequences when robot are in motion</span><br>px = (M*G*c(<span class="hljs-number">1</span>) + pz * dP(<span class="hljs-number">1</span>) - dL(<span class="hljs-number">2</span>))/(M*G + dP(<span class="hljs-number">3</span>));<br>py = (M*G*c(<span class="hljs-number">2</span>) + pz * dP(<span class="hljs-number">2</span>) + dL(<span class="hljs-number">1</span>))/(M*G + dP(<span class="hljs-number">3</span>));<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[px,py]</span> = <span class="title">calcZMP</span><span class="params">(c,dP,dL,pz)</span></span></span><br><span class="line"><span class="keyword">global</span> M G</span><br><span class="line"></span><br><span class="line"><span class="comment">% dP and dL are numerical differentiation of the momentum and angular momentum</span></span><br><span class="line"><span class="comment">% P and L are sequences when robot are in motion</span></span><br><span class="line">px = (M*G*c(<span class="number">1</span>) + pz * dP(<span class="number">1</span>) - dL(<span class="number">2</span>))/(M*G + dP(<span class="number">3</span>));</span><br><span class="line">py = (M*G*c(<span class="number">2</span>) + pz * dP(<span class="number">2</span>) + dL(<span class="number">1</span>))/(M*G + dP(<span class="number">3</span>));</span><br></pre></td></tr></table></figure>
 <h3 id="calculating-zmp-by-approximation">Calculating ZMP by Approximation</h3>
 As we discussed above, the angular momentum of the j-th link is as shown. To simplify the model, we ignore the inertia tensor of each link about its CoM: <span class="math display">\[
 \begin{aligned}
@@ -497,319 +399,6 @@ M(y\ddot{z}-z\ddot{y}) \\ M(z\ddot{x}-x\ddot{z})\\ M(x\ddot{y}-y\ddot{x})
 p_x&amp;=x-\frac{(z-p_z)\ddot{x}}{\ddot{z}+g}\\
 p_y&amp;=y-\frac{(z-p_z)\ddot{y}}{\ddot{z}+g}
 \end{aligned}\]</span>
-<p>$$ <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328201646072.png" srcset="/img/loading.gif" lazyload alt="image-20220328201646072" style="zoom:67%;" /></p>
+<p>$$ <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220328201646072.png" alt="image-20220328201646072" style="zoom:67%;" /></p>
 <h2 id="reference">Reference</h2>
-<section class="footnotes">
-<div class="footnote-list">
-<ol>
-<li>
-<span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Zero_moment_point">Zero moment point</a> <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://spiff.rit.edu/classes/phys216/workshops/w9c/w9c.html">Parallel-axis theorem, torque</a> <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩︎</a></span></span>
-</li>
-</ol>
-</div>
-</section>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/Walking-Robot/">Walking Robot</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/ZMP/">ZMP</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Dynamics/">Dynamics</a>
-                    
-                  </div>
-                
-              </div>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/06/13/2022-06-13-KLT-naive-version/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">光流估计目标追踪-简单的KLT Feature Tracker</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/06/12/2022-06-12-walking-robot-kinematics/">
-                        <span class="hidden-mobile">行走机器人课程-运动学复习</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
-  <div id="valine"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#valine', function() {
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
-        var options = Object.assign(
-          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
-          {
-            el: "#valine",
-            path: window.location.pathname
-          }
-        )
-        new Valine(options);
-        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
-          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-              </article>
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-
-    
-  </main>
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
-  
-
-  
-</footer>
-
-
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-<!-- Plugins -->
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-        typing(title);
-      
-    })(window, document);
-  </script>
-
-
-
-
-
-  
-
-  
-    <!-- MathJax -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        loader: {
-          load: ['ui/lazy']
-        },
-        options: {
-          renderActions: {
-            findScript: [10, doc => {
-              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-                const display = !!node.type.match(/; *mode=display/);
-                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-                const text = document.createTextNode('');
-                node.parentNode.replaceChild(text, node);
-                math.start = { node: text, delim: '', n: 0 };
-                math.end = { node: text, delim: '', n: 0 };
-                doc.math.push(math);
-              });
-            }, '', false],
-            insertedScript: [200, () => {
-              document.querySelectorAll('mjx-container').forEach(node => {
-                let target = node.parentNode;
-                if (target.nodeName.toLowerCase() === 'li') {
-                  target.parentNode.classList.add('has-jax');
-                }
-              });
-            }, '', false]
-          }
-        }
-      };
-    </script>
-
-    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
-
-  
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-</body>
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://judera9.github.io">Jude</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://judera9.github.io/2022/06/13/2022-06-13-ZMP-dynamics/">https://judera9.github.io/2022/06/13/2022-06-13-ZMP-dynamics/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://judera9.github.io" target="_blank">Jude's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ZMP/">ZMP</a><a class="post-meta__tags" href="/tags/Dynamics/">Dynamics</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/06/13/2022-06-13-KLT-naive-version/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">光流估计目标追踪-简单的KLT Feature Tracker</div></div></a></div><div class="next-post pull-right"><a href="/2022/06/12/2022-06-12-walking-robot-kinematics/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">行走机器人课程-运动学复习</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jude</div><div class="author-info__description">Record anything interesting!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">52</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zmp-analysis"><span class="toc-number">2.</span> <span class="toc-text">ZMP Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#convex-set-and-convex-hull"><span class="toc-number">2.1.</span> <span class="toc-text">Convex Set and Convex Hull</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zmp-and-com"><span class="toc-number">2.2.</span> <span class="toc-text">ZMP and CoM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#d-analysis"><span class="toc-number">2.3.</span> <span class="toc-text">2D Analysis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extend-to-3d"><span class="toc-number">2.4.</span> <span class="toc-text">Extend to 3D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#measurement-of-zmp"><span class="toc-number">2.5.</span> <span class="toc-text">Measurement of ZMP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#limitation-of-zmp"><span class="toc-number">2.6.</span> <span class="toc-text">Limitation of ZMP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dynamics-of-humanoid-robots"><span class="toc-number">3.</span> <span class="toc-text">Dynamics of Humanoid Robots</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#physics-review"><span class="toc-number">3.1.</span> <span class="toc-text">Physics Review</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#derive-the-inertia-tensor-of-rigid-body"><span class="toc-number">3.2.</span> <span class="toc-text">Derive the Inertia Tensor of Rigid Body</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code-calculation"><span class="toc-number">4.</span> <span class="toc-text">Code Calculation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#center-of-mass"><span class="toc-number">4.1.</span> <span class="toc-text">Center of Mass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#link-speed-and-angular-velocity"><span class="toc-number">4.2.</span> <span class="toc-text">Link Speed and Angular Velocity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#momentum"><span class="toc-number">4.3.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#angular-momentum"><span class="toc-number">4.4.</span> <span class="toc-text">Angular Momentum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zmp-from-robots-motion"><span class="toc-number">4.5.</span> <span class="toc-text">ZMP from Robot&#39;s Motion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#calculating-zmp-by-approximation"><span class="toc-number">4.6.</span> <span class="toc-text">Calculating ZMP by Approximation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/07/21/Review-of-fourier-transform/" title="Review of fourier transform"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Review of fourier transform"/></a><div class="content"><a class="title" href="/2022/07/21/Review-of-fourier-transform/" title="Review of fourier transform">Review of fourier transform</a><time datetime="2022-07-21T14:28:37.000Z" title="发表于 2022-07-21 22:28:37">2022-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/20/Introduction-to-Hexo-pdf-and-music-plugins/" title="Introduction to Hexo pdf and music plugins"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to Hexo pdf and music plugins"/></a><div class="content"><a class="title" href="/2022/07/20/Introduction-to-Hexo-pdf-and-music-plugins/" title="Introduction to Hexo pdf and music plugins">Introduction to Hexo pdf and music plugins</a><time datetime="2022-07-19T17:04:21.000Z" title="发表于 2022-07-20 01:04:21">2022-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/20/2022-07-20-Introduction-to-chrono/" title="Introduction to chrono"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to chrono"/></a><div class="content"><a class="title" href="/2022/07/20/2022-07-20-Introduction-to-chrono/" title="Introduction to chrono">Introduction to chrono</a><time datetime="2022-07-19T16:30:08.000Z" title="发表于 2022-07-20 00:30:08">2022-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/19/2022-07-19-The-usage-of-round-in-design/" title="The usage of round in design"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="The usage of round in design"/></a><div class="content"><a class="title" href="/2022/07/19/2022-07-19-The-usage-of-round-in-design/" title="The usage of round in design">The usage of round in design</a><time datetime="2022-07-19T15:49:21.000Z" title="发表于 2022-07-19 23:49:21">2022-07-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/13/2022-06-13-KLT-naive-version/" title="光流估计目标追踪-简单的KLT Feature Tracker"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="光流估计目标追踪-简单的KLT Feature Tracker"/></a><div class="content"><a class="title" href="/2022/06/13/2022-06-13-KLT-naive-version/" title="光流估计目标追踪-简单的KLT Feature Tracker">光流估计目标追踪-简单的KLT Feature Tracker</a><time datetime="2022-06-13T15:36:22.000Z" title="发表于 2022-06-13 23:36:22">2022-06-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Jude</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

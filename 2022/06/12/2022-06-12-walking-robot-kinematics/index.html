@@ -1,29 +1,11 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar2.png">
-  <link rel="icon" href="/img/avatar2.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Jude">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>行走机器人课程-运动学复习 | Jude's Blog</title><meta name="keywords" content="坐标系变换,旋转矩阵,欧拉角,角速度向量,控制"><meta name="author" content="Jude"><meta name="copyright" content="Jude"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="行走机器人课程-运动学复习">
 <meta property="og:url" content="https://judera9.github.io/2022/06/12/2022-06-12-walking-robot-kinematics/index.html">
 <meta property="og:site_name" content="Jude&#39;s Blog">
 <meta property="og:description" content="大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303184501646.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 <meta property="article:published_time" content="2022-06-12T14:09:16.000Z">
 <meta property="article:modified_time" content="2022-06-12T14:29:48.368Z">
 <meta property="article:author" content="Jude">
@@ -32,235 +14,155 @@
 <meta property="article:tag" content="欧拉角">
 <meta property="article:tag" content="角速度向量">
 <meta property="article:tag" content="控制">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303184501646.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://judera9.github.io/2022/06/12/2022-06-12-walking-robot-kinematics/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '行走机器人课程-运动学复习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-12 22:29:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
-  <title>行走机器人课程-运动学复习 - Jude&#39;s Blog</title>
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
-
-  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"judera9.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<!-- hexo injector head_end start -->
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Jude&#39;s Blog</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                Home Page
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                Archive
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                Category
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                Tag
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                About Me
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default8.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="行走机器人课程-运动学复习">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-06-12 22:09" pubdate>
-        2022年6月12日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      8.3k 字
-    </span>
-  
-
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      70 分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">行走机器人课程-运动学复习</h1>
-            
-            <div class="markdown-body">
-              <p>大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">52</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jude's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">行走机器人课程-运动学复习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-06-12T14:09:16.000Z" title="发表于 2022-06-12 22:09:16">2022-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-12T14:29:48.368Z" title="更新于 2022-06-12 22:29:48">2022-06-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/Walking-Robot/">Walking Robot</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="行走机器人课程-运动学复习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>大三下学期行走机器人这门课程的一些笔记，用的教材是日本Kajita的Introduction to Humanoid Robotics，估计是因为老师主要是做双足机器人的。</p>
 <span id="more"></span>
 <h2 id="腿足机器人相关术语">腿足机器人相关术语</h2>
 <table>
 <tr>
 <td>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303202715842.png" srcset="/img/loading.gif" lazyload alt="image-20220303202715842" style="zoom: 67%;" />
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303202715842.png" alt="image-20220303202715842" style="zoom: 67%;" />
 </td>
 <td>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303203014777.png" srcset="/img/loading.gif" lazyload alt="image-20220303203014777" style="zoom:67%;" />
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303203014777.png" alt="image-20220303203014777" style="zoom:67%;" />
 </td>
 <td>
-<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303203312534.png" srcset="/img/loading.gif" lazyload alt="image-20220303203312534" style="zoom:67%;" />
+<img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303203312534.png" alt="image-20220303203312534" style="zoom:67%;" />
 </td>
 </tr>
 </table>
@@ -282,7 +184,7 @@ e_{ay}=\begin{bmatrix}
 e_{az}=\begin{bmatrix}
 0 \\ -sin\phi \\ cos\phi
 \end{bmatrix}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303184501646.png" srcset="/img/loading.gif" lazyload alt="image-20220303184501646" style="zoom:67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303184501646.png" alt="image-20220303184501646" style="zoom:67%;" /></p>
 <p>  将整个坐标系变换关系用一个4 x 4矩阵表示，用0和1来匹配dimensions得到下面的齐次变换矩阵（Homogeneous transformation matrices）： <span class="math display">\[
 \begin{bmatrix}
 p_h \\ 1
@@ -329,13 +231,13 @@ T_N &amp; = T_1 \ ^{1}T_2 \ ^{2}T_3 \ ^{3}T_4... \ ^{N-1}T_N
 <h2 id="旋转矩阵与欧拉角">旋转矩阵与欧拉角</h2>
 <h3 id="欧拉角与旋转矩阵关系">欧拉角与旋转矩阵关系</h3>
 <p>  欧拉角的定义挺灵活的，有的时候根据物体运动特点定义，有的时候根据坐标轴定义，所以在看课本或paper之前要看好定义。本课本中定义<span class="math inline">\(roll,pitch,yaw\)</span>为<span class="math inline">\(xyz\)</span>三轴的旋转角：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402150402685.png" srcset="/img/loading.gif" lazyload alt="image-20220402150402685" style="zoom: 50%;" /> <span class="math display">\[
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402150402685.png" alt="image-20220402150402685" style="zoom: 50%;" /> <span class="math display">\[
 \begin{aligned}
 p&#39;&amp;=R_{rpy}(\phi,\theta,\psi)p \\
 &amp;=R_z(\psi)R_y(\theta)R_x(\phi)p \\
 \end{aligned}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402150908339.png" srcset="/img/loading.gif" lazyload alt="image-20220402150908339" style="zoom: 33%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402153453022.png" srcset="/img/loading.gif" lazyload alt="image-20220402153453022" style="zoom: 33%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402150908339.png" alt="image-20220402150908339" style="zoom: 33%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402153453022.png" alt="image-20220402153453022" style="zoom: 33%;" /></p>
 <h3 id="旋转矩阵的两种理解">旋转矩阵的两种理解</h3>
 <p>  旋转矩阵<span class="math inline">\(p&#39;=Rp\)</span>可以理解为两种情形：</p>
 <ol type="1">
@@ -346,7 +248,7 @@ p&#39;&amp;=R_{rpy}(\phi,\theta,\psi)p \\
 <p>How can we figure out a rotation matrix used in which meaning, (1) operator to rotate a vector, or (2) attitude of a local frame? <strong>We can see it by checking whether the point exists in the same coordinate space before and after the calculation</strong>. Most of the time, however, it is clear from the context.</p>
 </blockquote>
 <h3 id="旋转矩阵性质">旋转矩阵性质</h3>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402153730601.png" srcset="/img/loading.gif" lazyload alt="image-20220402153730601" style="zoom:33%;" /> <span class="math display">\[
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402153730601.png" alt="image-20220402153730601" style="zoom:33%;" /> <span class="math display">\[
 R^{-1}=R^T
 \]</span></p>
 <h3 id="旋转矩阵求导">旋转矩阵求导</h3>
@@ -373,16 +275,16 @@ w_yp_z-w_zp_y \\ w_zp_x-w_xp_z \\ w_xp_y-w_yp_x
 \end{bmatrix} \\
 \abs{v}=\abs{w}\abs{p}sin\theta \\
 (v\perp{w})\cap(v\perp{p})
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303141839733.png" srcset="/img/loading.gif" lazyload alt="image-20220303141839733" style="zoom:67%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303141839733.png" alt="image-20220303141839733" style="zoom:67%;" /></p>
 <p>  另外一种定义的方法是用旋转轴的单位向量<span class="math inline">\(a\)</span>，乘上旋转角速度幅值<span class="math inline">\(\dot{q}\)</span>： <span class="math display">\[
 \omega = a\dot{q}
 \]</span></p>
 <h3 id="角速度向量omega的旋转">角速度向量<span class="math inline">\(\omega\)</span>的旋转</h3>
 <p>  旋转矩阵对<span class="math inline">\(\omega\)</span>的操作可以理解为对旋转轴的单位向量<span class="math inline">\(a\)</span>的旋转，即<span class="math inline">\(\omega&#39;=R\omega=(Ra)\dot{q}\)</span>。</p>
 <p>  关于<span class="math inline">\(R(w\times p)=(Rw)\times(Rp)\)</span>这个结论，我写作业的时候证明的太复杂了，其实是个很直观的原理。<strong>相当于三个向量同时进行了相同的旋转，即所在坐标系发生了旋转，因此等号保持不变</strong>。我自己的证明也在下面：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303170425922.png" srcset="/img/loading.gif" lazyload alt="image-20220303170425922" style="zoom:67%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/1ed0f2d4716220d13fc75fd041a2bb8.png" srcset="/img/loading.gif" lazyload alt="1ed0f2d4716220d13fc75fd041a2bb8" style="zoom: 33%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/f871343e1b880baa0f35e4c8925f9e1-16462987879351.png" srcset="/img/loading.gif" lazyload alt="f871343e1b880baa0f35e4c8925f9e1" style="zoom: 33%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220303170425922.png" alt="image-20220303170425922" style="zoom:67%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/1ed0f2d4716220d13fc75fd041a2bb8.png" alt="1ed0f2d4716220d13fc75fd041a2bb8" style="zoom: 33%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/f871343e1b880baa0f35e4c8925f9e1-16462987879351.png" alt="f871343e1b880baa0f35e4c8925f9e1" style="zoom: 33%;" /></p>
 <h3 id="角速度的矩阵表示hatomega">角速度的矩阵表示<span class="math inline">\(\hat{\omega}\)</span></h3>
   由上面矩阵导数的结果推导，得到角速度的反对称矩阵表示： <span class="math display">\[
 \begin{aligned}
@@ -429,8 +331,8 @@ p_x \\ p_y\\ p_z
 <h3 id="rodrigues-formula">Rodrigues’ formula</h3>
 <p>  上面的式子是从旋转矩阵得到角速度向量（矩阵），那么通过微分方程能够得到由角速度计算旋转矩阵的公式，使用指数函数的泰勒多项式展开得到Rodrigues’ formula。<strong>这个公式非常有用！</strong>下面是作业中的证明： <span class="math display">\[
 e^{\hat{a}\theta}=E+\hat{a}\sin\theta+\hat{a}^2(1-\cos\theta) \quad \theta\equiv \omega t
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402183133778.png" srcset="/img/loading.gif" lazyload alt="image-20220402183133778" style="zoom:50%;" /></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402183250127.png" srcset="/img/loading.gif" lazyload alt="image-20220402183250127" style="zoom:50%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402183133778.png" alt="image-20220402183133778" style="zoom:50%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402183250127.png" alt="image-20220402183250127" style="zoom:50%;" /></p>
 <h3 id="矩阵对数">矩阵对数</h3>
 <p>  由上面得出的旋转矩阵指数表示法，经过一系列推导，得到用<span class="math inline">\(R\)</span>求解<span class="math inline">\(\hat{a}\)</span>的公式： <span class="math display">\[
 \begin{aligned}
@@ -459,7 +361,7 @@ r_{21} - r_{12} \\
 \theta &amp;=\atan2(||l||, r{11}+r{22}+r{33}-1)
 \end{aligned}
 \]</span>   但是根据Kevin的《现代机器人学》这本书的内容，这里的公式推导好像有点问题：首先，当<span class="math inline">\(R=E\)</span>时，角速度不是0而是未定义的（好像问题不大）；其次，这个“R is diagonal“（这里好像是代入<span class="math inline">\(\theta=\frac{\pi}{2}...\)</span>）的情况好像没有推导的必要，因为通解的特殊情况是<span class="math inline">\(\sin\theta=0\)</span>。我自己推导了一部分放在下面，另外可以参考原书的推导：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402233735396.png" srcset="/img/loading.gif" lazyload alt="image-20220402233735396" style="zoom:50%;" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220402233735396.png" alt="image-20220402233735396" style="zoom:50%;" /></p>
 
 
 	<div class="row">
@@ -476,7 +378,7 @@ r_{21} - r_{12} \\
 \mbox{The interpolation becomes: } &amp;R(t)=R_1e^{\hat{\omega}t}\\
 \end{aligned}
 \]</span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> scipy.linalg <span class="hljs-keyword">import</span> expm, logm<br><br><span class="hljs-comment">#1. Generate test R1, R2, example array</span><br><br>R1 = np.array([<br>    [np.sin(<span class="hljs-number">2</span>), np.cos(<span class="hljs-number">2</span>), <span class="hljs-number">0</span>],<br>    [np.cos(<span class="hljs-number">2</span>), -np.sin(<span class="hljs-number">2</span>), <span class="hljs-number">0</span>],<br>    [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br>])<br><br>R2 = np.array([<br>    [-np.sin(<span class="hljs-number">3</span>), <span class="hljs-number">0</span>, np.cos(<span class="hljs-number">3</span>)],<br>    [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>],<br>    [np.cos(<span class="hljs-number">3</span>), <span class="hljs-number">0</span>, np.sin(<span class="hljs-number">3</span>)]])<br><br>test_arr = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]])<br><br><span class="hljs-comment">#2. Find omega by matrix logarithm algorithm</span><br><br>R = R1.T @ R2<br>l = np.array([[R[<span class="hljs-number">2</span>, <span class="hljs-number">1</span>] - R[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]],<br>              [R[<span class="hljs-number">0</span>, <span class="hljs-number">2</span>] - R[<span class="hljs-number">2</span>, <span class="hljs-number">0</span>]],<br>              [R[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>] - R[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]]])<br>norm_l = np.linalg.norm(l)<br>theta = np.arctan2(norm_l, R[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>] + R[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>] + R[<span class="hljs-number">2</span>, <span class="hljs-number">2</span>] - <span class="hljs-number">1</span>)<br>omega = theta * l / norm_l <span class="hljs-comment"># equ to: (R - R.T) / (2 * np.sin(theta)) * theta</span><br><br>np.set_printoptions(precision=<span class="hljs-number">3</span>)<br>np.set_printoptions(suppress=<span class="hljs-literal">True</span>)<br><br><span class="hljs-built_in">print</span>(omega.ravel()) <span class="hljs-comment"># [-1.828  0.399  2.108]</span><br><br><span class="hljs-comment">#3. Check result with scipy.logm</span><br><br>np.set_printoptions(precision=<span class="hljs-number">3</span>)<br>np.set_printoptions(suppress=<span class="hljs-literal">True</span>)<br><br>omega_m = logm(R)<br><span class="hljs-built_in">print</span>(omega_m)<br><span class="hljs-comment"># [[ 0.    -2.108  0.399]</span><br><span class="hljs-comment">#  [ 2.108 -0.     1.828]</span><br><span class="hljs-comment">#  [-0.399 -1.828  0.   ]]</span><br><br><span class="hljs-comment">#4. Test the given array for interpolation</span><br><br>np.set_printoptions(precision=<span class="hljs-number">3</span>)<br>np.set_printoptions(suppress=<span class="hljs-literal">True</span>)<br><br>test1 = R1 @ test_arr.T<br>test2 = R2 @ test_arr.T<br><br><span class="hljs-built_in">print</span>(test1.ravel())<br><span class="hljs-built_in">print</span>(test2.ravel())<br><span class="hljs-comment"># [ 0.493 -1.325  0.   ]</span><br><span class="hljs-comment"># [-0.141  1.    -0.99 ]</span><br><br><span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">11</span>):<br>    interp_R = R1 @ (expm(omega_m * t/<span class="hljs-number">10</span>))<br>    <span class="hljs-built_in">print</span>((interp_R @ test_arr.T).ravel())<br><span class="hljs-comment"># [ 0.493 -1.325  0.   ]</span><br><span class="hljs-comment"># [ 0.211 -1.379 -0.235]</span><br><span class="hljs-comment"># [-0.062 -1.329 -0.481]</span><br><span class="hljs-comment"># [-0.304 -1.179 -0.719]</span><br><span class="hljs-comment"># [-0.496 -0.943 -0.93 ]</span><br><span class="hljs-comment"># [-0.623 -0.637 -1.098]</span><br><span class="hljs-comment"># [-0.675 -0.287 -1.209]</span><br><span class="hljs-comment"># [-0.647  0.08  -1.255]</span><br><span class="hljs-comment"># [-0.543  0.435 -1.231]</span><br><span class="hljs-comment"># [-0.369  0.75  -1.141]</span><br><span class="hljs-comment"># [-0.141  1.    -0.99 ]</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.linalg <span class="keyword">import</span> expm, logm</span><br><span class="line"></span><br><span class="line"><span class="comment">#1. Generate test R1, R2, example array</span></span><br><span class="line"></span><br><span class="line">R1 = np.array([</span><br><span class="line">    [np.sin(<span class="number">2</span>), np.cos(<span class="number">2</span>), <span class="number">0</span>],</span><br><span class="line">    [np.cos(<span class="number">2</span>), -np.sin(<span class="number">2</span>), <span class="number">0</span>],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">R2 = np.array([</span><br><span class="line">    [-np.sin(<span class="number">3</span>), <span class="number">0</span>, np.cos(<span class="number">3</span>)],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">    [np.cos(<span class="number">3</span>), <span class="number">0</span>, np.sin(<span class="number">3</span>)]])</span><br><span class="line"></span><br><span class="line">test_arr = np.array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#2. Find omega by matrix logarithm algorithm</span></span><br><span class="line"></span><br><span class="line">R = R1.T @ R2</span><br><span class="line">l = np.array([[R[<span class="number">2</span>, <span class="number">1</span>] - R[<span class="number">1</span>, <span class="number">2</span>]],</span><br><span class="line">              [R[<span class="number">0</span>, <span class="number">2</span>] - R[<span class="number">2</span>, <span class="number">0</span>]],</span><br><span class="line">              [R[<span class="number">1</span>, <span class="number">0</span>] - R[<span class="number">0</span>, <span class="number">1</span>]]])</span><br><span class="line">norm_l = np.linalg.norm(l)</span><br><span class="line">theta = np.arctan2(norm_l, R[<span class="number">0</span>, <span class="number">0</span>] + R[<span class="number">1</span>, <span class="number">1</span>] + R[<span class="number">2</span>, <span class="number">2</span>] - <span class="number">1</span>)</span><br><span class="line">omega = theta * l / norm_l <span class="comment"># equ to: (R - R.T) / (2 * np.sin(theta)) * theta</span></span><br><span class="line"></span><br><span class="line">np.set_printoptions(precision=<span class="number">3</span>)</span><br><span class="line">np.set_printoptions(suppress=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(omega.ravel()) <span class="comment"># [-1.828  0.399  2.108]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3. Check result with scipy.logm</span></span><br><span class="line"></span><br><span class="line">np.set_printoptions(precision=<span class="number">3</span>)</span><br><span class="line">np.set_printoptions(suppress=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">omega_m = logm(R)</span><br><span class="line"><span class="built_in">print</span>(omega_m)</span><br><span class="line"><span class="comment"># [[ 0.    -2.108  0.399]</span></span><br><span class="line"><span class="comment">#  [ 2.108 -0.     1.828]</span></span><br><span class="line"><span class="comment">#  [-0.399 -1.828  0.   ]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4. Test the given array for interpolation</span></span><br><span class="line"></span><br><span class="line">np.set_printoptions(precision=<span class="number">3</span>)</span><br><span class="line">np.set_printoptions(suppress=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">test1 = R1 @ test_arr.T</span><br><span class="line">test2 = R2 @ test_arr.T</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(test1.ravel())</span><br><span class="line"><span class="built_in">print</span>(test2.ravel())</span><br><span class="line"><span class="comment"># [ 0.493 -1.325  0.   ]</span></span><br><span class="line"><span class="comment"># [-0.141  1.    -0.99 ]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">11</span>):</span><br><span class="line">    interp_R = R1 @ (expm(omega_m * t/<span class="number">10</span>))</span><br><span class="line">    <span class="built_in">print</span>((interp_R @ test_arr.T).ravel())</span><br><span class="line"><span class="comment"># [ 0.493 -1.325  0.   ]</span></span><br><span class="line"><span class="comment"># [ 0.211 -1.379 -0.235]</span></span><br><span class="line"><span class="comment"># [-0.062 -1.329 -0.481]</span></span><br><span class="line"><span class="comment"># [-0.304 -1.179 -0.719]</span></span><br><span class="line"><span class="comment"># [-0.496 -0.943 -0.93 ]</span></span><br><span class="line"><span class="comment"># [-0.623 -0.637 -1.098]</span></span><br><span class="line"><span class="comment"># [-0.675 -0.287 -1.209]</span></span><br><span class="line"><span class="comment"># [-0.647  0.08  -1.255]</span></span><br><span class="line"><span class="comment"># [-0.543  0.435 -1.231]</span></span><br><span class="line"><span class="comment"># [-0.369  0.75  -1.141]</span></span><br><span class="line"><span class="comment"># [-0.141  1.    -0.99 ]</span></span><br></pre></td></tr></table></figure>
 <h2 id="d运动描述">3D运动描述</h2>
 <h3 id="速度与角速度">速度与角速度</h3>
 <p>  其实是在上面旋转矩阵的基础上，添加了平动向量，将矩阵扩充为<span class="math inline">\(rank(4)\)</span>的齐次矩阵。<strong>一对<span class="math inline">\((p,R)\)</span>可以看作一个与物体绑定的local coordinate与世界坐标系的变换关系</strong>，下面是三维运动公式： <span class="math display">\[
@@ -490,7 +392,7 @@ v &amp;\equiv\dot{p} \\
 \omega &amp;\equiv(\dot{R}R^T)^{\vee} \\
 R\overline{p}_k &amp;\equiv (p_k - p)
 \end{aligned}
-\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220403115542777.png" srcset="/img/loading.gif" lazyload alt="image-20220403115542777" style="zoom:33%;" /></p>
+\]</span> <img src="https://cdn.jsdelivr.net/gh/Judera9/Pictures-for-Blogs@main/img/2022/others/image-20220403115542777.png" alt="image-20220403115542777" style="zoom:33%;" /></p>
 <h3 id="多物体速度与角速度变换">多物体速度与角速度变换</h3>
 <p><span class="math display">\[
 \begin{aligned}
@@ -529,269 +431,4 @@ v_2 &amp;= \frac{d}{dt}(p_1+R_1p_d)\\
 \Rightarrow \omega_2 &amp;= \omega_1 + R_1\omega_d
 \end{aligned}
 \]</span></p>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/Walking-Robot/">Walking Robot</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%9D%90%E6%A0%87%E7%B3%BB%E5%8F%98%E6%8D%A2/">坐标系变换</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/">旋转矩阵</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%AC%A7%E6%8B%89%E8%A7%92/">欧拉角</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E8%A7%92%E9%80%9F%E5%BA%A6%E5%90%91%E9%87%8F/">角速度向量</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%8E%A7%E5%88%B6/">控制</a>
-                    
-                  </div>
-                
-              </div>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/06/13/2022-06-13-ZMP-dynamics/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">行走机器人课程-ZMP双足控制与动力学</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/06/12/2022-06-12-belt-design-process/">
-                        <span class="hidden-mobile">带传动选型笔记</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
-  <div id="valine"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#valine', function() {
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
-        var options = Object.assign(
-          {"appId":"A2B86e7zop7GQkkzp7ipqfER-gzGzoHsz","appKey":"tuSWVIPcIWJRbLSnVVwFn5UL","path":"window.location.pathname","placeholder":"欢迎在此处留下你的评论呀～","avatar":"robohash","meta":["nick"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
-          {
-            el: "#valine",
-            path: window.location.pathname
-          }
-        )
-        new Valine(options);
-        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
-          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-              </article>
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-
-    
-  </main>
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://github.com/Judera9" target="_blank" rel="nofollow noopener"><span>Github</span></a> <i class="iconfont icon-love"></i> <a href="https://space.bilibili.com/629192924?from=search&seid=4236930356157132584&spm_id_from=333.337.0.0" target="_blank" rel="nofollow noopener"><span>Bilibili</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
-  
-
-  
-</footer>
-
-
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-<!-- Plugins -->
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-        typing(title);
-      
-    })(window, document);
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-</body>
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://judera9.github.io">Jude</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://judera9.github.io/2022/06/12/2022-06-12-walking-robot-kinematics/">https://judera9.github.io/2022/06/12/2022-06-12-walking-robot-kinematics/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://judera9.github.io" target="_blank">Jude's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9D%90%E6%A0%87%E7%B3%BB%E5%8F%98%E6%8D%A2/">坐标系变换</a><a class="post-meta__tags" href="/tags/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/">旋转矩阵</a><a class="post-meta__tags" href="/tags/%E6%AC%A7%E6%8B%89%E8%A7%92/">欧拉角</a><a class="post-meta__tags" href="/tags/%E8%A7%92%E9%80%9F%E5%BA%A6%E5%90%91%E9%87%8F/">角速度向量</a><a class="post-meta__tags" href="/tags/%E6%8E%A7%E5%88%B6/">控制</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/06/13/2022-06-13-ZMP-dynamics/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">行走机器人课程-ZMP双足控制与动力学</div></div></a></div><div class="next-post pull-right"><a href="/2022/06/12/2022-06-12-belt-design-process/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">带传动选型笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/02/14/2022-2-14-Note-Of-Modern-Control-2021/" title="Note of Modern Control 2021"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-14</div><div class="title">Note of Modern Control 2021</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jude</div><div class="author-info__description">Record anything interesting!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">52</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%85%BF%E8%B6%B3%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.</span> <span class="toc-text">腿足机器人相关术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">坐标系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9D%E5%AF%B9%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="toc-number">2.1.</span> <span class="toc-text">绝对坐标系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%AF%B9%E5%9D%90%E6%A0%87%E7%B3%BB%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2"><span class="toc-number">2.2.</span> <span class="toc-text">相对坐标系与坐标变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E4%B8%8E%E6%AC%A7%E6%8B%89%E8%A7%92"><span class="toc-number">3.</span> <span class="toc-text">旋转矩阵与欧拉角</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E4%B8%8E%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E5%85%B3%E7%B3%BB"><span class="toc-number">3.1.</span> <span class="toc-text">欧拉角与旋转矩阵关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%90%86%E8%A7%A3"><span class="toc-number">3.2.</span> <span class="toc-text">旋转矩阵的两种理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E6%80%A7%E8%B4%A8"><span class="toc-number">3.3.</span> <span class="toc-text">旋转矩阵性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC"><span class="toc-number">3.4.</span> <span class="toc-text">旋转矩阵求导</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%92%E9%80%9F%E5%BA%A6%E5%90%91%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">角速度向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E9%80%9F%E5%BA%A6%E5%90%91%E9%87%8Fomega%E7%9A%84%E6%97%8B%E8%BD%AC"><span class="toc-number">4.2.</span> <span class="toc-text">角速度向量\(\omega\)的旋转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E9%80%9F%E5%BA%A6%E7%9A%84%E7%9F%A9%E9%98%B5%E8%A1%A8%E7%A4%BAhatomega"><span class="toc-number">4.3.</span> <span class="toc-text">角速度的矩阵表示\(\hat{\omega}\)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rodrigues-formula"><span class="toc-number">4.4.</span> <span class="toc-text">Rodrigues’ formula</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E5%AF%B9%E6%95%B0"><span class="toc-number">4.5.</span> <span class="toc-text">矩阵对数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d%E8%BF%90%E5%8A%A8%E6%8F%8F%E8%BF%B0"><span class="toc-number">5.</span> <span class="toc-text">3D运动描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6"><span class="toc-number">5.1.</span> <span class="toc-text">速度与角速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%89%A9%E4%BD%93%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E5%8F%98%E6%8D%A2"><span class="toc-number">5.2.</span> <span class="toc-text">多物体速度与角速度变换</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/07/21/Review-of-fourier-transform/" title="Review of fourier transform"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Review of fourier transform"/></a><div class="content"><a class="title" href="/2022/07/21/Review-of-fourier-transform/" title="Review of fourier transform">Review of fourier transform</a><time datetime="2022-07-21T14:28:37.000Z" title="发表于 2022-07-21 22:28:37">2022-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/20/Introduction-to-Hexo-pdf-and-music-plugins/" title="Introduction to Hexo pdf and music plugins"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to Hexo pdf and music plugins"/></a><div class="content"><a class="title" href="/2022/07/20/Introduction-to-Hexo-pdf-and-music-plugins/" title="Introduction to Hexo pdf and music plugins">Introduction to Hexo pdf and music plugins</a><time datetime="2022-07-19T17:04:21.000Z" title="发表于 2022-07-20 01:04:21">2022-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/20/2022-07-20-Introduction-to-chrono/" title="Introduction to chrono"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to chrono"/></a><div class="content"><a class="title" href="/2022/07/20/2022-07-20-Introduction-to-chrono/" title="Introduction to chrono">Introduction to chrono</a><time datetime="2022-07-19T16:30:08.000Z" title="发表于 2022-07-20 00:30:08">2022-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/19/2022-07-19-The-usage-of-round-in-design/" title="The usage of round in design"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="The usage of round in design"/></a><div class="content"><a class="title" href="/2022/07/19/2022-07-19-The-usage-of-round-in-design/" title="The usage of round in design">The usage of round in design</a><time datetime="2022-07-19T15:49:21.000Z" title="发表于 2022-07-19 23:49:21">2022-07-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/13/2022-06-13-KLT-naive-version/" title="光流估计目标追踪-简单的KLT Feature Tracker"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="光流估计目标追踪-简单的KLT Feature Tracker"/></a><div class="content"><a class="title" href="/2022/06/13/2022-06-13-KLT-naive-version/" title="光流估计目标追踪-简单的KLT Feature Tracker">光流估计目标追踪-简单的KLT Feature Tracker</a><time datetime="2022-06-13T15:36:22.000Z" title="发表于 2022-06-13 23:36:22">2022-06-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Jude</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
